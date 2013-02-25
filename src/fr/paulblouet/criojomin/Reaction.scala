@@ -19,29 +19,25 @@
 
 package fr.paulblouet.criojomin
 
+import java.util.UUID
+
 /**
  * User: pblout
  * Date: 20/02/13
  * Time: 13:51
  */
 
-class Rule(val premise: ((Valuation, Variable) => Term), val guard: ((Valuation, Variable) => Boolean),
-            val conclusion: ((Valuation, Variable) => Term))
+class Rule(val premise: ((Valuation, Variable) => Seq[Relation]), val guard: ((Valuation, Variable) => Boolean),
+           val conclusion: ((Valuation, Variable) => Seq[Relation]))
 
-trait Term {
-  val tail: Option[Term]
-  def &(that: Term): Term
-}
+class Relation(val state: Option[Any] = None) {
+  val id = UUID.randomUUID
 
-class Relation(val state: Seq[Any] = Seq(), val tail: Option[Term] = None) extends Term {
-  def &(that: Term): Term = tail match {
-    case Some(t) => new Relation(state, Some(t & that))
-    case None => new Relation(state, Some(that))
-  }
-  def apply(values: Any*) = new Relation(values, tail)
+  def apply(values: Any) = new Relation(Some(values))
 }
 
 class Variable {
+  val id = UUID.randomUUID
 }
 
 class Valuation(map: Option[Map[Variable, Any]] = None) {
@@ -52,7 +48,7 @@ class Valuation(map: Option[Map[Variable, Any]] = None) {
     map match {
       case Some(m) => m.get(v) match {
         case Some(x) => x match {
-          case x: T @unchecked => x
+          case x: T@unchecked => x
           case _ => throw new ClassCastException
         }
         case None => throw new NoSuchElementException
@@ -62,15 +58,38 @@ class Valuation(map: Option[Map[Variable, Any]] = None) {
   }
 }
 
-class Agent(rules: Seq[Rule], state: Seq[Term] = Seq()) {
+class Agent(rules: Seq[Rule], state: Seq[Relation] = Seq()) {
+  state match {
+    case relation :: tail => relation.state match {
+      case Some(v) =>
+        val x = new Variable
+        val s = new Valuation(Some(Map((x, v))))
+        rules.foreach {
+          rule =>
+            (rule.premise(s, x).forall(t => state.contains(t)) && rule.guard(s, x)) match {
+              case true => new Agent(rules, rule.conclusion(s, x))
+              case _ =>
+            }
+        }
+      case None =>
+    }
+    new Agent(rules, tail)
+    case _ =>
+  }
 
+  override def toString = "a"
 }
 
 object Test extends App {
   val R = new Relation
-  def pre(s: Valuation, i: Variable) = R(i) & R(s[Int](i) + 1)
+
+  def pre(s: Valuation, i: Variable) = Seq(R(i), R(s[Int](i) + 1))
+
   def gar(s: Valuation, i: Variable) = s[Int](i) < 10
-  def con(s: Valuation, i: Variable) = R(s[Int](i) + 1) & R(s[Int](i) + 2)
+
+  def con(s: Valuation, i: Variable) = Seq(R(s[Int](i) + 1), R(s[Int](i) + 2))
+
   val r = new Rule(pre, gar, con)
   val agent = new Agent(Seq(r), Seq(R(0), R(1)))
+  println(agent)
 }
