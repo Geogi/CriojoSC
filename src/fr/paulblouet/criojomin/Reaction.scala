@@ -25,18 +25,12 @@ package fr.paulblouet.criojomin
  * Time: 13:51
  */
 
-class Rule(val premise: Term, val guard: Option[Guard], val conclusion: Term) {
-}
-
-class Guard(val value: Any, val conclusion: Term) {
-}
+class Rule(val premise: ((Valuation, Variable) => Term), val guard: ((Valuation, Variable) => Boolean),
+            val conclusion: ((Valuation, Variable) => Term))
 
 trait Term {
   val tail: Option[Term]
   def &(that: Term): Term
-  def ?:(guard: Any) = new Guard(guard, this)
-  def ->(guard: Guard) = new Rule(this, Some(guard), guard.conclusion)
-  def ->(conclusion: Term) = new Rule(this, None, conclusion)
 }
 
 class Relation(val state: Seq[Any] = Seq(), val tail: Option[Term] = None) extends Term {
@@ -58,7 +52,7 @@ class Valuation(map: Option[Map[Variable, Any]] = None) {
     map match {
       case Some(m) => m.get(v) match {
         case Some(x) => x match {
-          case x: T => x
+          case x: T @unchecked => x
           case _ => throw new ClassCastException
         }
         case None => throw new NoSuchElementException
@@ -68,9 +62,15 @@ class Valuation(map: Option[Map[Variable, Any]] = None) {
   }
 }
 
+class Agent(rules: Seq[Rule], state: Seq[Term] = Seq()) {
+
+}
+
 object Test extends App {
   val R = new Relation
-  val i = new Variable
-  val s = new Valuation
-  val r: Rule = (R(s[Int](i) + 1) & R(1) & R(2)) -> (-1) ?: (R(3) & R(4) & R(5))
+  def pre(s: Valuation, i: Variable) = R(i) & R(s[Int](i) + 1)
+  def gar(s: Valuation, i: Variable) = s[Int](i) < 10
+  def con(s: Valuation, i: Variable) = R(s[Int](i) + 1) & R(s[Int](i) + 2)
+  val r = new Rule(pre, gar, con)
+  val agent = new Agent(Seq(r), Seq(R(0), R(1)))
 }
