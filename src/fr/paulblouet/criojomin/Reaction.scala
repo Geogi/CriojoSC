@@ -30,15 +30,13 @@ import java.util.UUID
 class Rule(val premise: ((Valuation, Variable) => Seq[Relation]), val guard: ((Valuation, Variable) => Boolean),
            val conclusion: ((Valuation, Variable) => Seq[Relation]))
 
-class Relation(val state: Option[Any] = None) {
-  val id = UUID.randomUUID
+class Relation(id: String = UUID.randomUUID.toString, val state: Option[Any] = None) {
+  def apply(values: Any) = new Relation(id, Some(values))
 
-  def apply(values: Any) = new Relation(Some(values))
+  override def toString = "R[" + id.toString.substring(0, 4) + "](" + state.get + ")"
 }
 
-class Variable {
-  val id = UUID.randomUUID
-}
+class Variable(id: String = UUID.randomUUID.toString)
 
 class Valuation(map: Option[Map[Variable, Any]] = None) {
   @throws[NoSuchFieldException]("valuation is not ready")
@@ -77,7 +75,7 @@ class Agent(rules: Seq[Rule], state: Seq[Relation] = Seq()) {
     case _ =>
   }
 
-  override def toString = "a"
+  override def toString = state.mkString(", ")
 }
 
 object Test extends App {
