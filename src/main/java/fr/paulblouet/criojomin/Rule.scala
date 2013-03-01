@@ -19,13 +19,9 @@
 
 package fr.paulblouet.criojomin
 
-/*
-If we have (x, y, z): R(x, y + 1) & S(y) --> T(z) | z < y ? R(x, y) & S(y)
-We want to rewrite it as:
-(x: Var[Any], y: Var[Int], z: Var[Int]) => (R(x, {what?}
-*/
 trait Rule {
-  private type Content = (Iterable[Variable] => (Premise, Valuation => (Guard, Conclusion)))
+
+  //private type Content = (Iterable[Variable] => (Premise, Valuation => (Guard, Conclusion)))
 
   private trait Premise {
     val reagents: Iterable[Reagent]

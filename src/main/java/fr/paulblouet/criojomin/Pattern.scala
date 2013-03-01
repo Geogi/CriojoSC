@@ -20,5 +20,5 @@
 package fr.paulblouet.criojomin
 
 trait Pattern[T] {
-  private type Content
+  type Content
 }
