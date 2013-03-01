@@ -19,9 +19,16 @@
 
 package fr.paulblouet.criojomin
 
-trait Agent {
-  val channels: Iterable[Channel]
-  val relations: Iterable[Relation]
-  val rules: Iterable[Rule]
-  val solution: Solution
+trait Reagent {
+
+}
+
+trait Message[T] extends Reagent {
+  val channel: Channel
+  val pattern: Pattern[T]
+}
+
+trait State[T] extends Reagent {
+  val relation: Relation
+  val pattern: Pattern[T]
 }
