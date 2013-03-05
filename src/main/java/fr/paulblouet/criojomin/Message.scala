@@ -19,14 +19,8 @@
 
 package fr.paulblouet.criojomin
 
-/** A universe complying with the chemical computing model. !CURRENTLY A STUB! */
-trait Agent {
-  /** Wormholes to other universes. */
-  val channels: Iterable[Channel]
-  /** Classes of entities that may react. */
-  val relations: Iterable[ReactantRelation]
-  /** How entities react. */
-  val rules: Iterable[Rule]
-  /** What entities this universe currently holds */
-  val solution: Solution
-}
+case class InboundMessage(channel: Channel, content: List[Pattern]) extends Reactant
+
+class OutboundMessage(channel: Channel, content: List[Any])
+
+object Msg

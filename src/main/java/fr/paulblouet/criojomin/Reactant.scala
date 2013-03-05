@@ -21,6 +21,4 @@ package fr.paulblouet.criojomin
 
 trait Reactant
 
-case class Message(channel: Channel, content: List[Pattern]) extends Reactant
-
 case class State(relation: ReactantRelation, state: List[Pattern]) extends Reactant
