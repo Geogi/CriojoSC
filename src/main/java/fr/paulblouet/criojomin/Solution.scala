@@ -19,6 +19,4 @@
 
 package fr.paulblouet.criojomin
 
-trait Solution {
-
-}
+trait Solution

@@ -19,6 +19,5 @@
 
 package fr.paulblouet.criojomin
 
-trait Channel {
-
-}
+/** A communication channel between agents. !CURRENTLY A STUB! */
+trait Channel

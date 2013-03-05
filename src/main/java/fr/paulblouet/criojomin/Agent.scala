@@ -19,9 +19,15 @@
 
 package fr.paulblouet.criojomin
 
+/** An universe complying with the chemical computing model. !CURRENTLY A STUB! */
+//TODO: stub
 trait Agent {
+  /** Wormholes to other universes. */
   val channels: Iterable[Channel]
-  val relations: Iterable[Relation]
+  /** Classes of entities that may react. */
+  val relations: Iterable[ReactantRelation]
+  /** How entities react. */
   val rules: Iterable[Rule]
+  /** What entities this universe currently holds */
   val solution: Solution
 }

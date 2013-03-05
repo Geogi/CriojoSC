@@ -19,16 +19,8 @@
 
 package fr.paulblouet.criojomin
 
-trait Reagent {
+trait Reactant
 
-}
+case class Message(channel: Channel, content: List[Pattern]) extends Reactant
 
-trait Message[T] extends Reagent {
-  val channel: Channel
-  val pattern: Pattern[T]
-}
-
-trait State[T] extends Reagent {
-  val relation: Relation
-  val pattern: Pattern[T]
-}
+case class State(relation: ReactantRelation, state: List[Pattern]) extends Reactant

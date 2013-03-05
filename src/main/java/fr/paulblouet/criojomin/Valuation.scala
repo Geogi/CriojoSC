@@ -19,6 +19,6 @@
 
 package fr.paulblouet.criojomin
 
-trait Valuation {
+trait Valuation extends collection.mutable.Set[Variable] {
 
 }

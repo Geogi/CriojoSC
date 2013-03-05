@@ -21,11 +21,19 @@ package fr.paulblouet.criojomin
 
 trait Rule {
 
-  //private type Content = (Iterable[Variable] => (Premise, Valuation => (Guard, Conclusion)))
-
-  private trait Premise {
-    val reagents: Iterable[Reagent]
+  // Variables management
+  def Var[A] = new Variable {
+    override type T = A
   }
+
+  val variables: List[Variable]
+
+  // Premises
+  trait Premise {
+    val reagents: List[Reactant]
+  }
+
+  val premise: Premise
 
   private trait Guard
 

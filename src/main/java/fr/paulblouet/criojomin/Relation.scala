@@ -19,6 +19,10 @@
 
 package fr.paulblouet.criojomin
 
-trait Relation {
-
+class ReactantRelation {
+  def apply(state: Pattern*) = new State(this, state.toList)
 }
+
+class MolecularRelation
+
+object Relation
