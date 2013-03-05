@@ -26,6 +26,59 @@
     <groupId>fr.paulblouet.criojo</groupId>
     <artifactId>criojo-min</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>Criojo-Min</name>
+    <description>Criojo-Min is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with
+        guaranteed causal order.
+    </description>
+    <url>https://github.com/Geogi/criojomin</url>
+    <organization>
+        <name>Mines Nantes</name>
+        <url>http://www.mines-nantes.fr/</url>
+    </organization>
+    <licenses>
+        <license>
+            <name>GPL</name>
+            <url>http://www.gnu.org/licenses/gpl-3.0-standalone.html</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>Geogi</id>
+            <name>Paul Blouët</name>
+            <email>paul@paulblouet.fr</email>
+            <url>http://web.paulblouet.fr</url>
+            <organization>Mines Nantes</organization>
+            <organizationUrl>http://www.mines-nantes.fr/</organizationUrl>
+            <roles>
+                <role>Intern</role>
+            </roles>
+            <timezone>Europe/Paris</timezone>
+        </developer>
+    </developers>
+    <contributors>
+        <contributor>
+            <name>Hervé Grall</name>
+            <organization>Mines Nantes</organization>
+            <organizationUrl>http://www.mines-nantes.fr/</organizationUrl>
+            <roles>
+                <role>Tutor</role>
+            </roles>
+            <timezone>Europe/Paris</timezone>
+        </contributor>
+    </contributors>
+
+    <scm>
+        <connection>scm:https://github.com/Geogi/criojomin.git</connection>
+        <developerConnection>scm:https://github.com/Geogi/criojomin.git</developerConnection>
+        <url>https://github.com/Geogi/criojomin</url>
+    </scm>
+    <issueManagement>
+        <system>GitHub</system>
+        <url>https://github.com/Geogi/criojomin/issues</url>
+    </issueManagement>
 
     <dependencies>
         <dependency>
@@ -34,10 +87,68 @@
             <version>2.10.0</version>
         </dependency>
         <dependency>
-            <groupId>org.scala-lang</groupId>
-            <artifactId>scala-actors</artifactId>
-            <version>2.10.0</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>2.15.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <sourceDir>src/main/java</sourceDir>
+                    <jvmArgs>
+                        <jvmArg>-Xms64m</jvmArg>
+                        <jvmArg>-Xmx1024m</jvmArg>
+                    </jvmArgs>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>2.15.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>2.6</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>index</report>
+                            <report>summary</report>
+                            <report>project-team</report>
+                            <report>license</report>
+                            <report>issue-tracking</report>
+                            <report>scm</report>
+                            <report>dependencies</report>
+                            <report>dependency-convergence</report>
+                            <report>dependency-info</report>
+                            <report>dependency-management</report>
+                            <report>modules</report>
+                            <report>plugin-management</report>
+                            <report>plugins</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
