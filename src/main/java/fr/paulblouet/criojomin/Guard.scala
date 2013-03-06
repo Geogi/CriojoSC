@@ -19,6 +19,30 @@
 
 package fr.paulblouet.criojomin
 
-trait Guard
+trait Guard {
+  def evaluate: Boolean
+}
 
-case object EmptyGuard extends Guard
+case object TrueGuard extends Guard {
+  def evaluate = true
+}
+
+case object FalseGuard extends Guard {
+  def evaluate = false
+}
+
+case class AndGuard(left: Guard, right: Guard) extends Guard {
+  def evaluate = left.evaluate && right.evaluate
+}
+
+case class OrGuard(left: Guard, right: Guard) extends Guard {
+  def evaluate = left.evaluate || right.evaluate
+}
+
+case class WhereGuard(premise: Rule#Premise, guard: Guard) extends Guard {
+  def evaluate = throw new NotImplementedError
+}
+
+case class NativeGuard(evaluate: Boolean) extends Guard
+
+trait IntrospectionGuard extends Guard
