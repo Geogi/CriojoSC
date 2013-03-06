@@ -19,26 +19,6 @@
 
 package fr.paulblouet.criojomin
 
-trait Rule {
+trait Guard
 
-  // Variables management
-  def Var[T] = {
-    val v = new Variable[T]
-    variables += v
-    v
-  }
-
-  val variables = collection.mutable.HashSet.empty[Variable[_]]
-
-  // Premise
-  class Premise(val reactants: List[Reactant])
-
-  val premise: Premise
-
-  // Guard
-  val guard: Guard
-
-  // Conclusion
-  def conclusion(s: Valuation): List[Molecule]
-
-}
+case object EmptyGuard extends Guard

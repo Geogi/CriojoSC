@@ -25,36 +25,20 @@ trait Pattern[T] {
   def set(s: Valuation, mod: (T) => T = x => x, v: T)
 }
 
-trait PredefPatterns {
+trait RecursivePattern[T] extends Pattern[T] {
+  val child: Pattern[T]
 
-  // utility
-  trait RecursivePattern[T] extends Pattern[T] {
-    val child: Pattern[T]
+  def set_recursion(v: T): T
 
-    def set_recursion(v: T): T
+  def get_recursion(v: T): T
 
-    def get_recursion(v: T): T
-
-    override def set(s: Valuation, mod: (T) => T, v: T) {
-      child.set(s, mod compose set_recursion, v)
-    }
-
-    override def get = child.get
+  override def set(s: Valuation, mod: (T) => T, v: T) {
+    child.set(s, mod compose set_recursion, v)
   }
 
-  // constants
-  class Const[T](override val get: T) extends Pattern[T] {
-    override def set(s: Valuation, mod: (T) => T, x: T) {}
-  }
+  override def get = child.get
+}
 
-  def C(i: Int) = new Const[Int](i)
-
-  // functional patterns
-  def S(this_child: Pattern[Int]) = new RecursivePattern[Int] {
-    override val child = this_child
-
-    override def set_recursion(i: Int) = i - 1
-
-    override def get_recursion(i: Int) = i + 1
-  }
+class Const[T](override val get: T) extends Pattern[T] {
+  override def set(s: Valuation, mod: (T) => T, x: T) {}
 }

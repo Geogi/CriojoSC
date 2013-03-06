@@ -25,6 +25,8 @@ class Variable[T] extends Pattern[T] {
   @throws[NoSuchElementException]("access attempt on unset variable")
   override def get = value getOrElse (throw new NoSuchElementException("trying to access unbound variable"))
 
+  def unary_! = get
+
   override def set(s: Valuation, mod: (T) => T, v: T) {
     value = Some(mod(v))
     s += this

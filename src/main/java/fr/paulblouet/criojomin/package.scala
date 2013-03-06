@@ -17,28 +17,18 @@
  * along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.paulblouet.criojomin
+package fr.paulblouet
 
-trait Rule {
+package object criojomin {
+  def C(i: Int) = new Const[Int](i)
 
-  // Variables management
-  def Var[T] = {
-    val v = new Variable[T]
-    variables += v
-    v
+  // functional patterns
+  def S(this_child: Pattern[Int]) = new RecursivePattern[Int] {
+    override val child = this_child
+
+    override def set_recursion(i: Int) = i - 1
+
+    override def get_recursion(i: Int) = i + 1
   }
-
-  val variables = collection.mutable.HashSet.empty[Variable[_]]
-
-  // Premise
-  class Premise(val reactants: List[Reactant])
-
-  val premise: Premise
-
-  // Guard
-  val guard: Guard
-
-  // Conclusion
-  def conclusion(s: Valuation): List[Molecule]
 
 }

@@ -19,4 +19,10 @@
 
 package fr.paulblouet.criojomin
 
-trait Valuation extends collection.mutable.Set[Variable[_]]
+class Valuation {
+  val content = collection.mutable.HashSet.empty[Variable[_]]
+
+  def +=(x: Variable[_]) {
+    content += x
+  }
+}

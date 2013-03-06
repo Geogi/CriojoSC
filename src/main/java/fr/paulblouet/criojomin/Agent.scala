@@ -27,6 +27,6 @@ trait Agent {
   val relations: Iterable[Atom]
   /** How entities react. */
   val rules: Iterable[Rule]
-  /** What entities this universe currently holds */
+  /** What entities this universe currently holds. */
   val solution: Solution
 }
