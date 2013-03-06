@@ -19,26 +19,4 @@
 
 package fr.paulblouet.criojomin
 
-trait Rule {
-
-  // Variables management
-  def Var[T] = {
-    val v = new Variable[T]
-    variables += v
-  }
-
-  val variables = collection.mutable.Set[Variable[_]]()
-
-  // Premises
-  trait Premise {
-    implicit val expect_pattern = true
-    val reactants: List[Reactant]
-  }
-
-  val premise: Premise
-
-  private trait Guard
-
-  private trait Conclusion
-
-}
+trait Molecule

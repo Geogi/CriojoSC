@@ -80,6 +80,10 @@
         <url>https://github.com/Geogi/criojomin/issues</url>
     </issueManagement>
 
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.scala-lang</groupId>

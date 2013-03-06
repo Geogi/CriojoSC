@@ -19,10 +19,34 @@
 
 package fr.paulblouet.criojomin
 
-class ReactantRelation {
-  def apply(state: Pattern*) = new State(this, state.toList)
+class AtomPattern(val symbol: Atom, val patterns: List[Pattern[_]]) extends Reactant
+
+class AtomInstance(val symbol: Atom, val values: List[Any]) extends Molecule
+
+trait Atom
+
+class Atom0 extends Atom {
+  def unary_~ = new AtomPattern(this, Nil)
+
+  def unary_! = new AtomInstance(this, Nil)
 }
 
-class MolecularRelation
+class Atom1[T1] extends Atom {
+  def apply(p1: Pattern[T1]) = new AtomPattern(this, List(p1))
 
-object Relation
+  def apply(v1: T1) = new AtomInstance(this, List(v1))
+}
+
+class Atom2[T1, T2] extends Atom {
+  def apply(p1: Pattern[T1], p2: Pattern[T2]) = new AtomPattern(this, List(p1, p2))
+
+  def apply(v1: T1, v2: T2) = new AtomInstance(this, List(v1, v2))
+}
+
+object Atom {
+  def apply() = new Atom0
+
+  def apply[T1] = new Atom1[T1]
+
+  def apply[T1, T2] = new Atom2[T1, T2]
+}

@@ -19,8 +19,10 @@
 
 package fr.paulblouet.criojomin
 
-case class InboundMessage(channel: Channel, content: List[Pattern]) extends Reactant
+trait MessagePattern extends Reactant
 
-class OutboundMessage(channel: Channel, content: List[Any])
+trait MessageInstance extends Molecule
 
-object Msg
+trait Message
+
+object Message
