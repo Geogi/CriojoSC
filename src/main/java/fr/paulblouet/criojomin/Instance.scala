@@ -19,4 +19,4 @@
 
 package fr.paulblouet.criojomin
 
-trait Molecule
+trait Instance

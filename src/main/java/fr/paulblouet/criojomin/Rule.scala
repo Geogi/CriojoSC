@@ -31,7 +31,7 @@ trait Rule {
   val variables = collection.mutable.HashSet.empty[Variable[_]]
 
   // Premise
-  class Premise(val reactants: List[Reactant])
+  class Premise(val reactants: List[Term])
 
   val premise: Premise
 
@@ -39,6 +39,6 @@ trait Rule {
   val guard: Guard
 
   // Conclusion
-  def conclusion(s: Valuation): List[Molecule]
+  def conclusion(s: Valuation): List[Instance]
 
 }

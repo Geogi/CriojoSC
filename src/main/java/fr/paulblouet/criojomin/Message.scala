@@ -19,9 +19,9 @@
 
 package fr.paulblouet.criojomin
 
-trait MessagePattern extends Reactant
+trait MessagePattern extends Term
 
-trait MessageInstance extends Molecule
+trait MessageInstance extends Instance
 
 trait Message
 

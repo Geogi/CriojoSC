@@ -19,4 +19,4 @@
 
 package fr.paulblouet.criojomin
 
-trait Reactant
+trait Term

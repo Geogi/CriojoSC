@@ -22,6 +22,8 @@ package fr.paulblouet
 package object criojomin {
   def C(i: Int) = new Const[Int](i)
 
+  def C[T](c: T) = new Const[T](c)
+
   // functional patterns
   def S(this_child: Pattern[Int]) = new RecursivePattern[Int] {
     override val child = this_child
