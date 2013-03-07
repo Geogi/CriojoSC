@@ -19,12 +19,23 @@
 
 package fr.paulblouet
 
+/** Criojo-Min is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with guaranteed causal order.<br />
+  * It sounds cool, but it's far from complete at the moment.
+  *
+  * Criojo-Min uses Scala and is GPL licenced.
+  *
+  * Some useful resources:
+  * 1. The mainline implementation by Mayleen Lacouture: [[https://github.com/maylencita/CRIOJO/tree/version2.0 maylencita/CRIOJO@GitHub]]
+  * 2. The latest CRIOJO research paper: [[http://hal.inria.fr/hal-00676083/]]
+  */
 package object criojomin {
+  /** Creates an Int [[fr.paulblouet.criojomin.Const]] of value `i`. */
   def C(i: Int) = new Const[Int](i)
 
+  /** Creates a [[fr.paulblouet.criojomin.Const]] of any value `c: T`. */
   def C[T](c: T) = new Const[T](c)
 
-  // functional patterns
+  /** Successor [[fr.paulblouet.criojomin.Pattern]]: binds to `i - 1` and returns `i + 1`. */
   def S(this_child: Pattern[Int]) = new RecursivePattern[Int] {
     override val child = this_child
 

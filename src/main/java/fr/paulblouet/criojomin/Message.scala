@@ -19,6 +19,7 @@
 
 package fr.paulblouet.criojomin
 
+/** A symbolic representation of a [[fr.paulblouet.criojomin.Message]]. !CURRENTLY A STUB! */
 trait MessagePattern extends Term
 
 trait MessageInstance extends Instance

@@ -19,30 +19,49 @@
 
 package fr.paulblouet.criojomin
 
+/** Guards allow conditional triggering of [[fr.paulblouet.criojomin.Rule]]s. Their most useful feature is that they permit introspection of the
+  * [[fr.paulblouet.criojomin.Solution]], allowing tests that would not be possible with only the premise. For instance, `Abs(~A)` test if
+  * no [[fr.paulblouet.criojomin.AtomInstance]] of A is present in the solution. !CURRENTLY A STUB!
+  */
 trait Guard {
+  /** Truth of this guard. Will probably be changed when guards are implemented with state machines. !CURRENTLY A STUB! */
   def evaluate: Boolean
 }
 
+/** A guard that always evaluate to `true`. It is the default. !CURRENTLY A STUB! */
 case object TrueGuard extends Guard {
   def evaluate = true
 }
 
+/** A guard that always evaluate to `false`. !CURRENTLY A STUB! */
 case object FalseGuard extends Guard {
   def evaluate = false
 }
 
+/** && guard (using a [[fr.paulblouet.criojomin.Guard]] method is probably preferable) !CURRENTLY A STUB! */
 case class AndGuard(left: Guard, right: Guard) extends Guard {
   def evaluate = left.evaluate && right.evaluate
 }
 
+/** && guard (using a [[fr.paulblouet.criojomin.Guard]] method is probably preferable) !CURRENTLY A STUB! */
 case class OrGuard(left: Guard, right: Guard) extends Guard {
   def evaluate = left.evaluate || right.evaluate
 }
 
+/** `true` if the premise match and, given the updated [[fr.paulblouet.criojomin.Valuation]], the sub-guard is `true` !CURRENTLY A STUB! */
 case class WhereGuard(premise: Rule#Premise, guard: Guard) extends Guard {
   def evaluate = throw new NotImplementedError
 }
 
+/** Guard whose truth value comes from a Scala boolean. !CURRENTLY A STUB!
+  *
+  * @example {{{
+  *             !x >= !y
+  *          }}}
+  *
+  * @param evaluate A Boolean to evaluate to.
+  */
 case class NativeGuard(evaluate: Boolean) extends Guard
 
+/** The parent trait of all guards that require special handling by the [[fr.paulblouet.criojomin.Solution]] (inspectors). !CURRENTLY A STUB! */
 trait IntrospectionGuard extends Guard

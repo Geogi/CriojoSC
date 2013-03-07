@@ -19,4 +19,5 @@
 
 package fr.paulblouet.criojomin
 
+/** Something that exist in the [[fr.paulblouet.criojomin.Solution]] or can be created by a [[fr.paulblouet.criojomin.Rule]]. */
 trait Instance
