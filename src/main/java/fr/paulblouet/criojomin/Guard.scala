@@ -19,9 +19,11 @@
 
 package fr.paulblouet.criojomin
 
-/** Guards allow conditional triggering of [[fr.paulblouet.criojomin.Rule]]s. Their most useful feature is that they permit introspection of the
-  * [[fr.paulblouet.criojomin.Solution]], allowing tests that would not be possible with only the premise. For instance, `Abs(~A)` test if
-  * no [[fr.paulblouet.criojomin.AtomInstance]] of A is present in the solution. !CURRENTLY A STUB!
+/** Guards allow conditional triggering of [[fr.paulblouet.criojomin.Rule]]s. !CURRENTLY A STUB!
+  *
+  * Their most useful feature is that they permit introspection of the [[fr.paulblouet.criojomin.Solution]], allowing
+  * tests that would not be possible only with the premise.<br />
+  * For instance, `Abs(~A)` test if no [[fr.paulblouet.criojomin.AtomInstance]] of A is present in the solution.
   */
 trait Guard {
   /** Truth of this guard. Will probably be changed when guards are implemented with state machines. !CURRENTLY A STUB! */
@@ -56,7 +58,7 @@ case class WhereGuard(premise: Rule#Premise, guard: Guard) extends Guard {
 /** Guard whose truth value comes from a Scala boolean. !CURRENTLY A STUB!
   *
   * @example {{{
-  *             !x >= !y
+  *                       !x >= !y
   *          }}}
   *
   * @param evaluate A Boolean to evaluate to.

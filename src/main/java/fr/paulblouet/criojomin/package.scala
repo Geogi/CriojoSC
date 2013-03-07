@@ -25,8 +25,10 @@ package fr.paulblouet
   * Criojo-Min uses Scala and is GPL licenced.
   *
   * Some useful resources:
-  * 1. The mainline implementation by Mayleen Lacouture: [[https://github.com/maylencita/CRIOJO/tree/version2.0 maylencita/CRIOJO@GitHub]]
-  * 2. The latest CRIOJO research paper: [[http://hal.inria.fr/hal-00676083/]]
+  * <ul>
+  * <li>The mainline implementation by Mayleen Lacouture: [[https://github.com/maylencita/CRIOJO/tree/version2.0 maylencita/CRIOJO@GitHub]]</li>
+  * <li>The latest CRIOJO research paper: [[http://hal.inria.fr/hal-00676083/]]</li>
+  * </ul>
   */
 package object criojomin {
   /** Creates an Int [[fr.paulblouet.criojomin.Const]] of value `i`. */
