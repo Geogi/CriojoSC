@@ -26,4 +26,4 @@ trait MessageInstance extends Instance
 
 trait Message
 
-object Message
+object Message extends EntitySymbol

@@ -21,7 +21,7 @@ package fr.paulblouet.criojomin
 
 /** Guards allow conditional triggering of [[fr.paulblouet.criojomin.Rule]]s. !CURRENTLY A STUB!
   *
-  * Their most useful feature is that they permit introspection of the [[fr.paulblouet.criojomin.Solution]], allowing
+  * Their most useful feature is that they permit introspection of the [[fr.paulblouet.criojomin.EntitySymbol]], allowing
   * tests that would not be possible only with the premise.<br />
   * For instance, `Abs(~A)` test if no [[fr.paulblouet.criojomin.AtomInstance]] of A is present in the solution.
   */
@@ -51,19 +51,19 @@ case class OrGuard(left: Guard, right: Guard) extends Guard {
 }
 
 /** `true` if the premise match and, given the updated [[fr.paulblouet.criojomin.Valuation]], the sub-guard is `true` !CURRENTLY A STUB! */
-case class WhereGuard(premise: Rule#Premise, guard: Guard) extends Guard {
+case class WhereGuard(premise: Premise, guard: Guard) extends Guard {
   def evaluate = throw new NotImplementedError
 }
 
 /** Guard whose truth value comes from a Scala boolean. !CURRENTLY A STUB!
   *
   * @example {{{
-  *                       !x >= !y
+  *                                 !x >= !y
   *          }}}
   *
   * @param evaluate A Boolean to evaluate to.
   */
 case class NativeGuard(evaluate: Boolean) extends Guard
 
-/** The parent trait of all guards that require special handling by the [[fr.paulblouet.criojomin.Solution]] (inspectors). !CURRENTLY A STUB! */
+/** The parent trait of all guards that require special handling by the [[fr.paulblouet.criojomin.EntitySymbol]] (inspectors). !CURRENTLY A STUB! */
 trait IntrospectionGuard extends Guard

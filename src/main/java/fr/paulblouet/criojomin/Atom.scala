@@ -20,7 +20,7 @@
 package fr.paulblouet.criojomin
 
 /** A symbolic representation of an [[fr.paulblouet.criojomin.Atom]], as used in rule premises and "where" guards.<br />
-  * The engine matches it against the actual instances in [[fr.paulblouet.criojomin.Solution]] to produce a
+  * The engine matches it against the actual instances in [[fr.paulblouet.criojomin.EntitySymbol]] to produce a
   * [[fr.paulblouet.criojomin.Valuation]], used by most [[fr.paulblouet.criojomin.Guard]]s and
   * [[fr.paulblouet.criojomin.Rule]] conclusions.
   *
@@ -36,7 +36,7 @@ package fr.paulblouet.criojomin
 class AtomPattern(val symbol: Atom, val patterns: List[Pattern[_]]) extends Term
 
 /** An instance of an [[fr.paulblouet.criojomin.Atom]] in a given state (a list of an unbound type).<br />
-  * It may exist in [[fr.paulblouet.criojomin.Solution]] or be the product of a [[fr.paulblouet.criojomin.Rule]]
+  * It may exist in [[fr.paulblouet.criojomin.EntitySymbol]] or be the product of a [[fr.paulblouet.criojomin.Rule]]
   * (listed in its conclusion).
   *
   * Note that while [[fr.paulblouet.criojomin.AtomInstance]] is not typed itself, it is created by
@@ -60,20 +60,20 @@ class AtomInstance(val symbol: Atom, val values: List[_]) extends Instance
   * The way to create patterns or instances of the atom depends on whether it's nullary (see example below).
   *
   * @example {{{
-  *                                 val atom0 = Atom()             // nullary Atom
-  *                                 ~atom0                         // AtomPattern
-  *                                 !atom0                         // AtomInstance
+  *                                           val atom0 = Atom()             // nullary Atom
+  *                                           ~atom0                         // AtomPattern
+  *                                           !atom0                         // AtomInstance
   *
-  *                                 val atom2 = Atom[Int, String]  // binary Atom
-  *                                 val p2 = Var[String]           // Pattern
-  *                                 atom2(C(2), p2)                // AtomPattern (all arguments are Patterns)
-  *                                 atom2(2, !p2)                  // AtomInstance (no argument is a Pattern)
-  *                                 atom2(2, p2)                   // !!!AtomInstance!!! (at least one argument, here the first, is not a Pattern)
-  *                                                                // __this is probably not what you want, since p2 will not be valuated__
-  *                                 /* Likewise with Atom1 to Atom22 */
+  *                                           val atom2 = Atom[Int, String]  // binary Atom
+  *                                           val p2 = Var[String]           // Pattern
+  *                                           atom2(C(2), p2)                // AtomPattern (all arguments are Patterns)
+  *                                           atom2(2, !p2)                  // AtomInstance (no argument is a Pattern)
+  *                                           atom2(2, p2)                   // !!!AtomInstance!!! (at least one argument, here the first, is not a Pattern)
+  *                                                                          // __this is probably not what you want, since p2 will not be valuated__
+  *                                           /* Likewise with Atom1 to Atom22 */
   *          }}}
   */
-trait Atom
+trait Atom extends EntitySymbol
 
 /** An identifier for a nullary atom. See [[fr.paulblouet.criojomin.Atom]] for more details. */
 class Atom0 extends Atom {
@@ -105,9 +105,9 @@ class Atom2[T1, T2] extends Atom {
 /** This object provides utilities for creating [[fr.paulblouet.criojomin.Atom]]s.
   *
   * @example {{{
-  *                                 atom0 = Atom()        // create a nullary Atom
-  *                                 atom2 = Atom[T1, T2]  // create a binary Atom whose instances accept (T1, T2) values
-  *                                 /* Likewise with Atom[T1] to Atom[T1, .. T22] */
+  *                                           atom0 = Atom()        // create a nullary Atom
+  *                                           atom2 = Atom[T1, T2]  // create a binary Atom whose instances accept (T1, T2) values
+  *                                           /* Likewise with Atom[T1] to Atom[T1, .. T22] */
   *          }}}
   */
 object Atom {

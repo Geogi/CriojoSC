@@ -19,12 +19,21 @@
 
 package fr.paulblouet.criojomin
 
+import util.{Failure, Success, Try}
+
 trait Pattern[T] {
-  def get: T
+  def get(s: Valuation): T
 
-  def set(s: Valuation, mod: (T) => T = x => x, v: T)
+  def set(s: Valuation, v: T, mod: (T) => T = Function.const[T, T])
 
-  def try_match(s: Valuation, instance: Instance): Boolean = false
+  def matching(s: Valuation, proposed: T): Boolean = Try(get(s)) match {
+    case Success(real) => proposed == real
+    case Failure(_: NoSuchElementException) => {
+      set(s, proposed)
+      true
+    }
+    case Failure(e) => throw e
+  }
 }
 
 trait RecursivePattern[T] extends Pattern[T] {
@@ -34,13 +43,15 @@ trait RecursivePattern[T] extends Pattern[T] {
 
   def get_recursion(v: T): T
 
-  override def set(s: Valuation, mod: (T) => T, v: T) {
-    child.set(s, mod compose set_recursion, v)
+  override def set(s: Valuation, v: T, mod: (T) => T) {
+    child.set(s, v, mod compose set_recursion)
   }
 
-  override def get = child.get
+  override def get(s: Valuation) = child.get(s)
 }
 
-class Const[T](override val get: T) extends Pattern[T] {
-  override def set(s: Valuation, mod: (T) => T, x: T) {}
+class Const[T](val c: T) extends Pattern[T] {
+  override def get(s: Valuation) = c
+
+  override def set(s: Valuation, x: T, mod: (T) => T) {}
 }

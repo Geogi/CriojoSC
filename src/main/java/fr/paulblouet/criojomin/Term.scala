@@ -21,4 +21,6 @@ package fr.paulblouet.criojomin
 
 trait Term {
   def patterns: List[Pattern[_]]
+
+  def symbol: EntitySymbol
 }

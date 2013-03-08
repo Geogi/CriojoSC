@@ -20,15 +20,11 @@
 package fr.paulblouet.criojomin
 
 class Variable[T] extends Pattern[T] {
-  var value: Option[T] = None
+  override def get(s: Valuation) = s(this)
 
-  @throws[NoSuchElementException]("access attempt on unset variable")
-  override def get = value getOrElse (throw new NoSuchElementException("trying to access unbound variable"))
+  def unary_!(s: Valuation) = get(s)
 
-  def unary_! = get
-
-  override def set(s: Valuation, mod: (T) => T, v: T) {
-    value = Some(mod(v))
-    s += this
+  override def set(s: Valuation, v: T, mod: (T) => T) {
+    s +=(this, mod(v))
   }
 }

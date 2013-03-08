@@ -21,15 +21,15 @@ package fr.paulblouet.criojomin
 
 import collection.mutable
 
-class Valuation(val contents: mutable.HashSet[Variable[_]] = mutable.HashSet.empty[Variable[_]]) {
+class Valuation(val contents: mutable.HashMap[Variable[_], _] = mutable.HashMap.empty[Variable[_], _]) {
 
-
-  def +=(x: Variable[_]) {
-    contents += x
+  @throws[NoSuchElementException]("access attempt on unset variable")
+  def apply(x: Variable[_]) = contents(x) match {
+    case Some(v) => v
+    case None => throw new NoSuchElementException("trying to access unbound variable")
   }
 
-  def fresh = contents map {
-    variable =>
-      (new Variable[_])
+  def +=(x: Variable[_], v: _) {
+    contents +=(x, v)
   }
 }
