@@ -21,15 +21,25 @@ package fr.paulblouet.criojomin
 
 import collection.mutable
 
-class Valuation(val contents: mutable.HashSet[Variable[_]] = mutable.HashSet.empty[Variable[_]]) {
+class Premise(val reactants: List[Term]) {
 
+  class State(val s: Valuation, val left: List[Term], val right: List[Instance]) {
+    val end = left.size == 0
 
-  def +=(x: Variable[_]) {
-    contents += x
+    def propose(instance: Instance): List[State] = Nil
   }
 
-  def fresh = contents map {
-    variable =>
-      (new Variable[_])
+  object State {
+    def initial = new State(new Valuation, reactants, List.empty[Instance])
+  }
+
+  val states = mutable.MutableList[State](State.initial)
+
+  def addInstance(instance: Instance): List[Valuation] = {
+    Nil
+  }
+
+  def removeInstance(instance: Instance) {
+
   }
 }

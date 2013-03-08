@@ -30,9 +30,6 @@ trait Rule {
 
   val variables = collection.mutable.HashSet.empty[Variable[_]]
 
-  // Premise
-  class Premise(val reactants: List[Term])
-
   val premise: Premise
 
   // Guard

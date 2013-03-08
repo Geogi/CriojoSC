@@ -23,6 +23,8 @@ trait Pattern[T] {
   def get: T
 
   def set(s: Valuation, mod: (T) => T = x => x, v: T)
+
+  def try_match(s: Valuation, instance: Instance): Boolean = false
 }
 
 trait RecursivePattern[T] extends Pattern[T] {

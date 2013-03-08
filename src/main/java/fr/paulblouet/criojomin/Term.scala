@@ -19,4 +19,6 @@
 
 package fr.paulblouet.criojomin
 
-trait Term
+trait Term {
+  def patterns: List[Pattern[_]]
+}
