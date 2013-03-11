@@ -26,9 +26,9 @@ class Solution(val agent: Agent) {
 
   def +=(instance: Instance) {
     content += instance
-    val complete_states = agent.rules map (rule => (rule, rule.premise addInstance instance))
+    val completed_states = agent.rules map (rule => (rule, rule.premise addInstance instance))
     // dummy choice algorithm beginning
-    val selected: Option[(Rule, State)] = complete_states filter (_._2.nonEmpty) match {
+    val selected: Option[(Rule, State)] = completed_states filter (_._2.nonEmpty) match {
       case r :: _ => Some((r._1, r._2.head))
       case _ => None
     }

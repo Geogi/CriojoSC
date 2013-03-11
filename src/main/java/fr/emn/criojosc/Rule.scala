@@ -36,6 +36,6 @@ trait Rule {
   val guard: Guard
 
   // Conclusion
-  def conclusion(s: Valuation): List[Instance]
+  def conclusion(implicit s: Valuation): List[Instance]
 
 }
