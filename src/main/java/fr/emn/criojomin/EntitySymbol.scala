@@ -17,7 +17,6 @@
  * along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.paulblouet.criojomin
+package fr.emn.criojomin
 
-/** A communication channel between agents. !CURRENTLY A STUB! */
-trait Channel
+trait EntitySymbol

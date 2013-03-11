@@ -17,9 +17,14 @@
  * along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.paulblouet.criojomin
+package fr.emn.criojomin
 
-/** Something that exist in the [[fr.paulblouet.criojomin.Solution]] or can be created by a [[fr.paulblouet.criojomin.Rule]]. */
-trait Instance {
-  def symbol: EntitySymbol
+class Variable[T] extends Pattern[T] {
+  override def get(s: Valuation) = s(this)
+
+  def unary_!(s: Valuation) = get(s)
+
+  override def set(s: Valuation, v: T, mod: (T) => T) {
+    s +=(this, mod(v))
+  }
 }

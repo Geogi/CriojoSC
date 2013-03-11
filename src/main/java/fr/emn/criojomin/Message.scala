@@ -17,6 +17,13 @@
  * along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.paulblouet.criojomin
+package fr.emn.criojomin
 
-trait Solution
+/** A symbolic representation of a [[fr.emn.criojomin.Message]]. !CURRENTLY A STUB! */
+trait MessagePattern extends Term
+
+trait MessageInstance extends Instance
+
+trait Message
+
+object Message extends EntitySymbol

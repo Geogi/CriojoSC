@@ -17,6 +17,25 @@
  * along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.paulblouet.criojomin
+package fr.emn.criojomin
 
-trait EntitySymbol
+trait Rule {
+
+  // Variables management
+  def Var[T] = {
+    val v = new Variable[T]
+    variables += v
+    v
+  }
+
+  val variables = collection.mutable.HashSet.empty[Variable[_]]
+
+  val premise: Premise
+
+  // Guard
+  val guard: Guard
+
+  // Conclusion
+  def conclusion(s: Valuation): List[Instance]
+
+}

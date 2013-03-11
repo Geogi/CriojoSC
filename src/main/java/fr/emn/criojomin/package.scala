@@ -17,7 +17,7 @@
  * along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.paulblouet
+package fr.emn
 
 /** Criojo-Min is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with guaranteed causal order.<br />
   * It sounds cool, but it's far from complete at the moment.
@@ -31,13 +31,13 @@ package fr.paulblouet
   * </ul>
   */
 package object criojomin {
-  /** Creates an Int [[fr.paulblouet.criojomin.Const]] of value `i`. */
+  /** Creates an Int [[fr.emn.criojomin.Const]] of value `i`. */
   def C(i: Int) = new Const[Int](i)
 
-  /** Creates a [[fr.paulblouet.criojomin.Const]] of any value `c: T`. */
+  /** Creates a [[fr.emn.criojomin.Const]] of any value `c: T`. */
   def C[T](c: T) = new Const[T](c)
 
-  /** Successor [[fr.paulblouet.criojomin.Pattern]]: binds to `i - 1` and returns `i + 1`. */
+  /** Successor [[fr.emn.criojomin.Pattern]]: binds to `i - 1` and returns `i + 1`. */
   def S(this_child: Pattern[Int]) = new RecursivePattern[Int] {
     override val child = this_child
 

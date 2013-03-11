@@ -17,7 +17,7 @@
  * along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.paulblouet.criojomin
+package fr.emn.criojomin
 
 trait Term {
   def patterns: List[Pattern[_]]
