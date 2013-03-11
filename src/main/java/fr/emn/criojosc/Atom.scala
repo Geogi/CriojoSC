@@ -1,20 +1,20 @@
 /*
  * Copyright (c) 2013 Paul Blouët.
  *
- * This file is part of criojo-min.
+ * This file is part of CriojoSC.
  *
- * criojo-min is free software: you can redistribute it and/or modify
+ * CriojoSC is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * criojo-min is distributed in the hope that it will be useful,
+ * CriojoSC is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
+ * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package fr.emn.criojosc
@@ -59,19 +59,20 @@ class AtomInstance(val symbol: Atom, val values: List[Any]) extends Instance
   * class.<br />
   * The way to create patterns or instances of the atom depends on whether it's nullary (see example below).
   *
-  * @example {{{
-  *           val atom0 = Atom()             // nullary Atom
-  *           ~atom0                         // AtomPattern
-  *           !atom0                         // AtomInstance
+  * @example
+  * {{{
+  *  val atom0 = Atom()             // nullary Atom
+  *  ~atom0                         // AtomPattern
+  *  !atom0                         // AtomInstance
   *
-  *           val atom2 = Atom[Int, String]  // binary Atom
-  *           val p2 = Var[String]           // Pattern
-  *           atom2(C(2), p2)                // AtomPattern (all arguments are Patterns)
-  *           atom2(2, !p2)                  // AtomInstance (no argument is a Pattern)
-  *           atom2(2, p2)                   // !!!AtomInstance!!! (at least one argument, here the first, is not a Pattern)
-  *           // __this is probably not what you want, since p2 will not be valuated__
-  *           /* Likewise with Atom1 to Atom22 */
-  *          }}}
+  *  val atom2 = Atom[Int, String]  // binary Atom
+  *  val p2 = Var[String]           // Pattern
+  *  atom2(C(2), p2)                // AtomPattern (all arguments are Patterns)
+  *  atom2(2, !p2)                  // AtomInstance (no argument is a Pattern)
+  *  atom2(2, p2)                   // !!!AtomInstance!!! (at least one argument, here the first, is not a Pattern)
+  *  // __this is probably not what you want, since p2 will not be valuated__
+  *  /* Likewise with Atom1 to Atom22 */
+  * }}}
   */
 trait Atom extends EntitySymbol
 
@@ -104,11 +105,12 @@ class Atom2[T1, T2] extends Atom {
 
 /** This object provides utilities for creating [[fr.emn.criojosc.Atom]]s.
   *
-  * @example {{{
-  *           atom0 = Atom()        // create a nullary Atom
-  *           atom2 = Atom[T1, T2]  // create a binary Atom whose instances accept (T1, T2) values
-  *           /* Likewise with Atom[T1] to Atom[T1, .. T22] */
-  *          }}}
+  * @example
+  * {{{
+  *  atom0 = Atom()        // create a nullary Atom
+  *  atom2 = Atom[T1, T2]  // create a binary Atom whose instances accept (T1, T2) values
+  *  /* Likewise with Atom[T1] to Atom[T1, .. T22] */
+  * }}}
   */
 object Atom {
   /** Creates a nullary atom ([[fr.emn.criojosc.Atom0]]) */
