@@ -19,10 +19,10 @@
 
 package fr.emn
 
-/** Criojo-Min is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with guaranteed causal order.<br />
+/** CriojoSC is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with guaranteed causal order.<br />
   * It sounds cool, but it's far from complete at the moment.
   *
-  * Criojo-Min uses Scala and is GPL licenced.
+  * CriojoSC uses Scala and is GPL licenced.
   *
   * Some useful resources:
   * <ul>
