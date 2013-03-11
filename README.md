@@ -13,7 +13,7 @@ Building
 --------
 1. Install the following dependencies: [Git](http://git-scm.com/), [Maven](http://maven.apache.org/). On Linux, get them from your distro repositories.
 2. Clone from GitHub: `$ git clone https://github.com/Geogi/criojomin.git`.
-3. Compile CriojoSC: `$ mvn compile`. The .class files will be located at `target/fr/paulblouet/criojomin/`.
+3. Compile CriojoSC: `$ mvn compile`. The .class files will be located at `target/fr/emn/criojosc/`.
 4. If you want the JAR: `$ mvn package`. It will be located at `target/`.
 
 Generating the API
