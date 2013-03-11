@@ -19,4 +19,22 @@
 
 package fr.emn.criojosc
 
-trait Solution
+import collection.mutable
+
+class Solution {
+  val content = mutable.HashSet.empty[Instance]
+
+  def +=(instance: Instance) {}
+
+  def ++=(is: Iterable[Instance]) {
+    is.foreach(this += _)
+  }
+}
+
+object Solution {
+  def apply(is: Instance*) = {
+    val sol = new Solution
+    sol ++= is
+    sol
+  }
+}
