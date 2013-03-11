@@ -17,7 +17,7 @@
  * along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojomin
+package fr.emn.criojosc
 
 class Variable[T] extends Pattern[T] {
   override def get(s: Valuation) = s(this)

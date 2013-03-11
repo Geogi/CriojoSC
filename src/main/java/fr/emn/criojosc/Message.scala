@@ -17,7 +17,13 @@
  * along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojomin
+package fr.emn.criojosc
 
-/** A communication channel between agents. !CURRENTLY A STUB! */
-trait Channel
+/** A symbolic representation of a [[fr.emn.criojosc.Message]]. !CURRENTLY A STUB! */
+trait MessagePattern extends Term
+
+trait MessageInstance extends Instance
+
+trait Message
+
+object Message extends EntitySymbol

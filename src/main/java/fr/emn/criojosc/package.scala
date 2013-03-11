@@ -30,14 +30,14 @@ package fr.emn
   * <li>The latest CRIOJO research paper: [[http://hal.inria.fr/hal-00676083/]]</li>
   * </ul>
   */
-package object criojomin {
-  /** Creates an Int [[fr.emn.criojomin.Const]] of value `i`. */
+package object criojosc {
+  /** Creates an Int [[fr.emn.criojosc.Const]] of value `i`. */
   def C(i: Int) = new Const[Int](i)
 
-  /** Creates a [[fr.emn.criojomin.Const]] of any value `c: T`. */
+  /** Creates a [[fr.emn.criojosc.Const]] of any value `c: T`. */
   def C[T](c: T) = new Const[T](c)
 
-  /** Successor [[fr.emn.criojomin.Pattern]]: binds to `i - 1` and returns `i + 1`. */
+  /** Successor [[fr.emn.criojosc.Pattern]]: binds to `i - 1` and returns `i + 1`. */
   def S(this_child: Pattern[Int]) = new RecursivePattern[Int] {
     override val child = this_child
 

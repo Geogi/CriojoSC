@@ -17,25 +17,7 @@
  * along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojomin
+package fr.emn.criojosc
 
-trait Rule {
-
-  // Variables management
-  def Var[T] = {
-    val v = new Variable[T]
-    variables += v
-    v
-  }
-
-  val variables = collection.mutable.HashSet.empty[Variable[_]]
-
-  val premise: Premise
-
-  // Guard
-  val guard: Guard
-
-  // Conclusion
-  def conclusion(s: Valuation): List[Instance]
-
-}
+/** A communication channel between agents. !CURRENTLY A STUB! */
+trait Channel

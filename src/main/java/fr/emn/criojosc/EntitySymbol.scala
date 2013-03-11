@@ -17,19 +17,6 @@
  * along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojomin
+package fr.emn.criojosc
 
-import collection.mutable
-
-class Valuation(val contents: mutable.HashMap[Variable[_], _] = mutable.HashMap.empty[Variable[_], _]) {
-
-  @throws[NoSuchElementException]("access attempt on unset variable")
-  def apply(x: Variable[_]) = contents(x) match {
-    case Some(v) => v
-    case None => throw new NoSuchElementException("trying to access unbound variable")
-  }
-
-  def +=(x: Variable[_], v: _) {
-    contents +=(x, v)
-  }
-}
+trait EntitySymbol

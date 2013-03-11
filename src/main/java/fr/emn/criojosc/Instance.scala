@@ -17,6 +17,9 @@
  * along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojomin
+package fr.emn.criojosc
 
-trait Solution
+/** Something that exist in the [[fr.emn.criojosc.Solution]] or can be created by a [[fr.emn.criojosc.Rule]]. */
+trait Instance {
+  def symbol: EntitySymbol
+}

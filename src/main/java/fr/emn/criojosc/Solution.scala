@@ -17,16 +17,6 @@
  * along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojomin
+package fr.emn.criojosc
 
-/** A universe complying with the chemical computing model. !CURRENTLY A STUB! */
-trait Agent {
-  /** Wormholes to other universes. */
-  val channels: Iterable[Channel]
-  /** Classes of entities that may react. */
-  val relations: Iterable[Atom]
-  /** How entities react. */
-  val rules: Iterable[Rule]
-  /** What entities this universe currently holds. */
-  val solution: Solution
-}
+trait Solution
