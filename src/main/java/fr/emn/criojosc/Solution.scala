@@ -21,19 +21,37 @@ package fr.emn.criojosc
 
 import collection.mutable
 
-class Solution {
+class Solution(val agent: Agent) {
   val content = mutable.HashSet.empty[Instance]
 
-  def +=(instance: Instance) {}
+  def +=(instance: Instance) {
+    content += instance
+    val complete_states = agent.rules map (rule => (rule, rule.premise addInstance instance))
+    // dummy choice algorithm beginning
+    val selected = complete_states filter (_._2.nonEmpty) match {
+      case r :: _ => Some((r._1, r._2.head))
+      case _ => None
+    }
+    // dummy choice algorithm end
+    selected foreach {
+      rule_state =>
+        rule_state._2.right foreach (this -= _)
+        rule_state._1.conclusion(rule_state._2.s) foreach (this += _)
+    }
+  }
 
   def ++=(is: Iterable[Instance]) {
     is.foreach(this += _)
   }
+
+  def -=(instance: Instance) {
+    agent.rules foreach (_.premise.removeInstance(instance))
+  }
 }
 
 object Solution {
-  def apply(is: Instance*) = {
-    val sol = new Solution
+  def apply(agent: Agent, is: Instance*) = {
+    val sol = new Solution(agent)
     sol ++= is
     sol
   }
