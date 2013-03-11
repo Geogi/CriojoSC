@@ -21,5 +21,7 @@ package fr.emn.criojosc
 
 /** Something that exist in the [[fr.emn.criojosc.Solution]] or can be created by a [[fr.emn.criojosc.Rule]]. */
 trait Instance {
+  def values: List[Any]
+
   def symbol: EntitySymbol
 }

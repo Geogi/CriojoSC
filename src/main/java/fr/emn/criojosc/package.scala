@@ -37,13 +37,4 @@ package object criojosc {
   /** Creates a [[fr.emn.criojosc.Const]] of any value `c: T`. */
   def C[T](c: T) = new Const[T](c)
 
-  /** Successor [[fr.emn.criojosc.Pattern]]: binds to `i - 1` and returns `i + 1`. */
-  def S(this_child: Pattern[Int]) = new RecursivePattern[Int] {
-    override val child = this_child
-
-    override def set_recursion(i: Int) = i - 1
-
-    override def get_recursion(i: Int) = i + 1
-  }
-
 }

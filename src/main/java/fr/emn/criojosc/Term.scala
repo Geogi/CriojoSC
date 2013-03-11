@@ -20,7 +20,7 @@
 package fr.emn.criojosc
 
 trait Term {
-  def patterns: List[Pattern[_]]
+  def patterns: List[Pattern[Any]]
 
   def symbol: EntitySymbol
 }

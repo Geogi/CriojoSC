@@ -28,7 +28,7 @@ trait Rule {
     v
   }
 
-  val variables = collection.mutable.HashSet.empty[Variable[_]]
+  val variables = collection.mutable.HashSet.empty[Variable[Any]]
 
   val premise: Premise
 

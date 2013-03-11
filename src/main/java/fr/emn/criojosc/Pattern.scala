@@ -21,12 +21,12 @@ package fr.emn.criojosc
 
 import util.{Failure, Success, Try}
 
-trait Pattern[T] {
+trait Pattern[+T] {
   def get(s: Valuation): T
 
-  def set(s: Valuation, v: T, mod: (T) => T = Function.const[T, T])
+  def set[S >: T](s: Valuation, v: S, mod: (S) => S = identity[S] _)
 
-  def matching(s: Valuation, proposed: T): Boolean = Try(get(s)) match {
+  def matching[S >: T](s: Valuation, proposed: S): Boolean = Try(get(s)) match {
     case Success(real) => proposed == real
     case Failure(_: NoSuchElementException) => {
       set(s, proposed)
@@ -36,22 +36,8 @@ trait Pattern[T] {
   }
 }
 
-trait RecursivePattern[T] extends Pattern[T] {
-  val child: Pattern[T]
-
-  def set_recursion(v: T): T
-
-  def get_recursion(v: T): T
-
-  override def set(s: Valuation, v: T, mod: (T) => T) {
-    child.set(s, v, mod compose set_recursion)
-  }
-
-  override def get(s: Valuation) = child.get(s)
-}
-
-class Const[T](val c: T) extends Pattern[T] {
+class Const[+T](val c: T) extends Pattern[T] {
   override def get(s: Valuation) = c
 
-  override def set(s: Valuation, x: T, mod: (T) => T) {}
+  override def set[S >: T](s: Valuation, x: S, mod: (S) => S) {}
 }
