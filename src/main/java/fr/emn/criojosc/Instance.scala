@@ -41,6 +41,4 @@ trait Instance {
   */
 class AtomInstance(val symbol: Relation, val values: List[Any]) extends Instance
 
-class MessageInstance(val channel: Channel, val values: List[Any]) extends Instance {
-  val symbol = Message
-}
+class MessageInstance(val symbol: Channel, val values: List[Any]) extends Instance

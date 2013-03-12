@@ -20,6 +20,6 @@
 package fr.emn.criojosc
 
 /** A communication channel between agents. !CURRENTLY A STUB! */
-trait Channel
+trait Channel extends EntitySymbol
 
 object Channel

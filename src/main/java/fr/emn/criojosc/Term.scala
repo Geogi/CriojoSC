@@ -41,7 +41,5 @@ trait Term {
   */
 class AtomPattern(val symbol: Relation, val patterns: List[Pattern[Any]]) extends Term
 
-/** A symbolic representation of a [[fr.emn.criojosc.Message]]. !CURRENTLY A STUB! */
-class MessagePattern(val channel: Channel, val patterns: List[Pattern[Any]]) extends Term {
-  val symbol = Message
-}
+/** A symbolic representation of a Message. !CURRENTLY A STUB! */
+class MessagePattern(val symbol: Channel, val patterns: List[Pattern[Any]]) extends Term
