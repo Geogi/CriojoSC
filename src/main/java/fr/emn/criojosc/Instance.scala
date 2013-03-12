@@ -31,7 +31,7 @@ trait Instance {
   * (listed in its conclusion).
   *
   * Note that while [[fr.emn.criojosc.AtomInstance]] is not typed itself, it is created by
-  * an `AtomN` ([[fr.emn.criojosc.Atom0]], [[fr.emn.criojosc.Atom1]], etc) that
+  * an `AtomN` ([[fr.emn.criojosc.Relation0]], [[fr.emn.criojosc.Relation1]], etc) that
   * is typed, ensuring a consistent state.<br />
   * This is why instances of this class should not be created manually, but using `Atom.apply` (arity > 0) or
   * `Atom0.unary_!`.

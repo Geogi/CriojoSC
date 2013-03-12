@@ -21,8 +21,8 @@ package fr.emn.criojosc
 
 /** An atom identifier, which can create [[fr.emn.criojosc.AtomPattern]]s and
   * [[fr.emn.criojosc.AtomInstance]]s.<br />
-  * Its implementations are arity dependent: [[fr.emn.criojosc.Atom0]] to (currently)
-  * [[fr.emn.criojosc.Atom2]] (will expand to Atom22, to match `scala.Product`).
+  * Its implementations are arity dependent: [[fr.emn.criojosc.Relation0]] to (currently)
+  * [[fr.emn.criojosc.Relation2]] (will expand to Atom22, to match `scala.Product`).
   *
   * Use the companion object to create new instances of `Atom`, as it will transparently instantiate the right `AtomN`
   * class.<br />
@@ -45,7 +45,7 @@ package fr.emn.criojosc
 trait Relation extends EntitySymbol
 
 /** An identifier for a nullary atom. See [[fr.emn.criojosc.Relation]] for more details. */
-class Atom0 extends Relation {
+class Relation0 extends Relation {
   /** Creates an [[fr.emn.criojosc.AtomPattern]] of this atom */
   def unary_~ = new AtomPattern(this, Nil)
 
@@ -54,7 +54,7 @@ class Atom0 extends Relation {
 }
 
 /** An identifier for an unary atom. See [[fr.emn.criojosc.Relation]] for more details. */
-class Atom1[T1] extends Relation {
+class Relation1[T1] extends Relation {
   /** Creates an [[fr.emn.criojosc.AtomPattern]] of this atom with pattern `p1`. */
   def apply(p1: Pattern[T1]) = new AtomPattern(this, List(p1))
 
@@ -63,7 +63,7 @@ class Atom1[T1] extends Relation {
 }
 
 /** An identifier for a binary atom. See [[fr.emn.criojosc.Relation]] for more details. */
-class Atom2[T1, T2] extends Relation {
+class Relation2[T1, T2] extends Relation {
   /** Creates an [[fr.emn.criojosc.AtomPattern]] of this atom with patterns `p1`, `p2`. */
   def apply(p1: Pattern[T1], p2: Pattern[T2]) = new AtomPattern(this, List(p1, p2))
 
@@ -80,12 +80,12 @@ class Atom2[T1, T2] extends Relation {
   * }}}
   */
 object Relation {
-  /** Creates a nullary atom ([[fr.emn.criojosc.Atom0]]) */
-  def apply() = new Atom0
+  /** Creates a nullary atom ([[fr.emn.criojosc.Relation0]]) */
+  def apply() = new Relation0
 
-  /** Creates an unary atom ([[fr.emn.criojosc.Atom1]]) with signature `T1` */
-  def apply[T1] = new Atom1[T1]
+  /** Creates an unary atom ([[fr.emn.criojosc.Relation1]]) with signature `T1` */
+  def apply[T1] = new Relation1[T1]
 
-  /** Creates a binary atom ([[fr.emn.criojosc.Atom2]]) with signature `T1`, `T2` */
-  def apply[T1, T2] = new Atom2[T1, T2]
+  /** Creates a binary atom ([[fr.emn.criojosc.Relation2]]) with signature `T1`, `T2` */
+  def apply[T1, T2] = new Relation2[T1, T2]
 }
