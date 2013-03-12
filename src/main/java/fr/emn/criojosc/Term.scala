@@ -40,3 +40,8 @@ trait Term {
   * @param patterns The list of [[fr.emn.criojosc.Pattern]]s used by the matching process.
   */
 class AtomPattern(val symbol: Relation, val patterns: List[Pattern[Any]]) extends Term
+
+/** A symbolic representation of a [[fr.emn.criojosc.Message]]. !CURRENTLY A STUB! */
+class MessagePattern(val channel: Channel, val patterns: List[Pattern[Any]]) extends Term {
+  val symbol = Message
+}

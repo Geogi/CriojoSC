@@ -20,3 +20,5 @@
 package fr.emn.criojosc
 
 trait EntitySymbol
+
+case object Message extends EntitySymbol

@@ -21,3 +21,5 @@ package fr.emn.criojosc
 
 /** A communication channel between agents. !CURRENTLY A STUB! */
 trait Channel
+
+object Channel

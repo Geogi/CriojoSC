@@ -40,3 +40,7 @@ trait Instance {
   * @param values The list of values (unbound type) that defines the state of this instance.
   */
 class AtomInstance(val symbol: Relation, val values: List[Any]) extends Instance
+
+class MessageInstance(val channel: Channel, val values: List[Any]) extends Instance {
+  val symbol = Message
+}
