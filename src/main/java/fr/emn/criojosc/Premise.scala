@@ -23,11 +23,9 @@ import collection.mutable
 
 class Premise(val reactants: List[Term]) {
 
-  object State {
-    def initial = new State(new Valuation, reactants, List.empty[Instance])
-  }
+  def initial_state = new State(new Valuation, reactants, List.empty[Instance])
 
-  val states = mutable.HashSet[State](State.initial)
+  val states = mutable.HashSet[State](initial_state)
 
   def addInstance(instance: Instance): Iterable[State] = {
     states ++= states flatMap (_.propose(instance))
