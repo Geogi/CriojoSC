@@ -57,7 +57,6 @@ case class WhereGuard(premise: Premise, guard: Guard) extends Guard {
 
 /** Guard whose truth value comes from a Scala boolean. !CURRENTLY A STUB!
   *
-  * @example
   * {{{
   *  !x >= !y
   * }}}

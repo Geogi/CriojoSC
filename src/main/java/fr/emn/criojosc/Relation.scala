@@ -19,37 +19,6 @@
 
 package fr.emn.criojosc
 
-/** A symbolic representation of an [[fr.emn.criojosc.Atom]], as used in rule premises and "where" guards.<br />
-  * The engine matches it against the actual instances in [[fr.emn.criojosc.EntitySymbol]] to produce a
-  * [[fr.emn.criojosc.Valuation]], used by most [[fr.emn.criojosc.Guard]]s and
-  * [[fr.emn.criojosc.Rule]] conclusions.
-  *
-  * Note that while [[fr.emn.criojosc.AtomPattern]] is not typed itself, it is created by
-  * an AtomN ([[fr.emn.criojosc.Atom0]], [[fr.emn.criojosc.Atom1]], etc) that
-  * is typed, ensuring a consistent state.<br />
-  * This is why instances of this class should not be created manually, but using `Atom.apply` (arity > 0) or
-  * `Atom0.unary_~`.
-  *
-  * @param symbol The Atom this particular representation refers to.
-  * @param patterns The list of [[fr.emn.criojosc.Pattern]]s used by the matching process.
-  */
-class AtomPattern(val symbol: Atom, val patterns: List[Pattern[Any]]) extends Term
-
-/** An instance of an [[fr.emn.criojosc.Atom]] in a given state (a list of an unbound type).<br />
-  * It may exist in [[fr.emn.criojosc.EntitySymbol]] or be the product of a [[fr.emn.criojosc.Rule]]
-  * (listed in its conclusion).
-  *
-  * Note that while [[fr.emn.criojosc.AtomInstance]] is not typed itself, it is created by
-  * an `AtomN` ([[fr.emn.criojosc.Atom0]], [[fr.emn.criojosc.Atom1]], etc) that
-  * is typed, ensuring a consistent state.<br />
-  * This is why instances of this class should not be created manually, but using `Atom.apply` (arity > 0) or
-  * `Atom0.unary_!`.
-  *
-  * @param symbol The Atom this instance refers to.
-  * @param values The list of values (unbound type) that defines the state of this instance.
-  */
-class AtomInstance(val symbol: Atom, val values: List[Any]) extends Instance
-
 /** An atom identifier, which can create [[fr.emn.criojosc.AtomPattern]]s and
   * [[fr.emn.criojosc.AtomInstance]]s.<br />
   * Its implementations are arity dependent: [[fr.emn.criojosc.Atom0]] to (currently)
@@ -59,7 +28,6 @@ class AtomInstance(val symbol: Atom, val values: List[Any]) extends Instance
   * class.<br />
   * The way to create patterns or instances of the atom depends on whether it's nullary (see example below).
   *
-  * @example
   * {{{
   *   val atom0 = Atom()             // nullary Atom
   *   ~atom0                         // AtomPattern
@@ -74,10 +42,10 @@ class AtomInstance(val symbol: Atom, val values: List[Any]) extends Instance
   *   /* Likewise with Atom1 to Atom22 */
   * }}}
   */
-trait Atom extends EntitySymbol
+trait Relation extends EntitySymbol
 
-/** An identifier for a nullary atom. See [[fr.emn.criojosc.Atom]] for more details. */
-class Atom0 extends Atom {
+/** An identifier for a nullary atom. See [[fr.emn.criojosc.Relation]] for more details. */
+class Atom0 extends Relation {
   /** Creates an [[fr.emn.criojosc.AtomPattern]] of this atom */
   def unary_~ = new AtomPattern(this, Nil)
 
@@ -85,8 +53,8 @@ class Atom0 extends Atom {
   def unary_! = new AtomInstance(this, Nil)
 }
 
-/** An identifier for an unary atom. See [[fr.emn.criojosc.Atom]] for more details. */
-class Atom1[T1] extends Atom {
+/** An identifier for an unary atom. See [[fr.emn.criojosc.Relation]] for more details. */
+class Atom1[T1] extends Relation {
   /** Creates an [[fr.emn.criojosc.AtomPattern]] of this atom with pattern `p1`. */
   def apply(p1: Pattern[T1]) = new AtomPattern(this, List(p1))
 
@@ -94,8 +62,8 @@ class Atom1[T1] extends Atom {
   def apply(v1: T1) = new AtomInstance(this, List(v1))
 }
 
-/** An identifier for a binary atom. See [[fr.emn.criojosc.Atom]] for more details. */
-class Atom2[T1, T2] extends Atom {
+/** An identifier for a binary atom. See [[fr.emn.criojosc.Relation]] for more details. */
+class Atom2[T1, T2] extends Relation {
   /** Creates an [[fr.emn.criojosc.AtomPattern]] of this atom with patterns `p1`, `p2`. */
   def apply(p1: Pattern[T1], p2: Pattern[T2]) = new AtomPattern(this, List(p1, p2))
 
@@ -103,16 +71,15 @@ class Atom2[T1, T2] extends Atom {
   def apply(v1: T1, v2: T2) = new AtomInstance(this, List(v1, v2))
 }
 
-/** This object provides utilities for creating [[fr.emn.criojosc.Atom]]s.
+/** This object provides utilities for creating [[fr.emn.criojosc.Relation]]s.
   *
-  * @example
   * {{{
   *   atom0 = Atom()        // create a nullary Atom
   *   atom2 = Atom[T1, T2]  // create a binary Atom whose instances accept (T1, T2) values
   *   /* Likewise with Atom[T1] to Atom[T1, .. T22] */
   * }}}
   */
-object Atom {
+object Relation {
   /** Creates a nullary atom ([[fr.emn.criojosc.Atom0]]) */
   def apply() = new Atom0
 

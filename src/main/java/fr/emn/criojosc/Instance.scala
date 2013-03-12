@@ -25,3 +25,18 @@ trait Instance {
 
   def symbol: EntitySymbol
 }
+
+/** An instance of an [[fr.emn.criojosc.Relation]] in a given state (a list of an unbound type).<br />
+  * It may exist in [[fr.emn.criojosc.EntitySymbol]] or be the product of a [[fr.emn.criojosc.Rule]]
+  * (listed in its conclusion).
+  *
+  * Note that while [[fr.emn.criojosc.AtomInstance]] is not typed itself, it is created by
+  * an `AtomN` ([[fr.emn.criojosc.Atom0]], [[fr.emn.criojosc.Atom1]], etc) that
+  * is typed, ensuring a consistent state.<br />
+  * This is why instances of this class should not be created manually, but using `Atom.apply` (arity > 0) or
+  * `Atom0.unary_!`.
+  *
+  * @param symbol The Atom this instance refers to.
+  * @param values The list of values (unbound type) that defines the state of this instance.
+  */
+class AtomInstance(val symbol: Relation, val values: List[Any]) extends Instance
