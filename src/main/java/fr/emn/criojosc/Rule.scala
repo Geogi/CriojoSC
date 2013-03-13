@@ -21,23 +21,11 @@ package fr.emn.criojosc
 
 trait Rule {
 
-  // Variables management
-  def Var[T] = {
-    val v = new Variable[T]
-    variables += v
-    v
-  }
-
-  val variables = collection.mutable.HashSet.empty[Variable[Any]]
+  def Var[T] = new Variable[T]
 
   val premise: Premise
 
-  // Guard
-  def guard(implicit s: Valuation): Guard
-
-  // Conclusion
-  def conclusion(implicit s: Valuation): Conclusion
-
+  def right_hand(implicit s: Valuation): (Guard, Conclusion)
 }
 
 class Conclusion(val content: Iterable[ClosedReactant])
