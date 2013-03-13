@@ -21,36 +21,36 @@ package fr.emn.criojosc
 
 import collection.mutable
 
-class Premise(val reactants: List[Term]) {
+class Premise(val reactants: List[OpenReactant]) {
 
-  def initial_state = new State(new Valuation, reactants, List.empty[Instance])
+  def initial_state = new State(new Valuation, reactants, List.empty[ClosedReactant])
 
   val states = mutable.HashSet[State](initial_state)
 
-  def addInstance(instance: Instance): Iterable[State] = {
-    states ++= states flatMap (_.propose(instance))
+  def +=(reactant: ClosedReactant): Iterable[State] = {
+    states ++= states flatMap (_.propose(reactant))
     states filter (_.end)
   }
 
-  def removeInstance(instance: Instance) {
-    states --= states filter (_.right contains instance)
+  def -=(reactant: ClosedReactant) {
+    states --= states filter (_.right contains reactant)
   }
 }
 
-class State(val s: Valuation, val left: List[Term], val right: List[Instance]) {
+class State(val s: Valuation, val left: List[OpenReactant], val right: List[ClosedReactant]) {
   val end = left.size == 0
 
-  def propose(instance: Instance): Iterable[State] = {
+  def propose(instance: ClosedReactant): Iterable[State] = {
     // This is the set of new states that will be returned.
     val new_states = mutable.HashSet.empty[State]
 
     // We filter the terms which symbol is not the same as `instance`.
-    val same_symbol: List[Term] = left filter (_.symbol == instance.symbol)
+    val same_symbol: List[OpenReactant] = left filter (_.symbol == instance.symbol)
 
     // We create the following object: (term, all permutations of (pattern, value) in term) for all terms in `same_symbol`
     // This way we can try to do the pattern matching regardless of the order of the patterns, while knowing which
     // pattern a particular permutation belongs to.
-    val all_permutations: List[(Term, Iterator[List[(Pattern[Any], Any)]])] =
+    val all_permutations: List[(OpenReactant, Iterator[List[(Pattern[Any], Any)]])] =
       same_symbol map (t => (t, (t.patterns zip instance.values).permutations))
 
     // For all permutation, we clone the valuation of the current state, and we try the pattern matching on all

@@ -22,9 +22,9 @@ package fr.emn.criojosc
 /** A universe complying with the chemical computing model. !CURRENTLY A STUB! */
 trait Agent {
   /** Wormholes to other universes. */
-  val channels: Iterable[Channel]
+  val channels: Iterable[Channel[Any]]
   /** Classes of entities that may react. */
-  val relations: Iterable[Relation]
+  val relations: Iterable[Relation[Any]]
   /** How entities react. */
   val rules: Iterable[Rule]
   /** What entities this universe currently holds. */

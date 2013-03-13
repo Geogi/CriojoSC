@@ -23,7 +23,7 @@ package fr.emn.criojosc
   *
   * Their most useful feature is that they permit introspection of the [[fr.emn.criojosc.EntitySymbol]], allowing
   * tests that would not be possible only with the premise.<br />
-  * For instance, `Abs(~A)` test if no [[fr.emn.criojosc.AtomInstance]] of A is present in the solution.
+  * For instance, `Abs(~A)` test if no [[fr.emn.criojosc.ClosedAtom]] of A is present in the solution.
   */
 trait Guard {
   /** Truth of this guard. Will probably be changed when guards are implemented with state machines. !CURRENTLY A STUB! */
@@ -51,7 +51,7 @@ case class OrGuard(left: Guard, right: Guard) extends Guard {
 }
 
 /** `true` if the premise match and, given the updated [[fr.emn.criojosc.Valuation]], the sub-guard is `true` !CURRENTLY A STUB! */
-case class WhereGuard(premise: Premise, guard: Guard) extends Guard {
+case class ExistenceGuard(premise: Premise, guard: Guard) extends Guard {
   def evaluate = throw new NotImplementedError
 }
 
@@ -65,5 +65,3 @@ case class WhereGuard(premise: Premise, guard: Guard) extends Guard {
   */
 case class NativeGuard(evaluate: Boolean) extends Guard
 
-/** The parent trait of all guards that require special handling by the [[fr.emn.criojosc.EntitySymbol]] (inspectors). !CURRENTLY A STUB! */
-trait IntrospectionGuard extends Guard

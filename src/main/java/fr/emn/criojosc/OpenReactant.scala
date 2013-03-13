@@ -19,27 +19,25 @@
 
 package fr.emn.criojosc
 
-trait Term {
+trait OpenReactant {
   def patterns: List[Pattern[Any]]
 
   def symbol: EntitySymbol
 }
 
-/** A symbolic representation of an [[fr.emn.criojosc.Relation]], as used in rule premises and "where" guards.<br />
+/** A symbolic representation of an [[fr.emn.criojosc.Relation]], as used in rule premises and "existence" guards.<br />
   * The engine matches it against the actual instances in [[fr.emn.criojosc.EntitySymbol]] to produce a
   * [[fr.emn.criojosc.Valuation]], used by most [[fr.emn.criojosc.Guard]]s and
   * [[fr.emn.criojosc.Rule]] conclusions.
   *
-  * Note that while [[fr.emn.criojosc.AtomPattern]] is not typed itself, it is created by
-  * an AtomN ([[fr.emn.criojosc.Relation0]], [[fr.emn.criojosc.Relation1]], etc) that
-  * is typed, ensuring a consistent state.<br />
-  * This is why instances of this class should not be created manually, but using `Atom.apply` (arity > 0) or
-  * `Atom0.unary_~`.
+  * Note that while [[fr.emn.criojosc.OpenAtom]] is not typed itself, it is created by
+  * ([[fr.emn.criojosc.Relation.apply]] that is typed, ensuring a consistent state.<br />
+  * This is why instances of this class should not be created manually, but using `Atom.apply`.
   *
   * @param symbol The Atom this particular representation refers to.
   * @param patterns The list of [[fr.emn.criojosc.Pattern]]s used by the matching process.
   */
-class AtomPattern(val symbol: Relation, val patterns: List[Pattern[Any]]) extends Term
+class OpenAtom(val symbol: EntitySymbol, val patterns: List[Pattern[Any]]) extends OpenReactant
 
 /** A symbolic representation of a Message. !CURRENTLY A STUB! */
-class MessagePattern(val symbol: Channel, val patterns: List[Pattern[Any]]) extends Term
+class OpenMessage(val symbol: EntitySymbol, val info: ChannelInfo, val patterns: List[Pattern[Any]]) extends OpenReactant

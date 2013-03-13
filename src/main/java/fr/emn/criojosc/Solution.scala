@@ -22,11 +22,11 @@ package fr.emn.criojosc
 import collection.mutable
 
 class Solution(val agent: Agent) {
-  val content = mutable.HashSet.empty[Instance]
+  val content = mutable.HashSet.empty[ClosedReactant]
 
-  def +=(instance: Instance) {
-    content += instance
-    val completed_states = agent.rules map (rule => (rule, rule.premise addInstance instance))
+  def +=(reactant: ClosedReactant) {
+    content += reactant
+    val completed_states = agent.rules map (rule => (rule, rule.premise += reactant))
     // dummy choice algorithm beginning
     val selected: Option[(Rule, State)] = completed_states filter (_._2.nonEmpty) match {
       case r :: _ => Some((r._1, r._2.head))
@@ -36,24 +36,24 @@ class Solution(val agent: Agent) {
     selected foreach {
       rule_state =>
         rule_state._2.right foreach (this -= _)
-        rule_state._1.conclusion(rule_state._2.s) foreach (this += _)
+        rule_state._1.conclusion(rule_state._2.s).content foreach (this += _)
     }
   }
 
-  def ++=(is: Iterable[Instance]) {
-    is.foreach(this += _)
+  def ++=(rs: Iterable[ClosedReactant]) {
+    rs.foreach(this += _)
   }
 
-  def -=(instance: Instance) {
-    content -= instance
-    agent.rules foreach (_.premise.removeInstance(instance))
+  def -=(reactant: ClosedReactant) {
+    content -= reactant
+    agent.rules foreach (_.premise -= reactant)
   }
 }
 
 object Solution {
-  def apply(agent: Agent, is: Instance*) = {
+  def apply(agent: Agent, rs: ClosedReactant*) = {
     val sol = new Solution(agent)
-    sol ++= is
+    sol ++= rs
     sol
   }
 }

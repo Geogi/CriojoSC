@@ -19,6 +19,6 @@
 
 package fr.emn.criojosc
 
-trait EntitySymbol
+class EntitySymbol
 
 

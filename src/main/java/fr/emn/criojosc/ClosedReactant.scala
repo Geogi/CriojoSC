@@ -20,25 +20,23 @@
 package fr.emn.criojosc
 
 /** Something that exist in the [[fr.emn.criojosc.Solution]] or can be created by a [[fr.emn.criojosc.Rule]]. */
-trait Instance {
+trait ClosedReactant {
   def values: List[Any]
 
   def symbol: EntitySymbol
 }
 
-/** An instance of an [[fr.emn.criojosc.Relation]] in a given state (a list of an unbound type).<br />
-  * It may exist in [[fr.emn.criojosc.EntitySymbol]] or be the product of a [[fr.emn.criojosc.Rule]]
+/** An instance of an [[fr.emn.criojosc.Relation]] in a given state (a list of patterns).<br />
+  * It may exist in [[fr.emn.criojosc.Solution]] or be the product of a [[fr.emn.criojosc.Rule]]
   * (listed in its conclusion).
   *
-  * Note that while [[fr.emn.criojosc.AtomInstance]] is not typed itself, it is created by
-  * an `AtomN` ([[fr.emn.criojosc.Relation0]], [[fr.emn.criojosc.Relation1]], etc) that
-  * is typed, ensuring a consistent state.<br />
-  * This is why instances of this class should not be created manually, but using `Atom.apply` (arity > 0) or
-  * `Atom0.unary_!`.
+  * Note that while [[fr.emn.criojosc.ClosedAtom]] is not typed itself, it is created by
+  * a ([[fr.emn.criojosc.Relation]] `apply` method, that is typed, ensuring a consistent state.<br />
+  * This is why instances of this class should not be created manually, but using `Relation.apply`.
   *
   * @param symbol The Atom this instance refers to.
   * @param values The list of values (unbound type) that defines the state of this instance.
   */
-class AtomInstance(val symbol: Relation, val values: List[Any]) extends Instance
+class ClosedAtom(val symbol: EntitySymbol, val values: List[Any]) extends ClosedReactant
 
-class MessageInstance(val symbol: Channel, val values: List[Any]) extends Instance
+class ClosedMessage(val symbol: EntitySymbol, val info: ChannelInfo, val values: List[Any]) extends ClosedReactant

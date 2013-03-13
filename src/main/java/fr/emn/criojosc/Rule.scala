@@ -33,9 +33,11 @@ trait Rule {
   val premise: Premise
 
   // Guard
-  val guard: Guard
+  def guard(implicit s: Valuation): Guard
 
   // Conclusion
-  def conclusion(implicit s: Valuation): List[Instance]
+  def conclusion(implicit s: Valuation): Conclusion
 
 }
+
+class Conclusion(val content: Iterable[ClosedReactant])
