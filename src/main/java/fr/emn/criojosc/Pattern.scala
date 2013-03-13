@@ -24,6 +24,18 @@ trait Pattern[+T] {
   def matching[S >: T](proposed: S, s: Valuation): (Boolean, Valuation)
 }
 
+trait InvariantPattern[T] extends Pattern[T] {
+  def matching[S >: T](proposed: S, s: Valuation) = invariant_matching(proposed.asInstanceOf[T], s)
+
+  def invariant_matching(proposed: T, s: Valuation): (Boolean, Valuation)
+}
+
 class Const[+T](val c: T) extends Pattern[T] {
   def matching[S >: T](proposed: S, s: Valuation) = (proposed == c, s)
+}
+
+class Successor(predecessor: Pattern[Int]) extends InvariantPattern[Int] {
+  def invariant_matching(proposed: Int, s: Valuation) =
+    if (proposed <= 0) (false, s)
+    else predecessor.matching(proposed - 1, s)
 }

@@ -37,4 +37,6 @@ package object criojosc {
   /** Creates a [[fr.emn.criojosc.Const]] of any value `c: T`. */
   def C[T](c: T) = new Const[T](c)
 
+  def S(p: Pattern[Int]) = new Successor(p)
+
 }
