@@ -31,11 +31,10 @@ package fr.emn
   * </ul>
   */
 package object criojosc {
-  /** Creates an Int [[fr.emn.criojosc.Const]] of value `i`. */
-  def C(i: Int) = new Const[Int](i)
-
   /** Creates a [[fr.emn.criojosc.Const]] of any value `c: T`. */
   def C[T](c: T) = new Const[T](c)
+
+  def Cs[T](origin: TraversableOnce[Pattern[T]]) = new Cons[T](origin)
 
   def S(p: Pattern[Int]) = new Successor(p)
 

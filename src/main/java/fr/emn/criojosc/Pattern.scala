@@ -39,3 +39,17 @@ class Successor(predecessor: Pattern[Int]) extends InvariantPattern[Int] {
     if (proposed <= 0) (false, s)
     else predecessor.matching(proposed - 1, s)
 }
+
+class Cons[T](val origin: TraversableOnce[Pattern[T]]) extends InvariantPattern[TraversableOnce[T]] {
+  def invariant_matching(proposed: TraversableOnce[T], s: Valuation) =
+    recursive_matching(origin.toIterator, proposed.toIterator, (true, s))
+
+  def recursive_matching(oit: Iterator[Pattern[T]], pit: Iterator[T], partial: (Boolean, Valuation)): (Boolean, Valuation) =
+    if (!partial._1)
+      (false, partial._2)
+    else
+    if (oit.hasNext && pit.hasNext)
+      recursive_matching(oit, pit, oit.next().matching(pit.next(), partial._2))
+    else
+      (oit.hasNext && pit.hasNext, partial._2)
+}
