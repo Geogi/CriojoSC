@@ -27,10 +27,10 @@ package fr.emn.criojosc
   *
   * Usage:
   * {{{
-  *   val R = Relation[Int]          // Relation
-  *   val p = Var[Int]               // Pattern
-  *   R(p)                           // OpenAtom (argument is a Pattern)
-  *   R(!p)                          // ClosedAtom (argument is not a Pattern)
+  * val R = Relation[Int]          // Relation
+  * val p = Var[Int]               // Pattern
+  * R(p)                           // OpenAtom (argument is a Pattern)
+  * R(!p)                          // ClosedAtom (argument is not a Pattern)
   * }}}
   */
 
@@ -45,14 +45,7 @@ class Relation[T1] {
   def apply(v1: T1) = new ClosedAtom(symbol, List(v1))
 }
 
-/** This object provides utilities for creating [[fr.emn.criojosc.Relation]]s.
-  *
-  * {{{
-  *   atom0 = Atom()        // create a nullary Atom
-  *   atom2 = Atom[T1, T2]  // create a binary Atom whose instances accept (T1, T2) values
-  *   /* Likewise with Atom[T1] to Atom[T1, .. T22] */
-  * }}}
-  */
+/** This object provides utilities for creating [[fr.emn.criojosc.Relation]]s. */
 object Relation {
   /** Creates a ([[fr.emn.criojosc.Relation]]) with signature `T` */
   def apply[T] = new Relation[T]
