@@ -19,19 +19,4 @@
 
 package fr.emn.criojosc
 
-import collection.mutable
-
-class Valuation(val contents: mutable.HashMap[Variable[Any], Any] = mutable.HashMap.empty[Variable[Any], Any]) {
-
-  @throws[NoSuchElementException]("access attempt on unset variable")
-  def apply(x: Variable[Any]) = contents(x) match {
-    case Some(v) => v
-    case None => throw new NoSuchElementException("trying to access unbound variable")
-  }
-
-  def +=(x: Variable[Any], v: Any) {
-    contents(x) = v
-  }
-
-  override def clone() = new Valuation(contents.clone())
-}
+class Valuation(val content: Map[Variable[Any], Any] = Map.empty[Variable[Any], Any])

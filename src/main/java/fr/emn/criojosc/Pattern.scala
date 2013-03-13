@@ -19,25 +19,11 @@
 
 package fr.emn.criojosc
 
-import util.{Failure, Success, Try}
 
 trait Pattern[+T] {
-  def get(s: Valuation): T
-
-  def set[S >: T](s: Valuation, v: S, mod: (S) => S = identity[S] _)
-
-  def matching[S >: T](s: Valuation, proposed: S): Boolean = Try(get(s)) match {
-    case Success(real) => proposed == real
-    case Failure(_: NoSuchElementException) => {
-      set(s, proposed)
-      true
-    }
-    case Failure(e) => throw e
-  }
+  def matching[S >: T](proposed: S, s: Valuation): (Boolean, Valuation)
 }
 
 class Const[+T](val c: T) extends Pattern[T] {
-  override def get(s: Valuation) = c
-
-  override def set[S >: T](s: Valuation, x: S, mod: (S) => S) {}
+  def matching[S >: T](proposed: S, s: Valuation) = (proposed == c, s)
 }
