@@ -21,7 +21,7 @@ package fr.emn.criojosc
 
 /** Something that exist in the [[fr.emn.criojosc.Solution]] or can be created by a [[fr.emn.criojosc.Rule]]. */
 trait ClosedReactant {
-  def values: List[Any]
+  def value: Any
 
   def symbol: EntitySymbol
 }
@@ -35,8 +35,8 @@ trait ClosedReactant {
   * This is why instances of this class should not be created manually, but using `Relation.apply`.
   *
   * @param symbol The Atom this instance refers to.
-  * @param values The list of values (unbound type) that defines the state of this instance.
+  * @param value The value (Any) that defines the state of this instance.
   */
-class ClosedAtom(val symbol: EntitySymbol, val values: List[Any]) extends ClosedReactant
+class ClosedAtom(val symbol: EntitySymbol, val value: Any) extends ClosedReactant
 
-class ClosedMessage(val symbol: EntitySymbol, val info: ChannelInfo, val values: List[Any]) extends ClosedReactant
+class ClosedMessage(val symbol: EntitySymbol, val info: ChannelInfo, val value: Any) extends ClosedReactant

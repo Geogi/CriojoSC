@@ -34,15 +34,15 @@ package fr.emn.criojosc
   * }}}
   */
 
-/** An identifier for an unary atom. See [[fr.emn.criojosc.Relation]] for more details. */
-class Relation[+T] {
-  /** Creates an [[fr.emn.criojosc.OpenAtom]] of this atom with pattern `p1`. */
-  val symbol = new EntitySymbol
+trait RelationSymbol extends EntitySymbol
 
-  def apply[S >: T](p: Pattern[S]) = new OpenAtom(symbol, List(p))
+/** An identifier for an unary atom. See [[fr.emn.criojosc.Relation]] for more details. */
+class Relation[T] extends RelationSymbol {
+  /** Creates an [[fr.emn.criojosc.OpenAtom]] of this atom with pattern `p1`. */
+  def apply(p: Pattern[T]) = new OpenAtom(this, p)
 
   /** Creates an [[fr.emn.criojosc.ClosedAtom]] of this atom with value `v1`. */
-  def apply[S >: T](v: S) = new ClosedAtom(symbol, List(v))
+  def apply(v: T) = new ClosedAtom(this, v)
 }
 
 /** This object provides utilities for creating [[fr.emn.criojosc.Relation]]s. */

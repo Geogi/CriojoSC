@@ -19,9 +19,10 @@
 
 package fr.emn.criojosc
 
+trait ChannelSymbol extends EntitySymbol
+
 /** A communication channel between agents. !CURRENTLY A STUB! */
-trait Channel[+T] {
-  val symbol: EntitySymbol
+trait Channel[T] extends ChannelSymbol {
   val info: ChannelInfo
 }
 

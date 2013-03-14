@@ -20,7 +20,7 @@
 package fr.emn.criojosc
 
 trait OpenReactant {
-  def patterns: List[Pattern[Any]]
+  def pattern: Pattern[Any]
 
   def symbol: EntitySymbol
 }
@@ -35,9 +35,9 @@ trait OpenReactant {
   * This is why instances of this class should not be created manually, but using `Atom.apply`.
   *
   * @param symbol The Atom this particular representation refers to.
-  * @param patterns The list of [[fr.emn.criojosc.Pattern]]s used by the matching process.
+  * @param pattern The list of [[fr.emn.criojosc.Pattern]]s used by the matching process.
   */
-class OpenAtom(val symbol: EntitySymbol, val patterns: List[Pattern[Any]]) extends OpenReactant
+class OpenAtom(val symbol: EntitySymbol, val pattern: Pattern[Any]) extends OpenReactant
 
 /** A symbolic representation of a Message. !CURRENTLY A STUB! */
-class OpenMessage(val symbol: EntitySymbol, val info: ChannelInfo, val patterns: List[Pattern[Any]]) extends OpenReactant
+class OpenMessage(val symbol: EntitySymbol, val info: ChannelInfo, val pattern: Pattern[Any]) extends OpenReactant
