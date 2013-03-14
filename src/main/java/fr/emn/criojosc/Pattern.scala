@@ -40,7 +40,7 @@ class Successor(predecessor: Pattern[Int]) extends InvariantPattern[Int] {
     else predecessor.matching(proposed - 1, s)
 }
 
-class Cons[T](val origin: TraversableOnce[Pattern[T]]) extends InvariantPattern[TraversableOnce[T]] {
+class TraversableCons[T](val origin: TraversableOnce[Pattern[T]]) extends InvariantPattern[TraversableOnce[T]] {
   def invariant_matching(proposed: TraversableOnce[T], s: Valuation) =
     recursive_matching(origin.toIterator, proposed.toIterator, (true, s))
 
@@ -52,4 +52,25 @@ class Cons[T](val origin: TraversableOnce[Pattern[T]]) extends InvariantPattern[
       recursive_matching(oit, pit, oit.next().matching(pit.next(), partial._2))
     else
       (oit.hasNext && pit.hasNext, partial._2)
+}
+
+class ProductCons(val origin: Product) extends InvariantPattern[Product] {
+  def invariant_matching(proposed: Product, s: Valuation): (Boolean, Valuation) = {
+    if (origin.productArity != proposed.productArity)
+      throw new IndexOutOfBoundsException("comparing products of different arity") // can't happen
+    else {
+      var vs = s
+      for (i <- 0 until origin.productArity) {
+        val pattern = origin.productElement(i) match {
+          case p: Pattern[_] => p
+          case x => new Const(x)
+        }
+        pattern.matching(proposed.productElement(i), vs) match {
+          case (false, _) => return (false, s)
+          case (true, ns) => vs = ns
+        }
+      }
+      (true, s)
+    }
+  }
 }
