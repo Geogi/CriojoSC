@@ -42,7 +42,10 @@ class Successor(predecessor: Pattern[Int]) extends InvariantPattern[Int] {
 
 class TraversableCons[T](val origin: TraversableOnce[Pattern[T]]) extends InvariantPattern[TraversableOnce[T]] {
   def invariant_matching(proposed: TraversableOnce[T], s: Valuation) =
-    recursive_matching(origin.toIterator, proposed.toIterator, (true, s))
+    recursive_matching(origin.toIterator, proposed.toIterator, (true, s)) match {
+      case (true, ns: Valuation) => (true, ns)
+      case (false, _) => (false, s)
+    }
 
   def recursive_matching(oit: Iterator[Pattern[T]], pit: Iterator[T], partial: (Boolean, Valuation)): (Boolean, Valuation) =
     if (!partial._1)
@@ -51,26 +54,15 @@ class TraversableCons[T](val origin: TraversableOnce[Pattern[T]]) extends Invari
     if (oit.hasNext && pit.hasNext)
       recursive_matching(oit, pit, oit.next().matching(pit.next(), partial._2))
     else
-      (oit.hasNext && pit.hasNext, partial._2)
+      (!oit.hasNext && !pit.hasNext, partial._2)
 }
 
-class ProductCons(val origin: Product) extends InvariantPattern[Product] {
-  def invariant_matching(proposed: Product, s: Valuation): (Boolean, Valuation) = {
-    if (origin.productArity != proposed.productArity)
-      throw new IndexOutOfBoundsException("comparing products of different arity") // can't happen
-    else {
-      var vs = s
-      for (i <- 0 until origin.productArity) {
-        val pattern = origin.productElement(i) match {
-          case p: Pattern[_] => p
-          case x => new Const(x)
-        }
-        pattern.matching(proposed.productElement(i), vs) match {
-          case (false, _) => return (false, s)
-          case (true, ns) => vs = ns
-        }
-      }
-      (true, s)
-    }
+class TupleCons[T1, T2](val origin: (Pattern[T1], Pattern[T2])) extends InvariantPattern[(T1, T2)] {
+  def invariant_matching(proposed: (T1, T2), s: Valuation): (Boolean, Valuation) = {
+    val half = origin._1.matching(proposed._1, s)
+    if (!half._1)
+      (false, s)
+    else
+      origin._2.matching(proposed._2, half._2)
   }
 }

@@ -36,7 +36,7 @@ package object criojosc {
 
   def K[T](origin: TraversableOnce[Pattern[T]]) = new TraversableCons[T](origin)
 
-  def K(origin: Product) = new ProductCons(origin)
+  def K[T1, T2](origin: (Pattern[T1], Pattern[T2])) = new TupleCons[T1, T2](origin)
 
   def S(p: Pattern[Int]) = new Successor(p)
 
