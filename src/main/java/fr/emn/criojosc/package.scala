@@ -34,7 +34,7 @@ package object criojosc {
   /** Creates a [[fr.emn.criojosc.Const]] of any value `c: T`. */
   def C[T](c: T) = new Const[T](c)
 
-  def K[T, C <: TraversableOnce[T]](origin: C[Pattern[T]]) = new TraversableCons[T, C](origin)
+  def K[T, C <: TraversableOnce[T]](origin: TraversableOnce[Pattern[T]]) = new TraversableCons[T, C](origin)
 
   def K[T1, T2](origin: (Pattern[T1], Pattern[T2])) = new TupleCons[T1, T2](origin)
 
