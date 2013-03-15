@@ -37,13 +37,7 @@ package fr.emn.criojosc
 trait RelationSymbol extends EntitySymbol
 
 /** An identifier for an unary atom. See [[fr.emn.criojosc.Relation]] for more details. */
-class Relation[T] extends RelationSymbol {
-  /** Creates an [[fr.emn.criojosc.OpenAtom]] of this atom with pattern `p1`. */
-  def apply(p: Pattern[T]) = new OpenAtom(this, p)
-
-  /** Creates an [[fr.emn.criojosc.ClosedAtom]] of this atom with value `v1`. */
-  def apply(v: T) = new ClosedAtom(this, v)
-}
+class Relation[T] extends RelationSymbol
 
 /** This object provides utilities for creating [[fr.emn.criojosc.Relation]]s. */
 object Relation {

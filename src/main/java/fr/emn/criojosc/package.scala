@@ -30,16 +30,5 @@ package fr.emn
   * <li>The latest CRIOJO research paper: [[http://hal.inria.fr/hal-00676083/]]</li>
   * </ul>
   */
-package object criojosc {
-  /** Creates a [[fr.emn.criojosc.Const]] of any value `c: T`. */
-  def C[T](c: T) = new Const[T](c)
 
-  def K[T, C <: TraversableOnce[T]](origin: TraversableOnce[Pattern[T]]) = new TraversableCons[T, C](origin)
-
-  def K[T1, T2](origin: (Pattern[T1], Pattern[T2])) = new TupleCons[T1, T2](origin)
-
-  def S(p: Pattern[Int]) = new Successor(p)
-
-  def nat(truth: Boolean) = new NativeGuard(s => truth)
-
-}
+package object criojosc

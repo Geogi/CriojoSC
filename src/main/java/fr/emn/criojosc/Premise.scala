@@ -20,3 +20,20 @@
 package fr.emn.criojosc
 
 class Premise(val reactants: List[OpenReactant])
+
+object Premise {
+
+  import language.implicitConversions
+
+  class RelationGenOpen[T](r: Relation[T]) {
+    def apply(p: Pattern[T]) = new OpenAtom(r, p)
+  }
+
+  implicit def relation2genOpen[T](r: Relation[T]) = new RelationGenOpen[T](r)
+
+  implicit def tuple2Pattern[A, B](t: (Pattern[A], Pattern[B])) = new TuplePattern[A, B](t)
+
+  implicit def any2Const[T](c: T) = new Const[T](c)
+
+  def S(p: Pattern[Int]) = new Successor(p)
+}
