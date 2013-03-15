@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Paul Blouët.
+ * Copyright (c) 2013 Mines Nantes.
  *
  * This file is part of CriojoSC.
  *
@@ -27,32 +27,25 @@ package fr.emn.criojosc
   */
 trait Guard {
   /** Truth of this guard. Will probably be changed when guards are implemented with state machines. !CURRENTLY A STUB! */
-  def evaluate: Boolean
+  def evaluate(implicit s: Valuation): Boolean
+
+  def unary_! = NotGuard(this)
+
+  def &&(that: Guard) = AndGuard(this, that)
+
+  def ||(that: Guard) = OrGuard(this, that)
 }
 
-/** A guard that always evaluate to `true`. It is the default. !CURRENTLY A STUB! */
-case object TrueGuard extends Guard {
-  def evaluate = true
+case class NotGuard(sub: Guard) extends Guard {
+  def evaluate(implicit s: Valuation) = !sub.evaluate
 }
 
-/** A guard that always evaluate to `false`. !CURRENTLY A STUB! */
-case object FalseGuard extends Guard {
-  def evaluate = false
-}
-
-/** && guard (using a [[fr.emn.criojosc.Guard]] method is probably preferable) !CURRENTLY A STUB! */
 case class AndGuard(left: Guard, right: Guard) extends Guard {
-  def evaluate = left.evaluate && right.evaluate
+  def evaluate(implicit s: Valuation) = left.evaluate && right.evaluate
 }
 
-/** && guard (using a [[fr.emn.criojosc.Guard]] method is probably preferable) !CURRENTLY A STUB! */
 case class OrGuard(left: Guard, right: Guard) extends Guard {
-  def evaluate = left.evaluate || right.evaluate
-}
-
-/** `true` if the premise match and, given the updated [[fr.emn.criojosc.Valuation]], the sub-guard is `true` !CURRENTLY A STUB! */
-case class ExistenceGuard(premise: Premise, guard: Guard) extends Guard {
-  def evaluate = throw new NotImplementedError
+  def evaluate(implicit s: Valuation) = left.evaluate || right.evaluate
 }
 
 /** Guard whose truth value comes from a Scala boolean. !CURRENTLY A STUB!
@@ -61,7 +54,19 @@ case class ExistenceGuard(premise: Premise, guard: Guard) extends Guard {
   *  !x >= !y
   * }}}
   *
-  * @param evaluate A Boolean to evaluate to.
+  * @param test A Boolean to evaluate to.
   */
-case class NativeGuard(evaluate: Boolean) extends Guard
+case class NativeGuard(test: (Valuation) => Boolean) extends Guard {
+  def evaluate(implicit s: Valuation) = test(s)
+}
 
+/** `true` if the premise match and, given the updated [[fr.emn.criojosc.Valuation]], the sub-guard is `true` !CURRENTLY A STUB! */
+trait ControlGuard extends Rule with Guard {
+  def guard(implicit s: Valuation): Guard
+
+  override def evaluate(implicit s: Valuation) = right_hand._1.evaluate
+
+  override def right_hand(implicit s: Valuation) = (guard, NoConclusion)
+}
+
+case object NoConclusion extends Conclusion(Nil)

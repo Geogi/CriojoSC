@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~ Copyright (c) 2013 Paul Blouët.
+  ~ Copyright (c) 2013 Mines Nantes.
   ~
-  ~ This file is part of criojo-min.
+  ~ This file is part of CriojoSC.
   ~
-  ~ criojo-min is free software: you can redistribute it and/or modify
+  ~ CriojoSC is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
   ~ the Free Software Foundation, either version 3 of the License, or
   ~ (at your option) any later version.
   ~
-  ~ criojo-min is distributed in the hope that it will be useful,
+  ~ CriojoSC is distributed in the hope that it will be useful,
   ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
   ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
   ~ GNU General Public License for more details.
   ~
   ~ You should have received a copy of the GNU General Public License
-  ~ along with criojo-min.  If not, see <http://www.gnu.org/licenses/>.
+  ~ along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -25,7 +25,7 @@
 
     <groupId>fr.emn</groupId>
     <artifactId>criojosc</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>CriojoSC</name>

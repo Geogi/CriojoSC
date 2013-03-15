@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Paul Blouët.
+ * Copyright (c) 2013 Mines Nantes.
  *
  * This file is part of CriojoSC.
  *

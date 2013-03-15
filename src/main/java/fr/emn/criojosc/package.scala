@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2013 Paul Blouët.
+ * Copyright (c) 2013 Mines Nantes.
  *
  * This file is part of CriojoSC.
  *
@@ -39,5 +39,7 @@ package object criojosc {
   def K[T1, T2](origin: (Pattern[T1], Pattern[T2])) = new TupleCons[T1, T2](origin)
 
   def S(p: Pattern[Int]) = new Successor(p)
+
+  def nat(truth: Boolean) = new NativeGuard(s => truth)
 
 }
