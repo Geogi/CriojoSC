@@ -43,11 +43,12 @@ class Successor(predecessor: Pattern[Int]) extends InvariantPattern[Int] {
 class TraversableCons[+A, +B <: TraversableOnce[A]](val origin: TraversableOnce[Pattern[A]]) extends Pattern[B] {
   def matching[C >: B](proposed: C, s: Valuation) =
     recursive_matching(origin.toIterator, proposed.asInstanceOf[B].toIterator, (true, s)) match {
-      case (true, ns: Valuation) => (true, ns)
+      case (true, ns) => (true, ns)
       case (false, _) => (false, s)
     }
 
-  private def recursive_matching[C >: A](oit: Iterator[Pattern[C]], pit: Iterator[C], partial: (Boolean, Valuation)): (Boolean, Valuation) =
+  private def recursive_matching[C >: A](oit: Iterator[Pattern[C]],
+                                         pit: Iterator[C], partial: (Boolean, Valuation)): (Boolean, Valuation) =
     if (!partial._1)
       (false, partial._2)
     else
