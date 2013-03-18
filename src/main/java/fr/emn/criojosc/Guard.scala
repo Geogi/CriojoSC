@@ -77,5 +77,5 @@ object Guard {
 
   import language.implicitConversions
 
-  implicit def bool2Guard(bool: Boolean) = new NativeGuard(s => bool)
+  implicit def bool2Guard(bool: Boolean) = new NativeGuard(Function.const[Boolean, Valuation](bool))
 }
