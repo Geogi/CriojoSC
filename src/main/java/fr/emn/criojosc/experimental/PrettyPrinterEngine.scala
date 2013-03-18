@@ -17,10 +17,23 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
+package fr.emn.criojosc.experimental
 
-class Valuation(val content: Map[Variable[Any], Any] = Map.empty[Variable[Any], Any]) {
-  def get(x: Variable[Any]) = content.get(x)
+import fr.emn.criojosc._
 
-  def +(x: Variable[Any], v: Any) = content + ((x, v))
+class PrettyPrinterEngine(val agents: Iterable[Agent]) extends Engine {
+  def print: String = agents flatMap {
+    a =>
+      a.rules map {
+        r =>
+          a.toString + ": " + r.premise.reactants.map(_.toString).mkString(" & ") +
+            " --> "
+      }
+  } mkString ("\n")
 }
+
+object PrettyPrinterValuation extends Valuation {
+  override def get(x: Variable[Any]) = None
+}
+
+case class PrettyPrinterNameGetter(name: String) extends RuntimeException

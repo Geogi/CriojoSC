@@ -19,8 +19,8 @@
 
 package fr.emn.criojosc
 
-class Valuation(val content: Map[Variable[Any], Any] = Map.empty[Variable[Any], Any]) {
-  def get(x: Variable[Any]) = content.get(x)
+trait Engine {
+  val agents: Iterable[Agent]
 
-  def +(x: Variable[Any], v: Any) = content + ((x, v))
+
 }
