@@ -28,15 +28,10 @@ trait Rule {
   def right_hand(implicit s: Valuation): (Guard, Conclusion)
 }
 
-class Conclusion(val content: Iterable[ClosedReactant])
+trait Conclusion extends TermPatternImplicits {
+  val content: Iterable[ClosedReactant]
+}
 
 object Conclusion {
 
-  import language.implicitConversions
-
-  class RelationGenClosed[T](r: Relation[T]) {
-    def apply(v: T) = new ClosedAtom(r, v)
-  }
-
-  implicit def relation2genClosed[T](r: Relation[T]) = new RelationGenClosed[T](r)
 }

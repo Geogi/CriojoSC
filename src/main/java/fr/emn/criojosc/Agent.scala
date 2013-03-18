@@ -24,7 +24,7 @@ trait Agent {
   /** Wormholes to other universes. */
   val channels: Iterable[ChannelSymbol]
   /** Classes of entities that may react. */
-  val relations: Iterable[RelationSymbol]
+  val relations: Iterable[Relation]
   /** How entities react. */
   val rules: Iterable[Rule]
   /** What entities this universe currently holds. */

@@ -19,8 +19,12 @@
 
 package fr.emn.criojosc
 
-class Solution(val content: Set[ClosedReactant])
+trait Solution extends TermPatternImplicits {
+  val content: Set[ClosedReactant]
+}
 
 object Solution {
-  def apply(rs: ClosedReactant*) = new Solution(rs.toSet)
+  def apply(rs: ClosedReactant*) = new Solution {
+    val content = rs.toSet
+  }
 }

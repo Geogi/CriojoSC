@@ -23,23 +23,19 @@ trait Pattern[+T] {
   def matching[S >: T](proposed: S, s: Valuation): (Boolean, Valuation)
 }
 
-trait InvariantPattern[+T] extends Pattern[T] {
-  def matching[S >: T](proposed: S, s: Valuation) = inv_matching(proposed.asInstanceOf[T], s)
-
-  def inv_matching(proposed: T, s: Valuation): (Boolean, Valuation)
-}
-
 class Const[+T](val c: T) extends Pattern[T] {
   def matching[S >: T](proposed: S, s: Valuation) = (proposed == c, s)
 }
 
-class Successor(predecessor: Pattern[Int]) extends InvariantPattern[Int] {
-  def inv_matching(proposed: Int, s: Valuation) =
-    if (proposed <= 0) (false, s)
-    else predecessor.matching(proposed - 1, s)
+class Successor(predecessor: Pattern[Int]) extends Pattern[Int] {
+  def matching[S >: Int](proposed: S, s: Valuation) =
+    if (proposed.asInstanceOf[Int] <= 0)
+      (false, s)
+    else
+      predecessor.matching(proposed.asInstanceOf[Int] - 1, s)
 }
 
-class TuplePattern[+T1, +T2](val origin: (Pattern[T1], Pattern[T2])) extends InvariantPattern[(T1, T2)] {
+class TuplePattern[+T1, +T2](val origin: (Pattern[T1], Pattern[T2])) extends Pattern[(T1, T2)] {
   def inv_matching(proposed: (T1, T2), s: Valuation) = cov_matching(proposed, s)
 
   private def cov_matching[S1 >: T1, S2 >: T2](proposed: (S1, S2), s: Valuation) = {
@@ -51,28 +47,19 @@ class TuplePattern[+T1, +T2](val origin: (Pattern[T1], Pattern[T2])) extends Inv
   }
 }
 
-class TraversablePattern[+T](val pattern: Pattern[TraversableOnce[T]]) extends InvariantPattern[TraversableOnce[T]] {
-  //TODO stub
-  val content = Nil
-  val cat = new Const(Nil)
-
+class TraversablePattern[+T](val head: Pattern[T], val tail: TraversablePattern[T])
+  extends InvariantPattern[TraversableOnce[T]] {
   def inv_matching(proposed: TraversableOnce[T], s: Valuation) = cov_matching(proposed, s)
 
-  private def cov_matching[S >: T](proposed: TraversableOnce[S], s: Valuation) =
-    rec_matching(content.toIterator, proposed.toIterator, (true, s)) match {
-      case (true, ns: Valuation) => (true, ns)
-      case (false, _) => (false, s)
+  def cov_matching[S >: T](proposed: TraversableOnce[S], s: Valuation): (Boolean, Valuation) = {
+    if (proposed.isEmpty)
+      (false, s)
+    else {
+      val pit = proposed.toIterator
+      head.matching(pit.next(), s) match {
+        case (false, _) => (false, s)
+        case (true, ns) => tail.cov_matching(pit, s)
+      }
     }
-
-  private def rec_matching[S >: T](oit: Iterator[Pattern[S]],
-                                   pit: Iterator[S], partial: (Boolean, Valuation)): (Boolean, Valuation) =
-    if (!partial._1)
-      (false, partial._2)
-    else
-    if (oit.hasNext && pit.hasNext)
-      rec_matching(oit, pit, oit.next().matching(pit.next(), partial._2))
-    else
-      (!oit.hasNext && !pit.hasNext, partial._2)
-
-  def ::[S >: T](head: Pattern[S]) = new TraversablePattern[S](cat)
+  }
 }
