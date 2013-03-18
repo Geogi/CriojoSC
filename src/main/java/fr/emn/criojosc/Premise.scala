@@ -24,7 +24,7 @@ trait Premise {
 
   import language.implicitConversions
 
-  implicit def relation2genOpen[T](r: RelationGenerator[T]) = new PatternRelation[T](r)
+  implicit def patternRelation[T](r: RelationGenerator[T]) = new PatternRelation[T](r)
 
   implicit def tuple2Pattern[A, B](t: (Pattern[A], Pattern[B])) = new TuplePattern[A, B](t)
 

@@ -36,7 +36,7 @@ class Successor(predecessor: Pattern[Int]) extends Pattern[Int] {
 }
 
 class TuplePattern[+T1, +T2](val origin: (Pattern[T1], Pattern[T2])) extends Pattern[(T1, T2)] {
-  def inv_matching(proposed: (T1, T2), s: Valuation) = cov_matching(proposed, s)
+  def matching[S >: (T1, T2)](proposed: S, s: Valuation) = cov_matching(proposed.asInstanceOf[(T1, T2)], s)
 
   private def cov_matching[S1 >: T1, S2 >: T2](proposed: (S1, S2), s: Valuation) = {
     val half = origin._1.matching(proposed._1, s)
@@ -47,19 +47,25 @@ class TuplePattern[+T1, +T2](val origin: (Pattern[T1], Pattern[T2])) extends Pat
   }
 }
 
-class TraversablePattern[+T](val head: Pattern[T], val tail: TraversablePattern[T])
-  extends InvariantPattern[TraversableOnce[T]] {
-  def inv_matching(proposed: TraversableOnce[T], s: Valuation) = cov_matching(proposed, s)
+class ListPattern[+T](val head: Pattern[T], val tail: ListPattern[T]) extends Pattern[List[T]] {
+  def matching[S >: List[T]](proposed: S, s: Valuation) =
+    cov_matching(proposed.asInstanceOf[List[T]], s)
 
-  def cov_matching[S >: T](proposed: TraversableOnce[S], s: Valuation): (Boolean, Valuation) = {
+  def cov_matching[S >: T](proposed: List[S], s: Valuation): (Boolean, Valuation) = {
     if (proposed.isEmpty)
       (false, s)
     else {
-      val pit = proposed.toIterator
-      head.matching(pit.next(), s) match {
+      head.matching(proposed.head, s) match {
         case (false, _) => (false, s)
-        case (true, ns) => tail.cov_matching(pit, s)
+        case (true, ns) => tail.cov_matching(proposed.tail, ns)
       }
     }
   }
+
+  def ::[S >: T](new_head: Pattern[S]): ListPattern[S] = new ListPattern(new_head, this)
+}
+
+case object Nip extends ListPattern[Nothing](Nil.head,
+  throw new UnsupportedOperationException("tail of empty traversable pattern")) {
+  override def cov_matching[S >: Nothing](proposed: List[S], s: Valuation) = (proposed.isEmpty, s)
 }
