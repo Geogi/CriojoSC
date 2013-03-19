@@ -17,12 +17,10 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
+package fr.emn.criojosc.pattern
 
-import pattern.Successor
+import fr.emn.criojosc.Valuation
 
-trait Premise {
-  val reactants: List[OpenReactant]
-
-  def S(p: Pattern[Int]) = new Successor(p)
+case object Nip extends ListPattern[Nothing](Nil.head, throw new UnsupportedOperationException("tail of empty traversable pattern")) {
+  override def cov_matching[S >: Nothing](proposed: List[S], s: Valuation) = (proposed.isEmpty, s)
 }

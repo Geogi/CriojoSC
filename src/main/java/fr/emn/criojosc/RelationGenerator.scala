@@ -47,10 +47,3 @@ object Relation {
   /** Creates a ([[fr.emn.criojosc.RelationGenerator]]) with signature `T` */
   def apply[T] = new RelationGenerator[T]
 }
-
-trait TermPatternImplicits {
-
-  import language.implicitConversions
-
-  implicit def relation2genClosed[T](r: RelationGenerator[T]) = new TermRelation[T](r)
-}

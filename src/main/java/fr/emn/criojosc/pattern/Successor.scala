@@ -17,12 +17,14 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
+package fr.emn.criojosc.pattern
 
-import pattern.Successor
+import fr.emn.criojosc.{Pattern, Valuation}
 
-trait Premise {
-  val reactants: List[OpenReactant]
+class Successor(predecessor: Pattern[Int]) extends Pattern[Int] {
+  def matching[S >: Int](proposed: S, s: Valuation) = proposed match {
+    case pint: Int if pint > 0 => predecessor.matching(pint - 1, s)
+    case _ => (false, s)
+  }
 
-  def S(p: Pattern[Int]) = new Successor(p)
 }

@@ -17,12 +17,6 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
+package fr.emn.criojosc.pattern
 
-import pattern.Successor
-
-trait Premise {
-  val reactants: List[OpenReactant]
-
-  def S(p: Pattern[Int]) = new Successor(p)
-}
+case object Tip extends TuplePattern[Nothing, Nothing](Nil.head, Nil.head)

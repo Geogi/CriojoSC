@@ -17,12 +17,25 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
+package fr.emn.criojosc.pattern
 
-import pattern.Successor
+import fr.emn.criojosc.{Pattern, Valuation}
 
-trait Premise {
-  val reactants: List[OpenReactant]
+class TuplePattern[+T1, +T2](val origin: (Pattern[T1], Pattern[T2])) extends Pattern[(T1, T2)] {
+  def matching[S >: (T1, T2)](proposed: S, s: Valuation) = proposed match {
+    case ptuple: (_, _) => cov_matching(ptuple, s)
+    case _ => (false, s)
+  }
 
-  def S(p: Pattern[Int]) = new Successor(p)
+  private def cov_matching[S1 >: T1, S2 >: T2](proposed: (S1, S2), s: Valuation) = {
+    val half = origin._1.matching(proposed._1, s)
+    if (!half._1)
+      (false, s)
+    else if (origin._2 == Tip)
+      (true, half._2)
+    else
+      origin._2.matching(proposed._2, half._2)
+  }
+
+  def ::[T3](head: Pattern[T3]) = new TuplePattern(head, this)
 }
