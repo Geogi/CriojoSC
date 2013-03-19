@@ -20,9 +20,18 @@
 package fr.emn.criojosc.experimental
 
 import fr.emn.criojosc._
+import language.experimental.macros
+import reflect.macros.Context
 
-class PrettyPrinterEngine(val agents: Iterable[Agent]) extends Engine {
-  def print: String = agents flatMap {
+object PrettyPrinter {
+  def printerVariables(r: Rule): Rule = macro printerVariablesImpl
+
+  def printerVariablesImpl(c: Context)(r: c.Expr[Rule]): c.Expr[Rule] = {
+    import c.universe._
+    c.Expr[Rule](Block())
+  }
+
+  def print(engine: Engine): String = engine.agents flatMap {
     a =>
       a.rules map {
         r =>
@@ -32,8 +41,12 @@ class PrettyPrinterEngine(val agents: Iterable[Agent]) extends Engine {
   } mkString ("\n")
 }
 
-object PrettyPrinterValuation extends Valuation {
-  override def get(x: Variable[Any]) = None
-}
+case object DummyValuation extends Valuation
 
-case class PrettyPrinterNameGetter(name: String) extends RuntimeException
+class PrinterVariable(id: String, `type`: String) extends Variable[Unit] {
+  override def matching[S >: Nothing](p: S, s: Valuation) = (true, s)
+
+  override def unary_!(implicit s: Valuation) {
+
+  }
+}
