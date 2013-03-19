@@ -40,7 +40,7 @@ class ListPattern[+T](val head: Pattern[T], val tail: ListPattern[T]) extends Pa
 
   def ::[S >: T](new_head: Pattern[S]): ListPattern[S] = new ListPattern(new_head, this)
 
-  def ::[S >: T](new_head: S) = ::(new Const(new_head))
+  def ::[S >: T](new_head: S): ListPattern[S] = ::(new Const(new_head))
 }
 
 case object Nip extends ListPattern[Nothing](Nil.head, throw new UnsupportedOperationException("tail of empty traversable pattern")) {

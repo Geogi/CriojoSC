@@ -31,7 +31,7 @@ class Successor(predecessor: Pattern[Int]) extends Pattern[Int] {
 object Successor {
   def apply(v: Int) = v + 1
 
-  def ?(p: Pattern[Int]) = new Successor(p)
+  def ?(p: Pattern[Int]): Successor = new Successor(p)
 
-  def ?(v: Int) = ?(new Const(v))
+  def ?(v: Int): Successor = ?(new Const(v))
 }

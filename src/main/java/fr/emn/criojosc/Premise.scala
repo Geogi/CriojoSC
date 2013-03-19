@@ -19,4 +19,4 @@
 
 package fr.emn.criojosc
 
-class Premise(reactants: List[OpenReactant])
+class Premise(val reactants: List[OpenReactant])

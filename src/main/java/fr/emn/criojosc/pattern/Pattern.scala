@@ -24,7 +24,7 @@ import fr.emn.criojosc.Valuation
 trait Pattern[+T] {
   def matching[S >: T](proposed: S, s: Valuation): (Boolean, Valuation)
 
-  def &:[T2](p: Pattern[T2]) = new TuplePattern(p, this)
+  def &:[T2](p: Pattern[T2]): TuplePattern[T2, T] = new TuplePattern(p, this)
 
-  def &:[T2](v: T2) = &:(new Const(v))
+  def &:[T2](v: T2): TuplePattern[T2, T] = &:(new Const(v))
 }

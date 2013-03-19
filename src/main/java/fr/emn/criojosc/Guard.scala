@@ -69,9 +69,7 @@ trait ControlGuard extends Rule with Guard {
   override def right_hand(implicit s: Valuation) = (guard, NoConclusion)
 }
 
-case object NoConclusion extends Conclusion {
-  val content = Nil
-}
+case object NoConclusion extends Conclusion(Nil)
 
 object Guard {
 
