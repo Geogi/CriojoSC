@@ -119,6 +119,7 @@
                 </executions>
                 <configuration>
                     <sourceDir>src/main/java</sourceDir>
+                    <testSourceDir>src/test/java</testSourceDir>
                     <jvmArgs>
                         <jvmArg>-Xms64m</jvmArg>
                         <jvmArg>-Xmx1024m</jvmArg>
