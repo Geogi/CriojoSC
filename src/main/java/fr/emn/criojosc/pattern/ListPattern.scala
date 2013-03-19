@@ -45,4 +45,8 @@ class ListPattern[+T](val head: Pattern[T], val tail: ListPattern[T]) extends Pa
 
 case object Nip extends ListPattern[Nothing](Nil.head, throw new UnsupportedOperationException("tail of empty traversable pattern")) {
   override def cov_matching[S >: Nothing](proposed: List[S], s: Valuation) = (proposed.isEmpty, s)
+
+  def &&:[T](p: Pattern[T]) = p
+
+  def &&:[T](v: T) = &&:(new Const(v))
 }

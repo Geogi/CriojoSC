@@ -21,10 +21,10 @@ package fr.emn.criojosc.pattern
 
 import fr.emn.criojosc.Valuation
 
-trait Pattern[+T] {
-  def matching[S >: T](proposed: S, s: Valuation): (Boolean, Valuation)
+trait Pattern[+A] {
+  def matching[S >: A](proposed: S, s: Valuation): (Boolean, Valuation)
 
-  def &:[T2](p: Pattern[T2]): TuplePattern[T2, T] = new TuplePattern(p, this)
+  def &:[B](p: Pattern[B]): TuplePattern[B, A] = new TuplePattern(p, this)
 
-  def &:[T2](v: T2): TuplePattern[T2, T] = &:(new Const(v))
+  def &:[B](v: B): TuplePattern[B, A] = &:(new Const(v))
 }

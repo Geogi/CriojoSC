@@ -19,7 +19,7 @@
 
 package fr.emn.criojosc
 
-import pattern.Pattern
+import pattern.{Const, Pattern}
 
 /** An atom identifier, which can create [[fr.emn.criojosc.OpenAtom]]s and
   * [[fr.emn.criojosc.ClosedAtom]]s.<br />
@@ -42,7 +42,9 @@ trait Relation extends EntitySymbol
 class TypedRelation[T] extends Relation {
   def apply(v: T) = new ClosedAtom(this, v)
 
-  def ?(p: Pattern[T]) = new OpenAtom(this, p)
+  def ?(p: Pattern[T]): OpenAtom = new OpenAtom(this, p)
+
+  def ?(v: T): OpenAtom = ?(new Const(v))
 }
 
 /** This object provides utilities for creating [[fr.emn.criojosc.TypedRelation]]s. */

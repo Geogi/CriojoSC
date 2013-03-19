@@ -19,7 +19,7 @@
 
 package fr.emn
 
-import criojosc.pattern.Successor
+import criojosc.pattern.{Const, Successor}
 
 /** CriojoSC is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with guaranteed causal order.<br />
   * It sounds cool, but it's far from complete at the moment.
@@ -35,4 +35,8 @@ import criojosc.pattern.Successor
 
 package object criojosc {
   def S = Successor
+
+  def ?[T](v: T) = new Const(v)
+
+  def $ = new Const(Unit)
 }
