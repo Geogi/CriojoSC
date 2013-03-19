@@ -19,12 +19,19 @@
 
 package fr.emn.criojosc.pattern
 
-import fr.emn.criojosc.{Pattern, Valuation}
+import fr.emn.criojosc.Valuation
 
 class Successor(predecessor: Pattern[Int]) extends Pattern[Int] {
   def matching[S >: Int](proposed: S, s: Valuation) = proposed match {
     case pint: Int if pint > 0 => predecessor.matching(pint - 1, s)
     case _ => (false, s)
   }
+}
 
+object Successor {
+  def apply(v: Int) = v + 1
+
+  def ?(p: Pattern[Int]) = new Successor(p)
+
+  def ?(v: Int) = ?(new Const(v))
 }

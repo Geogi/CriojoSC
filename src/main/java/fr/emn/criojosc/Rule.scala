@@ -28,10 +28,4 @@ trait Rule {
   def right_hand(implicit s: Valuation): (Guard, Conclusion)
 }
 
-trait Conclusion extends TermPatternImplicits {
-  val content: Iterable[ClosedReactant]
-}
-
-object Conclusion {
-
-}
+class Conclusion(val content: Iterable[ClosedReactant])

@@ -19,4 +19,12 @@
 
 package fr.emn.criojosc.pattern
 
-case object Tip extends TuplePattern[Nothing, Nothing](Nil.head, Nil.head)
+import fr.emn.criojosc.Valuation
+
+trait Pattern[+T] {
+  def matching[S >: T](proposed: S, s: Valuation): (Boolean, Valuation)
+
+  def &:[T2](p: Pattern[T2]) = new TuplePattern(p, this)
+
+  def &:[T2](v: T2) = &:(new Const(v))
+}

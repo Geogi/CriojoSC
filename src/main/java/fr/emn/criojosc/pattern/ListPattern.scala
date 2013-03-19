@@ -19,7 +19,7 @@
 
 package fr.emn.criojosc.pattern
 
-import fr.emn.criojosc.{Pattern, Valuation}
+import fr.emn.criojosc.Valuation
 
 class ListPattern[+T](val head: Pattern[T], val tail: ListPattern[T]) extends Pattern[List[T]] {
   def matching[S >: List[T]](proposed: S, s: Valuation) = proposed match {
@@ -39,4 +39,10 @@ class ListPattern[+T](val head: Pattern[T], val tail: ListPattern[T]) extends Pa
   }
 
   def ::[S >: T](new_head: Pattern[S]): ListPattern[S] = new ListPattern(new_head, this)
+
+  def ::[S >: T](new_head: S) = ::(new Const(new_head))
+}
+
+case object Nip extends ListPattern[Nothing](Nil.head, throw new UnsupportedOperationException("tail of empty traversable pattern")) {
+  override def cov_matching[S >: Nothing](proposed: List[S], s: Valuation) = (proposed.isEmpty, s)
 }

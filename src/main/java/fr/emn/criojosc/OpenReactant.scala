@@ -19,29 +19,27 @@
 
 package fr.emn.criojosc
 
+import pattern.Pattern
+
 trait OpenReactant {
   def pattern: Pattern[Any]
 
   def symbol: EntitySymbol
 }
 
-/** A symbolic representation of an [[fr.emn.criojosc.RelationGenerator]], as used in rule premises and "existence" guards.<br />
+/** A symbolic representation of an [[fr.emn.criojosc.TypedRelation]], as used in rule premises and "existence" guards.<br />
   * The engine matches it against the actual instances in [[fr.emn.criojosc.EntitySymbol]] to produce a
   * [[fr.emn.criojosc.Valuation]], used by most [[fr.emn.criojosc.Guard]]s and
   * [[fr.emn.criojosc.Rule]] conclusions.
   *
   * Note that while [[fr.emn.criojosc.OpenAtom]] is not typed itself, it is created by
-  * ([[fr.emn.criojosc.RelationGenerator.apply]] that is typed, ensuring a consistent state.<br />
+  * ([[fr.emn.criojosc.TypedRelation.apply]] that is typed, ensuring a consistent state.<br />
   * This is why instances of this class should not be created manually, but using `Atom.apply`.
   *
   * @param symbol The Atom this particular representation refers to.
-  * @param pattern The list of [[fr.emn.criojosc.Pattern]]s used by the matching process.
+  * @param pattern The list of Patterns used by the matching process.
   */
 class OpenAtom(val symbol: EntitySymbol, val pattern: Pattern[Any]) extends OpenReactant
 
 /** A symbolic representation of a Message. !CURRENTLY A STUB! */
 class OpenMessage(val symbol: EntitySymbol, val info: ChannelInfo, val pattern: Pattern[Any]) extends OpenReactant
-
-class PatternRelation[T](r: RelationGenerator[T]) {
-  def apply(p: Pattern[T]) = new OpenAtom(r, p)
-}

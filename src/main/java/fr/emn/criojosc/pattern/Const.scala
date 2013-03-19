@@ -19,7 +19,7 @@
 
 package fr.emn.criojosc.pattern
 
-import fr.emn.criojosc.{Pattern, Valuation}
+import fr.emn.criojosc.Valuation
 
 class Const[+T](val c: T) extends Pattern[T] {
   def matching[S >: T](proposed: S, s: Valuation) = (proposed == c, s)

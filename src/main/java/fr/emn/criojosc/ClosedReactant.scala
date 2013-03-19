@@ -26,13 +26,13 @@ trait ClosedReactant {
   def symbol: EntitySymbol
 }
 
-/** An instance of an [[fr.emn.criojosc.RelationGenerator]] in a given state (a list of patterns).<br />
+/** An instance of an [[fr.emn.criojosc.TypedRelation]] in a given state (a list of patterns).<br />
   * It may exist in [[fr.emn.criojosc.Solution]] or be the product of a [[fr.emn.criojosc.Rule]]
   * (listed in its conclusion).
   *
   * Note that while [[fr.emn.criojosc.ClosedAtom]] is not typed itself, it is created by
-  * a ([[fr.emn.criojosc.RelationGenerator]] `apply` method, that is typed, ensuring a consistent state.<br />
-  * This is why instances of this class should not be created manually, but using `RelationGenerator.apply`.
+  * a ([[fr.emn.criojosc.TypedRelation]] `apply` method, that is typed, ensuring a consistent state.<br />
+  * This is why instances of this class should not be created manually, but using `TypedRelation.apply`.
   *
   * @param symbol The Atom this instance refers to.
   * @param value The value (Any) that defines the state of this instance.
@@ -40,7 +40,3 @@ trait ClosedReactant {
 class ClosedAtom(val symbol: EntitySymbol, val value: Any) extends ClosedReactant
 
 class ClosedMessage(val symbol: EntitySymbol, val info: ChannelInfo, val value: Any) extends ClosedReactant
-
-class TermRelation[T](r: RelationGenerator[T]) {
-  def apply(v: T) = new ClosedAtom(r, v)
-}

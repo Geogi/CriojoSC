@@ -19,7 +19,7 @@
 
 package fr.emn.criojosc.pattern
 
-import fr.emn.criojosc.{Pattern, Valuation}
+import fr.emn.criojosc.Valuation
 
 class TuplePattern[+T1, +T2](val origin: (Pattern[T1], Pattern[T2])) extends Pattern[(T1, T2)] {
   def matching[S >: (T1, T2)](proposed: S, s: Valuation) = proposed match {
@@ -31,11 +31,7 @@ class TuplePattern[+T1, +T2](val origin: (Pattern[T1], Pattern[T2])) extends Pat
     val half = origin._1.matching(proposed._1, s)
     if (!half._1)
       (false, s)
-    else if (origin._2 == Tip)
-      (true, half._2)
     else
       origin._2.matching(proposed._2, half._2)
   }
-
-  def ::[T3](head: Pattern[T3]) = new TuplePattern(head, this)
 }

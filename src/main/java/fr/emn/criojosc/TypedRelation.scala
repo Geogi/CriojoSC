@@ -19,15 +19,17 @@
 
 package fr.emn.criojosc
 
+import pattern.Pattern
+
 /** An atom identifier, which can create [[fr.emn.criojosc.OpenAtom]]s and
   * [[fr.emn.criojosc.ClosedAtom]]s.<br />
   *
   * Use the companion object to create new instances of `Atom`, as it will transparently instantiate
-  * [[fr.emn.criojosc.RelationGenerator]] with the right type.
+  * [[fr.emn.criojosc.TypedRelation]] with the right type.
   *
   * Usage:
   * {{{
-  * val R = Relation[Int]          // RelationGenerator
+  * val R = Relation[Int]          // TypedRelation
   * val p = Var[Int]               // Pattern
   * R(p)                           // OpenAtom (argument is a Pattern)
   * R(!p)                          // ClosedAtom (argument is not a Pattern)
@@ -36,14 +38,15 @@ package fr.emn.criojosc
 
 trait Relation extends EntitySymbol
 
-/** An identifier for an unary atom. See [[fr.emn.criojosc.RelationGenerator]] for more details. */
-class RelationGenerator[T] extends Relation {
-  val or = new PatternRelation[T](this)
-  val cr = new TermRelation[T](this)
+/** An identifier for an unary atom. See [[fr.emn.criojosc.TypedRelation]] for more details. */
+class TypedRelation[T] extends Relation {
+  def apply(v: T) = new ClosedAtom(this, v)
+
+  def ?(p: Pattern[T]) = new OpenAtom(this, p)
 }
 
-/** This object provides utilities for creating [[fr.emn.criojosc.RelationGenerator]]s. */
+/** This object provides utilities for creating [[fr.emn.criojosc.TypedRelation]]s. */
 object Relation {
-  /** Creates a ([[fr.emn.criojosc.RelationGenerator]]) with signature `T` */
-  def apply[T] = new RelationGenerator[T]
+  /** Creates a ([[fr.emn.criojosc.TypedRelation]]) with signature `T` */
+  def apply[T] = new TypedRelation[T]
 }

@@ -19,10 +19,4 @@
 
 package fr.emn.criojosc
 
-import pattern.Successor
-
-trait Premise {
-  val reactants: List[OpenReactant]
-
-  def S(p: Pattern[Int]) = new Successor(p)
-}
+class Premise(reactants: List[OpenReactant])
