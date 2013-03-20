@@ -27,6 +27,7 @@ object Generate {
   val templateFilter = new FileFilter {
     def accept(p1: File): Boolean = p1.isDirectory || p1.getName.endsWith(".ssp")
   }
+  val srcDir = new File(System.getProperty("user.dir"), "src")
 
   def recurGetTemplates(f: File): Array[File] = {
     val files = f.listFiles(templateFilter)
@@ -34,6 +35,9 @@ object Generate {
   }
 
   def main(args: Array[String]) {
-    println("Working Directory = " + System.getProperty("user.dir"))
+    recurGetTemplates(srcDir).foreach {
+      file =>
+        println(engine.layout(file.getPath))
+    }
   }
 }

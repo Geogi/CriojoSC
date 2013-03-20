@@ -1,0 +1,3 @@
+object Relation {
+  <%=(0 until 22).mkString("(", ", ", ")") %>
+}
