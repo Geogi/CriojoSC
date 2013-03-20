@@ -46,9 +46,3 @@ class TypedRelation[T] extends Relation {
 
   def ?(v: T): OpenAtom = ?(new Const(v))
 }
-
-/** This object provides utilities for creating [[fr.emn.criojosc.TypedRelation]]s. */
-object Relation {
-  /** Creates a ([[fr.emn.criojosc.TypedRelation]]) with signature `T` */
-  def apply[T] = new TypedRelation[T]
-}
