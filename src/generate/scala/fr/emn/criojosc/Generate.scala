@@ -19,7 +19,7 @@
 
 package fr.emn.criojosc
 
-import java.io.{FileFilter, File}
+import java.io.{PrintWriter, FileFilter, File}
 import org.fusesource.scalate._
 
 object Generate {
@@ -28,6 +28,10 @@ object Generate {
     def accept(p1: File): Boolean = p1.isDirectory || p1.getName.endsWith(".ssp")
   }
   val srcDir = new File(System.getProperty("user.dir"), "src")
+  val srcDirS = srcDir.getPath
+
+  def printWriter(f: File) = new PrintWriter(srcDirS + f.getPath.replaceFirst(srcDirS, "").
+    replaceFirst("generate", "main").replaceFirst(".ssp$", ".gen.scala"))
 
   def recurGetTemplates(f: File): Array[File] = {
     val files = f.listFiles(templateFilter)
@@ -36,8 +40,8 @@ object Generate {
 
   def main(args: Array[String]) {
     recurGetTemplates(srcDir).foreach {
-      file =>
-        println(engine.layout(file.getPath))
+      f =>
+        engine.layout(f.getPath, printWriter(f), Map.empty[String, Any])
     }
   }
 }
