@@ -17,24 +17,23 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import fr.emn.criojosc._
+package fr.emn.criojosc
 
-object Engine extends App {
-  val agent = new Agent {
-    val R = Relation[(Int, (String, Char))]
-    val rule = new Rule {
-      val z = Var[Int]
-      val premise = new Premise(List(R ? (S ? (z) &: "a" &: ?('b'))))
+import java.io.{FileFilter, File}
+import org.fusesource.scalate._
 
-      def right_hand(implicit s: Valuation) = (
-        !z > 0,
-        new Conclusion(List(R(1, ("a", 1))))
-        )
-    }
+object Generate {
+  val engine = new TemplateEngine
+  val templateFilter = new FileFilter {
+    def accept(p1: File): Boolean = p1.isDirectory || p1.getName.endsWith(".ssp")
+  }
 
-    val channels = List()
-    val relations = List(R)
-    val rules = List(rule)
-    val solution = Solution(R(1, ("b", 1)))
+  def recurGetTemplates(f: File): Array[File] = {
+    val files = f.listFiles(templateFilter)
+    files.filter(_.isFile) ++ files.filter(_.isDirectory).flatMap(recurGetTemplates)
+  }
+
+  def main(args: Array[String]) {
+    println("Working Directory = " + System.getProperty("user.dir"))
   }
 }

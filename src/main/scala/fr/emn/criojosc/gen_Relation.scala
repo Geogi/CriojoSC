@@ -17,14 +17,8 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.pattern
+package fr.emn.criojosc
 
-import fr.emn.criojosc.Valuation
+class gen_Relation {
 
-trait Pattern[+A] {
-  def matching[S >: A](proposed: S, s: Valuation): (Boolean, Valuation)
-
-  def &:[B](p: Pattern[B]): TuplePattern[B, A] = new TuplePattern(p, this)
-
-  def &:[B](v: B): TuplePattern[B, A] = &:(new Const(v))
 }

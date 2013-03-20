@@ -17,26 +17,24 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn
+import fr.emn.criojosc._
 
-import criojosc.pattern.{Const, Successor}
+object Engine extends App {
+  val agent = new Agent {
+    val R = Relation[(Int, (String, Char))]
+    val rule = new Rule {
+      val z = Var[Int]
+      val premise = new Premise(List())
 
-/** CriojoSC is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with guaranteed causal order.<br />
-  * It sounds cool, but it's far from complete at the moment.
-  *
-  * CriojoSC uses Scala and is GPL licenced.
-  *
-  * Some useful resources:
-  * <ul>
-  * <li>The mainline implementation by Mayleen Lacouture: [[https://github.com/maylencita/CRIOJO/tree/version2.0 maylencita/CRIOJO@GitHub]]</li>
-  * <li>The latest CRIOJO research paper: [[http://hal.inria.fr/hal-00676083/]]</li>
-  * </ul>
-  */
+      def right_hand(implicit s: Valuation) = (
+        !z > 0,
+        new Conclusion(List(R(1, ("a", 1))))
+        )
+    }
 
-package object criojosc {
-  def S = Successor
-
-  def ?[T](v: T) = new Const(v)
-
-  def $ = new Const(Unit)
+    val channels = List()
+    val relations = List(R)
+    val rules = List(rule)
+    val solution = Solution(R(1, ("b", 1)))
+  }
 }
