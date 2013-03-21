@@ -34,8 +34,6 @@ package fr.emn.criojosc
   * }}}
   */
 
-trait Relation extends EntitySymbol
-
 /** An identifier for an unary atom. See [[fr.emn.criojosc.TypedRelation]] for more details. */
 class TypedRelation[T] extends Relation {
   def apply(v: T) = new ClosedAtom(this, v)

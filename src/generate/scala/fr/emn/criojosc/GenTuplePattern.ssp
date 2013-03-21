@@ -2,20 +2,25 @@
  def gt(i: Int, f: (Int) => String) = (1 to i).map(f).mkString(", ")
  def tl(i: Int) = gt(i, "T" + _)
 %>
+package fr.emn.criojosc
 
 #for (i <- 2 to 22)
-class Tuple<%=i%>Pattern[<%=gt(i, "+T" + _)%>](val origin: (<%=gt(i, "Pattern[T" + _ + "]")%>) extends Pattern[(<%=tl(i)%>)] {
+class Tuple<%=i%>Pattern[<%=gt(i, "+T" + _)%>](val origin: (<%=gt(i, "Pattern[T" + _ + "]")%>)) extends Pattern[(<%=tl(i)%>)] {
   def matching[S >: (<%=tl(i)%>)](proposed: S, s: Valuation) = proposed match {
-    case ptuple: (<%=gt(i, "_")%>) => cov_matching(ptuple, s)
+    case ptuple: (<%=gt(i, j => "_")%>) => cov_matching(ptuple, s)
     case _ => (false, s)
   }
 
-  private def cov_matching[<%=gt(i, j => "S" + j + " >: T" + j)%>](proposed: (<%=gt(i, "S" + _)%>), s: Valuation) = {
-    val half = origin._1.matching(proposed._1, s)
-    if (!half._1)
-      (false, s)
-    else
-      origin._2.matching(proposed._2, half._2)
+  private def cov_matching[<%=gt(i, j => "S" + j + " >: T" + j)%>](proposed: (<%=gt(i, "S" + _)%>), s: Valuation): (Boolean, Valuation) = {
+    var pr = (false, s)
+    var ps = s
+#for (j <- 1 to i)
+    pr = origin._<%=j%>.matching(proposed._<%=j%>, ps)
+    if (!pr._1)
+      return (false, s)
+    ps = pr._2
+#end
+    (true, ps)
   }
 }
 

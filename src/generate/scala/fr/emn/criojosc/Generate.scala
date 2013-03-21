@@ -24,9 +24,12 @@ import org.fusesource.scalate.TemplateEngine
 
 object Generate {
   val engine = new TemplateEngine
+  engine.escapeMarkup = false
+
   val templateFilter = new FileFilter {
     def accept(p1: File): Boolean = p1.isDirectory || p1.getName.endsWith(".ssp")
   }
+
   val srcDir = new File(System.getProperty("user.dir"), "src")
   val srcDirPath = srcDir.getPath
 

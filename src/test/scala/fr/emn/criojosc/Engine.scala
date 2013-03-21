@@ -21,7 +21,7 @@ import fr.emn.criojosc._
 
 object Engine extends App {
   val agent = new Agent {
-    val R = new TypedRelation[Int]
+    val R = Relation[Int]
     //Relation[(Int, (String, Char))]
     val rule = new Rule {
       val z = Var[Int]
