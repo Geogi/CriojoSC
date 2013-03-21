@@ -21,20 +21,21 @@ import fr.emn.criojosc._
 
 object Engine extends App {
   val agent = new Agent {
-    val R = Relation[(Int, (String, Char))]
+    val R = new TypedRelation[Int]
+    //Relation[(Int, (String, Char))]
     val rule = new Rule {
       val z = Var[Int]
-      val premise = new Premise(List())
+      val premise = new Premise(List(R ? (z)))
 
       def right_hand(implicit s: Valuation) = (
         !z > 0,
-        new Conclusion(List(R(1, ("a", 1))))
+        new Conclusion(List(R(1)))
         )
     }
 
     val channels = List()
     val relations = List(R)
     val rules = List(rule)
-    val solution = Solution(R(1, ("b", 1)))
+    val solution = Solution(R(1))
   }
 }

@@ -19,6 +19,8 @@
 
 package fr.emn.criojosc
 
+import pattern._
+
 trait Rule {
 
   def Var[T] = new Variable[T]
@@ -26,6 +28,10 @@ trait Rule {
   val premise: Premise
 
   def right_hand(implicit s: Valuation): (Guard, Conclusion)
+
+  import language.implicitConversions
+
+  implicit def const[T](v: T) = new Const(v)
 }
 
 class Conclusion(val content: Iterable[ClosedReactant])

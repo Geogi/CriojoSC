@@ -20,6 +20,7 @@
 package fr.emn.criojosc
 
 import java.io.{IOException, PrintWriter, FileFilter, File}
+import org.fusesource.scalate.TemplateEngine
 
 object Generate {
   val engine = new TemplateEngine
