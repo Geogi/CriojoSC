@@ -20,6 +20,8 @@ Generating the API
 ------------------
 Do the first two steps above then `$ mvn site`. The API will be located at `target/site/scaladocs/index.html`.
 
+The [Specs2](http://etorreborre.github.com/specs2/) specification can be generated with `$ mvn verify`. It will be located at `target/specs2-reports`.
+
 Using
 -----
 It's really unstable and partially unimplemented, so writing a tutorial at this point isn't sensible.

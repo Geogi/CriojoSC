@@ -17,25 +17,16 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import fr.emn.criojosc._
+package fr.emn.criojosc
 
-object Engine extends App {
-  val agent = new Agent {
-    val R = Relation[Int]
-    //Relation[(Int, (String, Char))]
-    val rule = new Rule {
-      val z = Var[Int]
-      val premise = new Premise(List(R ? (z)))
+import org.specs2._
+import runner.SpecificationsFinder._
 
-      def right_hand(implicit s: Valuation) = (
-        !z > 0,
-        new Conclusion(List(R(1)))
-        )
-    }
+class index extends Specification {
+  def is =
 
-    val channels = List()
-    val relations = List(R)
-    val rules = List(rule)
-    val solution = Solution(R(1))
-  }
+    examplesLinks("index")
+
+  // see the SpecificationsFinder trait for the parameters of the 'specifications' method
+  def examplesLinks(t: String) = t.title ^ specifications(verbose = true).map(see)
 }

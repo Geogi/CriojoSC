@@ -19,13 +19,16 @@
 
 package fr.emn.criojosc
 
-trait Rule {
+trait Rule extends RuleImplicits {
 
   def Var[T] = new Variable[T]
 
   val premise: Premise
 
   def right_hand(implicit s: Valuation): (Guard, Conclusion)
+}
+
+trait RuleImplicits {
 
   import language.implicitConversions
 
