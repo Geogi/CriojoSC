@@ -19,8 +19,6 @@
 
 package fr.emn.criojosc
 
-import pattern.Pattern
-
 /** An atom identifier, which can create [[fr.emn.criojosc.OpenAtom]]s and
   * [[fr.emn.criojosc.ClosedAtom]]s.<br />
   *

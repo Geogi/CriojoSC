@@ -19,8 +19,6 @@
 
 package fr.emn.criojosc
 
-import pattern.Pattern
-
 trait OpenReactant {
   def pattern: Pattern[Any]
 

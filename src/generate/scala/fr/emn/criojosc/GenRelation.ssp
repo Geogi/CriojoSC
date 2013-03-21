@@ -2,8 +2,6 @@
  def gt(i: Int, f: (Int) => String) = (1 to i).map(f).mkString(", ")
  def tl(i: Int) = gt(i, "T" + _)
 %>
-import fr.emn.criojosc._
-import fr.emn.criojosc.pattern._
 
 object Relation {
   def apply[T1] = new TypedRelation[T1]

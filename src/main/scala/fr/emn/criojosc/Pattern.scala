@@ -17,19 +17,12 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.pattern
+package fr.emn.criojosc
 
-import fr.emn.criojosc.Valuation
-
-class Successor(predecessor: Pattern[Int]) extends Pattern[Int] {
-  def matching[S >: Int](proposed: S, s: Valuation) = proposed match {
-    case pint: Int if pint > 0 => predecessor.matching(pint - 1, s)
-    case _ => (false, s)
-  }
+trait Pattern[+A] {
+  def matching[S >: A](proposed: S, s: Valuation): (Boolean, Valuation)
 }
 
-object Successor {
-  def apply(v: Int) = v + 1
-
-  def ?(p: Pattern[Int]): Successor = new Successor(p)
+class Const[+T](val c: T) extends Pattern[T] {
+  def matching[S >: T](proposed: S, s: Valuation) = (proposed == c, s)
 }

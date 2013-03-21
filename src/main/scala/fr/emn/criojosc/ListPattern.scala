@@ -17,9 +17,7 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.pattern
-
-import fr.emn.criojosc.Valuation
+package fr.emn.criojosc
 
 class ListPattern[+T](val head: Pattern[T], val tail: ListPattern[T]) extends Pattern[List[T]] {
   def matching[S >: List[T]](proposed: S, s: Valuation) = proposed match {

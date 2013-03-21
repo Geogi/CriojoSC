@@ -19,8 +19,6 @@
 
 package fr.emn.criojosc
 
-import pattern._
-
 trait Rule {
 
   def Var[T] = new Variable[T]

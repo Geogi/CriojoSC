@@ -19,8 +19,6 @@
 
 package fr.emn.criojosc
 
-import pattern.Pattern
-
 class Variable[+T] extends Pattern[T] {
   def matching[S >: T](proposed: S, s: Valuation) = s.get(this) match {
     case Some(real) => (proposed == real, s)
