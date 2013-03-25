@@ -22,5 +22,42 @@ package fr.emn.criojosc
 import org.specs2._
 
 class GuardSpec extends Specification { def is =
-  "Guard specification."
+  "Guard specification."                                                                 ^
+                                                                                         p^
+  "Native guards are Scala expressions that, given a valuation, evaluate to a Boolean."  ! nativeGuard^
+  "There is an implicit conversion from a boolean to a native guard, using a dummy " +
+    "valuation to force the abstraction."                                                ! implicitGuard^
+                                                                                         p^
+  "Unary construct: !negated"                                                            ! notGuard^
+  "Binary constructs:"                                                                   ^
+    "left && right"                                                                      ! andGuard^
+    "left || right"                                                                      ! orGuard^
+                                                                                         endp^
+  "Control guards act as a pseudo-rules, and evaluate against the solution. " +
+    "They're stubs for now"                                                              ! pending^
+                                                                                         end
+  def nativeGuard = {
+    val x = new Variable[Int]
+    implicit val sx = new Valuation(Map((x, 1)))
+    new NativeGuard((_: Valuation) => !x == 1).evaluate(sx) must beTrue
+  }
+
+  val dummyValuation = new Valuation
+
+  def implicitGuard = {
+    val implicitly: Guard = false
+    implicitly.evaluate(dummyValuation) must beFalse
+  }
+
+  val trueGuard: Guard = true
+  val falseGuard: Guard = false
+
+  def notGuard = (new NotGuard(trueGuard).evaluate(dummyValuation) must beFalse) and
+    (!trueGuard.evaluate(dummyValuation) must beFalse)
+
+  def andGuard = (new AndGuard(trueGuard, falseGuard).evaluate(dummyValuation) must beFalse) and
+    ((trueGuard && falseGuard).evaluate(dummyValuation) must beFalse)
+
+  def orGuard = (new OrGuard(trueGuard, falseGuard).evaluate(dummyValuation) must beTrue) and
+    ((trueGuard || falseGuard).evaluate(dummyValuation) must beTrue)
 }

@@ -23,8 +23,15 @@ import org.specs2._
 
 class AgentSpec extends Specification { def is =
 
-  "Agent specification." ^
-                         p^
-  ""
+  "Agent specification."                           ^
+                                                   p^
+  "An agent is created by implementing its trait." ! createAgent^
+                                                   end
 
+  def createAgent = {
+    val myAgent = new Agent {
+      val (channels, relations, rules, solution) = (List(), List(), List(), Solution())
+    }
+    myAgent must beAnInstanceOf[Agent]
+  }
 }

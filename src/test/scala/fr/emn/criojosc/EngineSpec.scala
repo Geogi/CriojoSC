@@ -22,5 +22,10 @@ package fr.emn.criojosc
 import org.specs2._
 
 class EngineSpec extends Specification { def is =
-  "Engine specification."
+
+  "Engine specification."         ^
+                                  p^
+  "Engine is currently a stub..." ! pending ^
+                                  end
+
 }

@@ -22,5 +22,9 @@ package fr.emn.criojosc
 import org.specs2._
 
 class ChannelSpec extends Specification { def is =
-  "Channel specification"
+
+  "Channel specification."         ^
+                                   p^
+  "Channel is currently a stub..." ! pending^
+                                   end
 }
