@@ -19,7 +19,9 @@
 
 package fr.emn.criojosc
 
-class ListPattern[+T](val head: Pattern[T], val tail: ListPattern[T]) extends Pattern[List[T]] {
+class ListPattern[+T] extends Pattern[List[T]] {
+  def head: Pattern[T] = throw new UnsupportedOperationException("head of empty list pattern")
+  def tail: ListPattern[T] = throw new UnsupportedOperationException("tail of empty list pattern")
   def matching[S >: List[T]](proposed: S, s: Valuation) = proposed match {
     case plist: List[_] => cov_matching(plist, s)
     case _ => (false, s)
@@ -36,9 +38,12 @@ class ListPattern[+T](val head: Pattern[T], val tail: ListPattern[T]) extends Pa
     }
   }
 
-  def ::[S >: T](new_head: Pattern[S]): ListPattern[S] = new ListPattern(new_head, this)
+  def ::[S >: T](new_head: Pattern[S]) = new ListPattern[S] {
+    override def head: Pattern[S] = new_head
+    override def tail: ListPattern[S] = this
+  }
 }
 
-case object Nip extends ListPattern[Nothing](Nil.head, throw new UnsupportedOperationException("tail of empty traversable pattern")) {
+case object Nip extends ListPattern[Nothing] {
   override def cov_matching[S >: Nothing](proposed: List[S], s: Valuation) = (proposed.isEmpty, s)
 }

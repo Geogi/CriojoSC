@@ -21,6 +21,28 @@ package fr.emn.criojosc
 
 import org.specs2._
 
-class ListPatternSpec extends Specification { def is =
-  "List pattern specification."
+class ListPatternSpec extends Specification with RuleImplicits { def is =
+
+  "List pattern specification."                                           ^
+                                                                          p^
+  "Creating a list pattern with the :: cons"                              ! consTest^
+  "This pattern is covariant in List[+T]"                                 ! covTest^
+                                                                          p^
+  "It matches as a functional list," +
+    " i.e. it tries to match its head, and matches its tail on success"   ! matchTest^
+                                                                          end
+
+  def consTest = (0 :: 1 :: 2 :: Nip) must beAnInstanceOf[Pattern[List[Int]]]
+  def covTest = {
+    class A
+    class B extends A
+    val (a, b) = (new A, new B)
+    ((b :: Nip) must beAnInstanceOf[Pattern[List[B]]]) and
+      ((a :: b :: Nip) must beAnInstanceOf[Pattern[List[A]]]) and
+      ((1 :: b :: Nip) must beAnInstanceOf[Pattern[List[Any]]])
+  }
+  def matchTest = {
+    val s = new Valuation
+    (0 :: "a" :: Nip).matching(0 :: "a" :: Nil, s)._1 must beTrue
+  }
 }
