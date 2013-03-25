@@ -20,13 +20,7 @@
 package fr.emn.criojosc
 
 import org.specs2._
-import runner.SpecificationsFinder._
 
 class index extends Specification {
-  def is =
-
-    examplesLinks("index")
-
-  // see the SpecificationsFinder trait for the parameters of the 'specifications' method
-  def examplesLinks(t: String) = t.title ^ specifications(verbose = true).map(see)
+  def is = "index".title ^ link(new SuccessorSpec)
 }
