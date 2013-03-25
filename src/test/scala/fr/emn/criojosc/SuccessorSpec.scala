@@ -21,22 +21,21 @@ package fr.emn.criojosc
 
 import org.specs2._
 
-class SuccessorSpec extends Specification with RuleImplicits {
-  def is =
+class SuccessorSpec extends Specification with RuleImplicits { def is =
 
-    "Specification of the Successor[Int] constructor."               ^
-                                                                     p^
-    "Inside the left hand:"                                          ^
-      "Create a pattern with the companion object's '?' method..."   ! { Successor ? (1) must bePatternInt } ^
-      "... or with the shortcut 'S?'."                               ! { S ? (1) must bePatternInt } ^
-      "It returns no match if the proposed value is not an Int..."   ! returnsNoMatch("a") ^
-      "... or if the value is zero or less."                         ! returnsNoMatch(0) ^
-      "Otherwise it chains the matching with the value decremented"  ^
-      "e.g. S?(1) matches only 2"                                    ! { S1Match(2) and !S1Match(3) } ^
-                                                                     endp ^
-    "Inside the right hand:"                                         ^
-      "Create an Int term by applying the companion object or 'S'."  ! isIntInsideRight ^
-      "It will be the successor of the parameter: S(1) = 2."         ! { S(1) === 2 }
+  "Specification of the Successor[Int] constructor."               ^
+                                                                   p^
+  "Inside the left hand:"                                          ^
+    "Create a pattern with the companion object's '?' method..."   ! { Successor ? (1) must bePatternInt } ^
+    "... or with the shortcut 'S?'."                               ! { S ? (1) must bePatternInt } ^
+    "It returns no match if the proposed value is not an Int..."   ! returnsNoMatch("a") ^
+    "... or if the value is zero or less."                         ! returnsNoMatch(0) ^
+    "Otherwise it chains the matching with the value decremented"  ^
+    "e.g. S?(1) matches only 2"                                    ! { S1Match(2) and !S1Match(3) } ^
+                                                                   endp ^
+  "Inside the right hand:"                                         ^
+    "Create an Int term by applying the companion object or 'S'."  ! isIntInsideRight ^
+    "It will be the successor of the parameter: S(1) = 2."         ! { S(1) === 2 }
 
   val s = new Valuation
 
