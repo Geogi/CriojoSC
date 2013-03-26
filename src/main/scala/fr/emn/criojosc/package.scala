@@ -33,4 +33,5 @@ package fr.emn
 
 package object criojosc {
   def S = Successor
+  val Nip = NilPatternList
 }

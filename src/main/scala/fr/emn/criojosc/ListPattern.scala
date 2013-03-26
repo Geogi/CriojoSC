@@ -38,16 +38,17 @@ class ListPattern[+T] extends Pattern[List[T]] {
     }
   }
 
-  def ::[S >: T](new_head: Pattern[S]) = new ListPattern[S] {
-    override def head: Pattern[S] = new_head
-    override def tail: ListPattern[S] = ListPattern.this
-    override def toString = new_head.toString + " :: " + ListPattern.this.toString
-  }
+  def ::[S >: T](new_head: Pattern[S]) = new ListPatternExpand(new_head, this)
 
   override def toString = ""
 }
 
-case object Nip extends ListPattern[Nothing] {
+final case class ListPatternExpand[+T](override val head: Pattern[T],
+                                      override val tail: ListPattern[T]) extends ListPattern[T] {
+  override def toString = head.toString + " :: " + tail.toString
+}
+
+case object NilPatternList extends ListPattern[Nothing] {
   override def cov_matching[S >: Nothing](proposed: List[S], s: Valuation) = (proposed.isEmpty, s)
   override def toString = "Nip"
 }
