@@ -22,5 +22,37 @@ package fr.emn.criojosc
 import org.specs2._
 
 class VariableSpec extends Specification { def is =
-  "Variable specification."
+  "Variable specification."                                   ^
+                                                              p^
+  "A variable is nothing but a name."                         ^
+    "x == x, x != y"                                          ! testSymbol^
+                                                              p^
+  "A valuation is needed to store the value of the variable"  ^
+    "store (x, 3) in s, test !x == 3"                         ! testValuation^
+                                                              p^
+  "If the variable is free, it's bound to the proposed value" ! bindTest^
+                                                              end
+
+  def testSymbol = {
+    val (x, y) = (new Variable[Int], new Variable[Int])
+    (x === x) and (x !== y)
+  }
+
+  def testValuation = {
+    val x = new Variable[Int]
+    val s1 = new Valuation
+    val s2 = s1 + (x, 3)
+    x.unary_!(s2) === 3
+  }
+
+  def bindTest = {
+    val s = new Valuation
+    val x = new Variable[String]
+    val (r1, s1) = x.matching("something", s)
+    val (r2, s2) = x.matching("something", s1)
+    val (r3, _) = x.matching("something else", s2)
+    (r1 must beTrue) and (s1 !== s) and      // matches because free and the valuation is updated
+      (r2 must beTrue) and (s2 === s1) and   // matches with bound value and valuation not updated
+      (r3 must beFalse)                      // doesn't match with other value
+  }
 }

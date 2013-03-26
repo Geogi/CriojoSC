@@ -44,7 +44,7 @@ class ListPattern[+T] extends Pattern[List[T]] {
 }
 
 final case class ListPatternExpand[+T](override val head: Pattern[T],
-                                      override val tail: ListPattern[T]) extends ListPattern[T] {
+                                       override val tail: ListPattern[T]) extends ListPattern[T] {
   override def toString = head.toString + " :: " + tail.toString
 }
 

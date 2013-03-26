@@ -22,5 +22,15 @@ package fr.emn.criojosc
 import org.specs2._
 
 class ValuationSpec extends Specification { def is =
-  "Valuation specification."
+  "Valuation specification."                        ^
+                                                    p^
+  "Valuations are usually made implicit."           ^
+    "implicitly !x = 3"                             ! implicitTest^
+                                                    end
+
+  def implicitTest = {
+    val x = new Variable[Int]
+    implicit val s = new Valuation(Map((x, 3)))
+    !x === 3
+  }
 }

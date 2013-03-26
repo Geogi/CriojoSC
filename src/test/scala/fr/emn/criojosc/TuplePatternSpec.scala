@@ -22,5 +22,22 @@ package fr.emn.criojosc
 import org.specs2._
 
 class TuplePatternSpec extends Specification { def is =
-  "Tuple pattern specification."
+  "Tuple pattern specification."                                                      ^
+                                                                                      p^
+  "Tuple patterns are used by n-ary relations (n > 1)."                               ^
+  see(new RelationSpec)                                                               ^
+                                                                                      p^
+  "Tuple patterns match element by element, and return false on the first failure."   ^
+    "While its members match, the updated valuation is passed along"                  ^ bt^
+    "(1, \"a\", 0 :: 'b' :: Nip) vs. (1, \"a\", 0 :: 'b' :: Nil) true"                ! testTuple3_1 ^
+    "(1, \"a\", 0 :: 'b' :: Nip) vs. (1, \"a\", 0 :: 'c' :: Nil) true"                ! testTuple3_2 ^
+                                                                                      end
+
+  import RuleImplicits.const
+
+  val s = new Valuation
+
+  val tuple3 = new Tuple3Pattern[Int, String, ListPattern[Any]](1, "a", 0 :: 'b' :: Nip)
+  def testTuple3_1 = tuple3.matching((1, "a", 0 :: 'b' :: Nil), s)._1 must beTrue
+  def testTuple3_2 = tuple3.matching((1, "a", 0 :: 'c' :: Nil), s)._1 must beFalse
 }

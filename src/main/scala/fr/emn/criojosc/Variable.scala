@@ -22,7 +22,7 @@ package fr.emn.criojosc
 class Variable[+T] extends Pattern[T] {
   def matching[S >: T](proposed: S, s: Valuation) = s.get(this) match {
     case Some(real) => (proposed == real, s)
-    case None => (true, new Valuation(s +(this, proposed)))
+    case None => (true, s +(this, proposed))
   }
 
   def unary_!(implicit s: Valuation): T = (s.get(this) getOrElse

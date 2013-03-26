@@ -35,9 +35,13 @@ class ListPatternSpec extends Specification { def is =
   "It works recursively on many objects"                                  ! matchTest^
                                                                           end
 
+
   import RuleImplicits.const
+
   val s = new Valuation
+
   def consTest = (0 :: 1 :: 2 :: Nip) must beAnInstanceOf[Pattern[List[Int]]]
+
   def covTest = {
     class A
     class B extends A
@@ -46,6 +50,7 @@ class ListPatternSpec extends Specification { def is =
       ((a :: b :: Nip) must beAnInstanceOf[Pattern[List[A]]]) and
       ((1 :: b :: Nip) must beAnInstanceOf[Pattern[List[Any]]])
   }
+
   def nipTest = Nip.matching(Nil, s)._1 must beTrue
   def singletonTest = ("a" :: Nip).matching("a" :: Nil, s)._1 must beTrue
   def matchTest = (0 :: "a" :: Nip).matching(0 :: "a" :: Nil, s)._1 must beTrue
