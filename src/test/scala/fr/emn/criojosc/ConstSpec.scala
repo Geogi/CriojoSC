@@ -19,14 +19,14 @@
 
 package fr.emn.criojosc
 
-trait Pattern[+A] {
-  def matching[S >: A](proposed: S, s: Valuation): (Boolean, Valuation)
-}
+import org.specs2._
 
-class Const[+T](val c: T) extends Pattern[T] {
-  def matching[S >: T](proposed: S, s: Valuation) = (proposed == c, s)
-  override def toString = c match {
-    case s: String => "~\"" + s.replace("\"", "\\\"") + "\""
-    case _ => "~" + c
-  }
+class ConstSpec extends Specification { def is =
+  "Constant pattern specification."                           ^
+                                                              p^
+  "A constant pattern matches its value"                      ! constTest^
+                                                              end
+
+  val s = new Valuation
+  def constTest = new Const("a").matching("a", s)._1 must beTrue
 }

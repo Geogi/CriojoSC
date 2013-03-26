@@ -35,4 +35,6 @@ trait RuleImplicits {
   implicit def const[T](v: T) = new Const(v)
 }
 
+object RuleImplicits extends RuleImplicits
+
 class Conclusion(val content: Iterable[ClosedReactant])

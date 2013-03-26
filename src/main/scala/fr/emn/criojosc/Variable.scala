@@ -27,4 +27,6 @@ class Variable[+T] extends Pattern[T] {
 
   def unary_!(implicit s: Valuation): T = (s.get(this) getOrElse
     (throw new NoSuchElementException("Unbound variable"))).asInstanceOf[T]
+
+  override def toString = "x@" + java.lang.Integer.toHexString(hashCode)
 }
