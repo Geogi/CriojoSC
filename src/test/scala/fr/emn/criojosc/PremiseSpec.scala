@@ -22,5 +22,8 @@ package fr.emn.criojosc
 import org.specs2._
 
 class PremiseSpec extends Specification { def is =
-  "Premise specification."
+  "Premise specification."                      ^
+                                                p^
+  "Nothing to test"                             ! success^
+                                                end
 }

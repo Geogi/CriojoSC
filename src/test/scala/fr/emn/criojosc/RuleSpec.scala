@@ -22,5 +22,8 @@ package fr.emn.criojosc
 import org.specs2._
 
 class RuleSpec extends Specification { def is =
-  "Rule specification."
+  "Rule specification."                       ^
+                                              p^
+  "Nothing to test."                          ! success^
+                                              end
 }

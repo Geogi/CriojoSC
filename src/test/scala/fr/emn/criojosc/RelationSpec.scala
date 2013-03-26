@@ -22,5 +22,32 @@ package fr.emn.criojosc
 import org.specs2._
 
 class RelationSpec extends Specification { def is =
-  "Relation specification."
+  "Relation specification."                         ^
+                                                    p^
+  "Creating a new relation with its companion"      ^
+    "Unary"                                         ! createRelation1^
+    "Ternary"                                       ! createRelation3^
+                                                    p^
+  "The ? method creates an OpenAtom"                ^
+    "Unary"                                         ! instantiateOpenAtom1^
+    "Ternary"                                       ! instantiateOpenAtom3^
+                                                    p^
+  "The apply method creates a ClosedAtom"           ^
+    "Unary"                                         ! instantiateClosedAtom1^
+    "Ternary"                                       ! instantiateClosedAtom3^
+                                                    end
+
+  import RuleImplicits.const
+
+  val R1 = Relation[Int]
+  val R3 = Relation[Char, String, Int]
+
+  def createRelation1 =  R1 must beAnInstanceOf[TypedRelation[Int]]
+  def createRelation3 = R3 must beAnInstanceOf[TypedRelation3[Char, String, Int]]
+
+  def instantiateOpenAtom1 = R1?(1) must beAnInstanceOf[OpenReactant]
+  def instantiateOpenAtom3 = R3?('a', "a", 0) must beAnInstanceOf[OpenReactant]
+
+  def instantiateClosedAtom1 = R1(1) must beAnInstanceOf[ClosedReactant]
+  def instantiateClosedAtom3 = R3('a', "a", 0) must beAnInstanceOf[ClosedReactant]
 }

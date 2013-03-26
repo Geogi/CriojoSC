@@ -22,5 +22,8 @@ package fr.emn.criojosc
 import org.specs2._
 
 class SolutionSpec extends Specification { def is =
-  "Solution specification."
+  "Solution specification."                 ^
+                                            p^
+  "Solution is a stub..."                   ! pending^
+                                            end
 }
