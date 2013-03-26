@@ -38,6 +38,8 @@ class Tuple2Pattern[+T1, +T2](val origin: (Pattern[T1], Pattern[T2])) extends Pa
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ")"
 }
 
 class Tuple3Pattern[+T1, +T2, +T3](val origin: (Pattern[T1], Pattern[T2], Pattern[T3])) extends Pattern[(T1, T2, T3)] {
@@ -63,6 +65,8 @@ class Tuple3Pattern[+T1, +T2, +T3](val origin: (Pattern[T1], Pattern[T2], Patter
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ")"
 }
 
 class Tuple4Pattern[+T1, +T2, +T3, +T4](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4])) extends Pattern[(T1, T2, T3, T4)] {
@@ -92,6 +96,8 @@ class Tuple4Pattern[+T1, +T2, +T3, +T4](val origin: (Pattern[T1], Pattern[T2], P
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ")"
 }
 
 class Tuple5Pattern[+T1, +T2, +T3, +T4, +T5](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5])) extends Pattern[(T1, T2, T3, T4, T5)] {
@@ -125,6 +131,8 @@ class Tuple5Pattern[+T1, +T2, +T3, +T4, +T5](val origin: (Pattern[T1], Pattern[T
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ")"
 }
 
 class Tuple6Pattern[+T1, +T2, +T3, +T4, +T5, +T6](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6])) extends Pattern[(T1, T2, T3, T4, T5, T6)] {
@@ -162,6 +170,8 @@ class Tuple6Pattern[+T1, +T2, +T3, +T4, +T5, +T6](val origin: (Pattern[T1], Patt
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ")"
 }
 
 class Tuple7Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7)] {
@@ -203,6 +213,8 @@ class Tuple7Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7](val origin: (Pattern[T1],
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ")"
 }
 
 class Tuple8Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8)] {
@@ -248,6 +260,8 @@ class Tuple8Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8](val origin: (Pattern
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ")"
 }
 
 class Tuple9Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8], Pattern[T9])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8, T9)] {
@@ -297,6 +311,8 @@ class Tuple9Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9](val origin: (Pa
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ", " + origin._9 + ")"
 }
 
 class Tuple10Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8], Pattern[T9], Pattern[T10])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10)] {
@@ -350,6 +366,8 @@ class Tuple10Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10](val orig
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ", " + origin._9 + ", " + origin._10 + ")"
 }
 
 class Tuple11Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8], Pattern[T9], Pattern[T10], Pattern[T11])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11)] {
@@ -407,6 +425,8 @@ class Tuple11Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11](va
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ", " + origin._9 + ", " + origin._10 + ", " + origin._11 + ")"
 }
 
 class Tuple12Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T12](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8], Pattern[T9], Pattern[T10], Pattern[T11], Pattern[T12])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12)] {
@@ -468,6 +488,8 @@ class Tuple12Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ", " + origin._9 + ", " + origin._10 + ", " + origin._11 + ", " + origin._12 + ")"
 }
 
 class Tuple13Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T12, +T13](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8], Pattern[T9], Pattern[T10], Pattern[T11], Pattern[T12], Pattern[T13])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13)] {
@@ -533,6 +555,8 @@ class Tuple13Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ", " + origin._9 + ", " + origin._10 + ", " + origin._11 + ", " + origin._12 + ", " + origin._13 + ")"
 }
 
 class Tuple14Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T12, +T13, +T14](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8], Pattern[T9], Pattern[T10], Pattern[T11], Pattern[T12], Pattern[T13], Pattern[T14])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14)] {
@@ -602,6 +626,8 @@ class Tuple14Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ", " + origin._9 + ", " + origin._10 + ", " + origin._11 + ", " + origin._12 + ", " + origin._13 + ", " + origin._14 + ")"
 }
 
 class Tuple15Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T12, +T13, +T14, +T15](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8], Pattern[T9], Pattern[T10], Pattern[T11], Pattern[T12], Pattern[T13], Pattern[T14], Pattern[T15])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15)] {
@@ -675,6 +701,8 @@ class Tuple15Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ", " + origin._9 + ", " + origin._10 + ", " + origin._11 + ", " + origin._12 + ", " + origin._13 + ", " + origin._14 + ", " + origin._15 + ")"
 }
 
 class Tuple16Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T12, +T13, +T14, +T15, +T16](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8], Pattern[T9], Pattern[T10], Pattern[T11], Pattern[T12], Pattern[T13], Pattern[T14], Pattern[T15], Pattern[T16])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16)] {
@@ -752,6 +780,8 @@ class Tuple16Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ", " + origin._9 + ", " + origin._10 + ", " + origin._11 + ", " + origin._12 + ", " + origin._13 + ", " + origin._14 + ", " + origin._15 + ", " + origin._16 + ")"
 }
 
 class Tuple17Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T12, +T13, +T14, +T15, +T16, +T17](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8], Pattern[T9], Pattern[T10], Pattern[T11], Pattern[T12], Pattern[T13], Pattern[T14], Pattern[T15], Pattern[T16], Pattern[T17])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17)] {
@@ -833,6 +863,8 @@ class Tuple17Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ", " + origin._9 + ", " + origin._10 + ", " + origin._11 + ", " + origin._12 + ", " + origin._13 + ", " + origin._14 + ", " + origin._15 + ", " + origin._16 + ", " + origin._17 + ")"
 }
 
 class Tuple18Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T12, +T13, +T14, +T15, +T16, +T17, +T18](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8], Pattern[T9], Pattern[T10], Pattern[T11], Pattern[T12], Pattern[T13], Pattern[T14], Pattern[T15], Pattern[T16], Pattern[T17], Pattern[T18])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18)] {
@@ -918,6 +950,8 @@ class Tuple18Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ", " + origin._9 + ", " + origin._10 + ", " + origin._11 + ", " + origin._12 + ", " + origin._13 + ", " + origin._14 + ", " + origin._15 + ", " + origin._16 + ", " + origin._17 + ", " + origin._18 + ")"
 }
 
 class Tuple19Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T12, +T13, +T14, +T15, +T16, +T17, +T18, +T19](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8], Pattern[T9], Pattern[T10], Pattern[T11], Pattern[T12], Pattern[T13], Pattern[T14], Pattern[T15], Pattern[T16], Pattern[T17], Pattern[T18], Pattern[T19])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19)] {
@@ -1007,6 +1041,8 @@ class Tuple19Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ", " + origin._9 + ", " + origin._10 + ", " + origin._11 + ", " + origin._12 + ", " + origin._13 + ", " + origin._14 + ", " + origin._15 + ", " + origin._16 + ", " + origin._17 + ", " + origin._18 + ", " + origin._19 + ")"
 }
 
 class Tuple20Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T12, +T13, +T14, +T15, +T16, +T17, +T18, +T19, +T20](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8], Pattern[T9], Pattern[T10], Pattern[T11], Pattern[T12], Pattern[T13], Pattern[T14], Pattern[T15], Pattern[T16], Pattern[T17], Pattern[T18], Pattern[T19], Pattern[T20])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20)] {
@@ -1100,6 +1136,8 @@ class Tuple20Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ", " + origin._9 + ", " + origin._10 + ", " + origin._11 + ", " + origin._12 + ", " + origin._13 + ", " + origin._14 + ", " + origin._15 + ", " + origin._16 + ", " + origin._17 + ", " + origin._18 + ", " + origin._19 + ", " + origin._20 + ")"
 }
 
 class Tuple21Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T12, +T13, +T14, +T15, +T16, +T17, +T18, +T19, +T20, +T21](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8], Pattern[T9], Pattern[T10], Pattern[T11], Pattern[T12], Pattern[T13], Pattern[T14], Pattern[T15], Pattern[T16], Pattern[T17], Pattern[T18], Pattern[T19], Pattern[T20], Pattern[T21])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21)] {
@@ -1197,6 +1235,8 @@ class Tuple21Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ", " + origin._9 + ", " + origin._10 + ", " + origin._11 + ", " + origin._12 + ", " + origin._13 + ", " + origin._14 + ", " + origin._15 + ", " + origin._16 + ", " + origin._17 + ", " + origin._18 + ", " + origin._19 + ", " + origin._20 + ", " + origin._21 + ")"
 }
 
 class Tuple22Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T12, +T13, +T14, +T15, +T16, +T17, +T18, +T19, +T20, +T21, +T22](val origin: (Pattern[T1], Pattern[T2], Pattern[T3], Pattern[T4], Pattern[T5], Pattern[T6], Pattern[T7], Pattern[T8], Pattern[T9], Pattern[T10], Pattern[T11], Pattern[T12], Pattern[T13], Pattern[T14], Pattern[T15], Pattern[T16], Pattern[T17], Pattern[T18], Pattern[T19], Pattern[T20], Pattern[T21], Pattern[T22])) extends Pattern[(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14, T15, T16, T17, T18, T19, T20, T21, T22)] {
@@ -1298,5 +1338,7 @@ class Tuple22Pattern[+T1, +T2, +T3, +T4, +T5, +T6, +T7, +T8, +T9, +T10, +T11, +T
     ps = pr._2
     (true, ps)
   }
+
+  override def toString = "~(" + origin._1 + ", " + origin._2 + ", " + origin._3 + ", " + origin._4 + ", " + origin._5 + ", " + origin._6 + ", " + origin._7 + ", " + origin._8 + ", " + origin._9 + ", " + origin._10 + ", " + origin._11 + ", " + origin._12 + ", " + origin._13 + ", " + origin._14 + ", " + origin._15 + ", " + origin._16 + ", " + origin._17 + ", " + origin._18 + ", " + origin._19 + ", " + origin._20 + ", " + origin._21 + ", " + origin._22 + ")"
 }
 

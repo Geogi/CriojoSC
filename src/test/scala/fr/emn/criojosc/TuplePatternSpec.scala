@@ -37,7 +37,7 @@ class TuplePatternSpec extends Specification { def is =
 
   val s = new Valuation
 
-  val tuple3 = new Tuple3Pattern[Int, String, ListPattern[Any]](1, "a", 0 :: 'b' :: Nip)
+  val tuple3 = new Tuple3Pattern[Int, String, List[AnyVal]]((1, "a", 0 :: 'b' :: Nip))
   def testTuple3_1 = tuple3.matching((1, "a", 0 :: 'b' :: Nil), s)._1 must beTrue
   def testTuple3_2 = tuple3.matching((1, "a", 0 :: 'c' :: Nil), s)._1 must beFalse
 }
