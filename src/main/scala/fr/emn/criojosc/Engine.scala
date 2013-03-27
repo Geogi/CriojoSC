@@ -21,6 +21,4 @@ package fr.emn.criojosc
 
 trait Engine {
   val agents: Iterable[Agent]
-
-
 }

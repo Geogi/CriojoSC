@@ -17,36 +17,11 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.experimental
+package fr.emn.criojosc
+package experimental
 
-import fr.emn.criojosc._
-import language.experimental.macros
-import reflect.macros.Context
+import reflect.runtime.{universe => ru}
 
-object PrettyPrinter {
-  def printerVariables(r: Rule): Rule = macro printerVariablesImpl
+class PrettyPrinter(val agents: Iterable[Agent]) extends Engine {
 
-  def printerVariablesImpl(c: Context)(r: c.Expr[Rule]): c.Expr[Rule] = {
-    import c.universe._
-    c.Expr[Rule](Block())
-  }
-
-  def print(engine: Engine): String = engine.agents flatMap {
-    a =>
-      a.rules map {
-        r =>
-          a.toString + ": " + r.premise.reactants.map(_.toString).mkString(" & ") +
-            " --> "
-      }
-  } mkString ("\n")
-}
-
-case object DummyValuation extends Valuation
-
-class PrinterVariable(id: String, `type`: String) extends Variable[Unit] {
-  override def matching[S >: Nothing](p: S, s: Valuation) = (true, s)
-
-  override def unary_!(implicit s: Valuation) {
-
-  }
 }
