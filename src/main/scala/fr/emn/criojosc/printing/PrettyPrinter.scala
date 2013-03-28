@@ -18,9 +18,11 @@
  */
 
 package fr.emn.criojosc
+package printing
 
 import reflect.runtime.universe._
 import tools.reflect.ToolBox
+import fr.emn.criojosc.{Engine, Agent}
 
 class PrettyPrinter(val agents: Iterable[Agent]) extends Engine {
   def print: String = ""
