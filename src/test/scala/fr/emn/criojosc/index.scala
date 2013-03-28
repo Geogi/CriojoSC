@@ -82,7 +82,7 @@ class index extends Specification {
     val pattern = "\\s*package\\s*(.+)\\s*"
 
     // extract the packages section at the beginning of the file
-    val packages = content.split("\n").filterNot(_.isEmpty).map(_.trim).find(_.startsWith("package")).mkString("\n")
+    val packages = content.split("\n").filter(_.trim.startsWith("package")).mkString("\n")
     result(JavaPattern.compile(pattern).matcher(packages)).mkString(".")
   }
 }

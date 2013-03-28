@@ -18,22 +18,8 @@
  */
 
 package fr.emn.criojosc
-package printing
-
-import reflect.runtime.universe._
+package printer
 
 class PrettyPrinter(val agents: Iterable[Agent]) extends Engine {
   def print: String = ""
-}
-
-trait Printable[T] {
-  val ast: Expr[T]
-  protected val value = toolbox.compile(ast.asInstanceOf).asInstanceOf[T]
-}
-
-trait PrintableAgent extends Agent with Printable[Agent] {
-  val channels = value.channels
-  val relations = value.relations
-  val rules = value.rules
-  val solution = value.solution
 }
