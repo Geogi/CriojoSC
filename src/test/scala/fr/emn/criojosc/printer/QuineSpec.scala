@@ -21,7 +21,7 @@ package fr.emn.criojosc.printer
 
 import org.specs2._
 
-class PrintableSpec extends Specification { def is =
+class QuineSpec extends Specification { def is =
   "Printer trait specification"                                          ^
                                                                          p^
                                                                          end
