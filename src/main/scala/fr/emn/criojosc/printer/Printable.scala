@@ -19,16 +19,22 @@
 
 package fr.emn.criojosc.printer
 
-import reflect.runtime.universe._
-import tools.reflect.ToolBox
+import language.experimental.macros
+import reflect.macros.Context
 
-trait Printable[T] {
-  val ast: Expr[T]
-  def value: T = runtimeMirror(getClass.getClassLoader).mkToolBox().eval(ast.tree).asInstanceOf[]
+trait Quine[T] {
+  val ast: Context#Tree
+  val value: T
 }
 
-object Printable {
-  def apply[T](thisAst: Expr[T]): Printable[T] = new Printable[T] {
-    val ast = thisAst
+object Quine {
+  def quinize[T](obj: T): Quine[T] = macro quinizeImpl[T]
+  def quinizeImpl[T: c.WeakTypeTag](c: Context)(obj: c.Expr[T]): c.Expr[Quine[T]] = {
+    import c.universe._
+    val this_ast: Expr[Tree] = reify { Literal(Constant(obj.splice)) }
+    reify { new Quine[T] {
+      val ast = this_ast.splice
+      val value = obj.splice
+    }}
   }
 }

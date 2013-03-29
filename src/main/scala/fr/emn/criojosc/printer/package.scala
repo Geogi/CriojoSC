@@ -19,11 +19,5 @@
 
 package fr.emn.criojosc
 
-import reflect.runtime.currentMirror
-import tools.reflect.ToolBox
-import language.implicitConversions
-
 package object printer {
-  val toolbox = currentMirror.mkToolBox()
-  implicit def printable2Type[T](printable: Printable[T]) = printable.value
 }
