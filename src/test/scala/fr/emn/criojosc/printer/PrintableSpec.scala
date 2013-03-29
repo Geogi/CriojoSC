@@ -19,20 +19,10 @@
 
 package fr.emn.criojosc.printer
 
-import reflect.runtime.universe._
 import org.specs2._
 
 class PrintableSpec extends Specification { def is =
   "Printer trait specification"                                          ^
                                                                          p^
-  "lol"
                                                                          end
-
-  val c = Printable(reify(new A {
-    val b = "a"
-  }))
-
-  trait A {
-    val b: String
-  }
 }
