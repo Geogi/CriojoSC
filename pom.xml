@@ -82,33 +82,41 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <scalaVersionMajor>2.10</scalaVersionMajor>
+        <scalaVersionMinor>1</scalaVersionMinor>
+        <specs2Version>1.14</specs2Version>
+        <scalateVersion>1.6.1</scalateVersion>
+        <slf4jVersion>1.7.5</slf4jVersion>
+        <scalaPluginVersion>2.15.2</scalaPluginVersion>
+        <specs2PluginVersion>0.4.1</specs2PluginVersion>
+        <mavenReportsPluginVersion>2.6</mavenReportsPluginVersion>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
-            <version>2.10.0</version>
+            <version>${scalaVersionMajor}.${scalaVersionMinor}</version>
         </dependency>
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-compiler</artifactId>
-            <version>2.10.0</version>
+            <version>${scalaVersionMajor}.${scalaVersionMinor}</version>
         </dependency>
         <dependency>
             <groupId>org.specs2</groupId>
-            <artifactId>specs2_2.10</artifactId>
-            <version>1.14</version>
+            <artifactId>specs2_${scalaVersionMajor}</artifactId>
+            <version>${specs2Version}</version>
         </dependency>
         <dependency>
             <groupId>org.fusesource.scalate</groupId>
-            <artifactId>scalate-core_2.10</artifactId>
-            <version>1.6.1</version>
+            <artifactId>scalate-core_${scalaVersionMajor}</artifactId>
+            <version>${scalateVersion}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.4</version>
+            <version>${slf4jVersion}</version>
         </dependency>
     </dependencies>
 
@@ -117,7 +125,7 @@
             <plugin>
                 <groupId>org.scala-tools</groupId>
                 <artifactId>maven-scala-plugin</artifactId>
-                <version>2.15.2</version>
+                <version>${scalaPluginVersion}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -138,7 +146,7 @@
             <plugin>
                 <groupId>com.mmakowski</groupId>
                 <artifactId>maven-specs2-plugin</artifactId>
-                <version>0.4.1</version>
+                <version>${specs2PluginVersion}</version>
                 <executions>
                     <execution>
                         <id>verify</id>
@@ -156,12 +164,12 @@
             <plugin>
                 <groupId>org.scala-tools</groupId>
                 <artifactId>maven-scala-plugin</artifactId>
-                <version>2.15.2</version>
+                <version>${scalaPluginVersion}</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>2.6</version>
+                <version>${mavenReportsPluginVersion}</version>
                 <reportSets>
                     <reportSet>
                         <reports>
