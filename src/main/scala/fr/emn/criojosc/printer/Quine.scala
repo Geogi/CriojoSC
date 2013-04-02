@@ -22,8 +22,8 @@ package fr.emn.criojosc.printer
 import language.experimental.macros
 import reflect.macros.Context
 
-trait Quine[T] {
-  val ast: Context#Tree
+trait Quine[+T] {
+  val ast: String
   val value: T
 }
 
@@ -31,10 +31,11 @@ object Quine {
   def quinize[T](obj: T): Quine[T] = macro quinizeImpl[T]
   def quinizeImpl[T: c.WeakTypeTag](c: Context)(obj: c.Expr[T]): c.Expr[Quine[T]] = {
     import c.universe._
-    val this_ast: Expr[Tree] = reify { Literal(Constant(obj.splice)) }
-    reify { new Quine[T] {
-      val ast = this_ast.splice
-      val value = obj.splice
-    }}
+    reify {
+      new Quine[T] {
+        val ast = c.Expr[String](Literal(Constant(showRaw(obj)))).splice
+        val value = obj.splice
+      }
+    }
   }
 }
