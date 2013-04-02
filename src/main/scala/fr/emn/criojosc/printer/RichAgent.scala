@@ -22,17 +22,17 @@ package fr.emn.criojosc.printer
 import language.experimental.macros
 import reflect.macros.Context
 
-trait Quine[+T] {
+trait RichAgent[+T] {
   val ast: String
   val value: T
 }
 
-object Quine {
-  def quinize[T](obj: T): Quine[T] = macro quinizeImpl[T]
-  def quinizeImpl[T: c.WeakTypeTag](c: Context)(obj: c.Expr[T]): c.Expr[Quine[T]] = {
+object RichAgent {
+  def quinize[T](obj: T): RichAgent[T] = macro quinizeImpl[T]
+  def quinizeImpl[T: c.WeakTypeTag](c: Context)(obj: c.Expr[T]): c.Expr[RichAgent[T]] = {
     import c.universe._
     reify {
-      new Quine[T] {
+      new RichAgent[T] {
         val ast = c.Expr[String](Literal(Constant(showRaw(obj)))).splice
         val value = obj.splice
       }
