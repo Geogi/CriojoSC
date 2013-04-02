@@ -17,8 +17,8 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
+package fr.emn.criojosc.printer
 
-package object printer {
-  //def _r(a: Agent) = RichAgent.enrich(a)
+trait Named {
+  val name: String
 }
