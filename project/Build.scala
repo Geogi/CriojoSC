@@ -21,7 +21,7 @@ import sbt._
 import Keys._
 
 object CriojoSCBuild extends Build {
-  lazy val main = Project("main", file("main")) dependsOn(generate, macros, common)
+  lazy val main = Project("main", file("main")) dependsOn(generate % "generate-sources", macros, common)
   lazy val common = Project("common", file("common"))
   lazy val macros = Project("macros", file("macros")) dependsOn(common) settings(
     libraryDependencies <+= scalaVersion("org.scala-lang" % "scala-compiler" % _)
