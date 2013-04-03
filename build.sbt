@@ -1,5 +1,7 @@
 name := "CriojoSC"
 
-version := "0.2-SNAPSHOT"
+version in ThisBuild := "0.2-SNAPSHOT"
 
-scalaVersion := "2.10.1"
+scalaVersion in ThisBuild := "2.10.1"
+
+libraryDependencies += ("org.specs2" %% "specs2" % "1.14" % "test")

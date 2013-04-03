@@ -30,7 +30,7 @@ object Generate {
     def accept(p1: File): Boolean = p1.isDirectory || p1.getName.endsWith(".ssp")
   }
 
-  val srcDir = new File(System.getProperty("user.dir"), "main" + File.separator + "src")
+  val srcDir = new File(System.getProperty("user.dir"), "src")
   val srcDirPath = srcDir.getPath
 
   def printWriter(f: File) = new PrintWriter(srcDirPath + f.getPath.replaceFirst(srcDirPath, "").

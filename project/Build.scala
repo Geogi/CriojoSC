@@ -21,12 +21,13 @@ import sbt._
 import Keys._
 
 object CriojoSCBuild extends Build {
-  lazy val main = Project("main", file(".")) dependsOn(generate % "generate-sources", macros, common)
+  lazy val main = Project("main", file(".")) dependsOn(generate % "runtime->compile", macros, common)
   lazy val common = Project("common", file("common"))
   lazy val macros = Project("macros", file("macros")) dependsOn(common) settings(
     libraryDependencies <+= scalaVersion("org.scala-lang" % "scala-compiler" % _)
     )
   lazy val generate = Project("generate", file("generate")) settings(
-    libraryDependencies += ("org.fusesource.scalate" % "scalate-core_2.10" % "1.6.1")
+    libraryDependencies ++= Seq("org.fusesource.scalate" %% "scalate-core" % "1.6.1",
+                                "org.slf4j" % "slf4j-simple" % "1.7.5")
     )
 }
