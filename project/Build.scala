@@ -20,9 +20,13 @@
 import sbt._
 import Keys._
 
-object MacroBuild extends Build {
-  lazy val main = Project("main", file(".")) dependsOn(macroSub)
-  lazy val macros = Project("macro", file("macro")) settings(
+object CriojoSCBuild extends Build {
+  lazy val main = Project("main", file("main")) dependsOn(generate, macros, common)
+  lazy val common = Project("common", file("common"))
+  lazy val macros = Project("macros", file("macros")) dependsOn(common) settings(
     libraryDependencies <+= scalaVersion("org.scala-lang" % "scala-compiler" % _)
+    )
+  lazy val generate = Project("generate", file("generate")) settings(
+    libraryDependencies += ("org.fusesource.scalate" % "scalate-core_2.10" % "1.6.1")
     )
 }
