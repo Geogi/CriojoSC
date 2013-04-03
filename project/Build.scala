@@ -17,6 +17,8 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import sbt._
+import Keys._
 
 object MacroBuild extends Build {
   lazy val main = Project("main", file(".")) dependsOn(macroSub)
