@@ -36,7 +36,7 @@ package fr.emn.criojosc
 
 /** An identifier for an unary atom. See [[fr.emn.criojosc.TypedRelation]] for more details. */
 class TypedRelation[T] extends Relation {
-  def apply(v: T) = new ClosedAtom(this, v)
+  def apply(v: T) = RelationMacros.genClosedAtom(this, v)
 
   def ?(p: Pattern[T]): OpenAtom = new OpenAtom(this, p)
 }

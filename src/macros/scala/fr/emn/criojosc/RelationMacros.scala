@@ -17,25 +17,15 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-<%
- def gt(i: Int, f: (Int) => String) = (1 to i).map(f).mkString(", ")
- def tl(i: Int) = gt(i, "T" + _)
-%>
 package fr.emn.criojosc
 
-trait Relation extends EntitySymbol
+import language.experimental.macros
+import reflect.macros.Context
 
-object Relation {
-  def apply[T1] = new TypedRelation[T1]
-#for (i <- 2 to 22)
-  def apply[<%=tl(i)%>] = new TypedRelation<%=i%>[<%=tl(i)%>]
-#end
+object RelationMacros {
+  def genClosedAtom(symbol: Relation, value: Any): ClosedAtom = macro genClosedAtomImpl
+  def genClosedAtomImpl(c: Context)(symbol: c.Expr[Relation], value: c.Expr[Any]): c.Expr[ClosedAtom] = {
+    import c.universe._
+    reify(new ClosedAtom(symbol.splice, value.splice, c.Expr[String](Literal(Constant(show(value)))).splice))
+  }
 }
-
-#for (i <- 2 to 22)
-class TypedRelation<%=i%>[<%=tl(i)%>] extends Relation {
-  def apply(<%=gt(i, j => "v" + j + ": T" + j)%>) = RelationMacros.genClosedAtom(this, (<%=gt(i, "v" + _)%>))
-  def ?(<%=gt(i,j => "p" + j + ": Pattern[T" + j + "]")%>) = new OpenAtom(this, new Tuple<%=i%>Pattern((<%=gt(i, "p" + _)%>)))
-}
-
-#end
