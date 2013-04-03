@@ -24,13 +24,12 @@ import org.fusesource.scalate.TemplateEngine
 
 object Generate {
   val engine = new TemplateEngine
-  engine.escapeMarkup = false
 
   val templateFilter = new FileFilter {
     def accept(p1: File): Boolean = p1.isDirectory || p1.getName.endsWith(".ssp")
   }
 
-  val srcDir = new File(System.getProperty("user.dir"), "src")
+  val srcDir = new File(System.getProperty("user.dir"), "generate")
   val srcDirPath = srcDir.getPath
 
   def printWriter(f: File) = new PrintWriter(srcDirPath + f.getPath.replaceFirst(srcDirPath, "").
@@ -42,9 +41,11 @@ object Generate {
   }
 
   def main(args: Array[String]) {
+    engine.escapeMarkup = false
     recurGetTemplates(srcDir).foreach {
       f =>
         val writer = printWriter(f)
+        println(f.getAbsolutePath)
         engine.layout(f.getPath, writer, Map.empty[String, Any])
         val error = writer.checkError
         writer.close()

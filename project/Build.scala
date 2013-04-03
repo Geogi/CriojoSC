@@ -21,7 +21,7 @@ import sbt._
 import Keys._
 
 object CriojoSCBuild extends Build {
-  lazy val main = Project("main", file(".")) dependsOn(generate % "runner->compile", macros, common) settings(
+  lazy val main = Project("main", file(".")) dependsOn(generate, macros, common) settings(
     mappings in (Compile, packageBin) <++= mappings in (common, Compile, packageBin),
     mappings in (Compile, packageSrc) <++= mappings in (common, Compile, packageSrc),
     mappings in (Compile, packageBin) <++= mappings in (macros, Compile, packageBin),
