@@ -29,11 +29,10 @@ object Generate {
     def accept(p1: File): Boolean = p1.isDirectory || p1.getName.endsWith(".ssp")
   }
 
-  val srcDir = new File(System.getProperty("user.dir"), "generate")
+  val srcDir = new File(System.getProperty("user.dir"))
   val srcDirPath = srcDir.getPath
 
-  def printWriter(f: File) = new PrintWriter(srcDirPath + f.getPath.replaceFirst(srcDirPath, "").
-    replaceFirst("generate", "main").replaceFirst(".ssp$", ".scala"))
+  def printWriter(f: File) = new PrintWriter(f.getPath.replaceFirst(".ssp$", ".scala"))
 
   def recurGetTemplates(f: File): Array[File] = {
     val files = f.listFiles(templateFilter)
@@ -45,7 +44,6 @@ object Generate {
     recurGetTemplates(srcDir).foreach {
       f =>
         val writer = printWriter(f)
-        println(f.getAbsolutePath)
         engine.layout(f.getPath, writer, Map.empty[String, Any])
         val error = writer.checkError
         writer.close()
