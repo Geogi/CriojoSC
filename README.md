@@ -11,16 +11,12 @@ Some useful resources:
 
 Building
 --------
-1. Install the following dependencies: [Git](http://git-scm.com/), [Maven](http://maven.apache.org/). On Linux, get them from your distro repositories.
-2. Clone from GitHub: `$ git clone https://github.com/Geogi/criojomin.git`.
-3. Compile CriojoSC: `$ mvn compile`. The .class files will be located at `target/fr/emn/criojosc/`.
-4. If you want the JAR: `$ mvn package`. It will be located at `target/`.
+The build chain is currently in disarray, and will be until I complete the switch to SBT.
+Use 62473a6c60f9d70b3408141ef4c693220928b0cc if needed.
 
 Generating the API
 ------------------
-Do the first two steps above then `$ mvn site`. The API will be located at `target/site/scaladocs/index.html`.
-
-The [Specs2](http://etorreborre.github.com/specs2/) specification can be generated with `$ mvn verify`. It will be located at `target/specs2-reports/index.html`.
+Same as Building above.
 
 Using
 -----
