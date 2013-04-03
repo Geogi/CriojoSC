@@ -21,7 +21,12 @@ import sbt._
 import Keys._
 
 object CriojoSCBuild extends Build {
-  lazy val main = Project("main", file(".")) dependsOn(generate % "runtime->compile", macros, common)
+  lazy val main = Project("main", file(".")) dependsOn(generate % "runner->compile", macros, common) settings(
+    mappings in (Compile, packageBin) <++= mappings in (common, Compile, packageBin),
+    mappings in (Compile, packageSrc) <++= mappings in (common, Compile, packageSrc),
+    mappings in (Compile, packageBin) <++= mappings in (macros, Compile, packageBin),
+    mappings in (Compile, packageSrc) <++= mappings in (macros, Compile, packageSrc)
+    )
   lazy val common = Project("common", file("common"))
   lazy val macros = Project("macros", file("macros")) dependsOn(common) settings(
     libraryDependencies <+= scalaVersion("org.scala-lang" % "scala-compiler" % _)
