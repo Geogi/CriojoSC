@@ -17,13 +17,14 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import java.nio.file.Files
 import sbt._
 import Keys._
 import java.io.{IOException, PrintWriter, FileFilter, File}
 import org.fusesource.scalate.TemplateEngine
 
 object CriojoSCBuild extends Build {
-  lazy val main = Project("main", file(".")) dependsOn(generate, macros, common) settings(
+  lazy val main = Project("main", file(".")) dependsOn(macros, common) settings(
     mappings in (Compile, packageBin) <++= mappings in (common, Compile, packageBin),
     mappings in (Compile, packageSrc) <++= mappings in (common, Compile, packageSrc),
     mappings in (Compile, packageBin) <++= mappings in (macros, Compile, packageBin),
@@ -31,7 +32,6 @@ object CriojoSCBuild extends Build {
     )
   lazy val common = Project("common", file("common"))
   lazy val macros = Project("macros", file("macros")) dependsOn(common)
-  lazy val generate = Project("generate", file("generate"))
 }
 
 object Generate {
@@ -49,7 +49,8 @@ object Generate {
   }
 
   def generateSources(outDir: File): Seq[File] = {
-    engine.escapeMarkup = false
+    if (!outDir.exists)
+      Files.createDirectories(outDir.toPath)
     recurGetTemplates(srcDir).map { f =>
         val generated = new File(outDir, f.getName.replaceFirst(".ssp$", ".scala"))
         val writer = new PrintWriter(generated)
