@@ -19,6 +19,8 @@
 
 import sbt._
 import Keys._
+import java.io.{IOException, PrintWriter, FileFilter, File}
+import org.fusesource.scalate.TemplateEngine
 
 object CriojoSCBuild extends Build {
   lazy val main = Project("main", file(".")) dependsOn(generate, macros, common) settings(
@@ -30,5 +32,33 @@ object CriojoSCBuild extends Build {
   lazy val common = Project("common", file("common"))
   lazy val macros = Project("macros", file("macros")) dependsOn(common)
   lazy val generate = Project("generate", file("generate"))
-  val generateSources = TaskKey[Unit]("generateCode", "Runs a template engine to generate source code.")
+}
+
+object Generate {
+  val engine = new TemplateEngine
+
+  val templateFilter = new FileFilter {
+    def accept(p1: File): Boolean = p1.isDirectory || p1.getName.endsWith(".ssp")
+  }
+
+  val srcDir = new File(System.getProperty("user.dir"))
+
+  def recurGetTemplates(f: File): Array[File] = {
+    val files = f.listFiles(templateFilter)
+    files.filter(_.isFile) ++ files.filter(_.isDirectory).flatMap(recurGetTemplates)
+  }
+
+  def generateSources(outDir: File): Seq[File] = {
+    engine.escapeMarkup = false
+    recurGetTemplates(srcDir).map { f =>
+        val generated = new File(outDir, f.getName.replaceFirst(".ssp$", ".scala"))
+        val writer = new PrintWriter(generated)
+        engine.layout(f.getPath, writer, Map.empty[String, Any])
+        val error = writer.checkError
+        writer.close()
+        if (error)
+          throw new IOException("error during template writing")
+        generated
+    }
+  }
 }
