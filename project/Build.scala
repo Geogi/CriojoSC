@@ -28,11 +28,7 @@ object CriojoSCBuild extends Build {
     mappings in (Compile, packageSrc) <++= mappings in (macros, Compile, packageSrc)
     )
   lazy val common = Project("common", file("common"))
-  lazy val macros = Project("macros", file("macros")) dependsOn(common) settings(
-    libraryDependencies <+= scalaVersion("org.scala-lang" % "scala-compiler" % _)
-    )
-  lazy val generate = Project("generate", file("generate")) settings(
-    libraryDependencies ++= Seq("org.fusesource.scalate" %% "scalate-core" % "1.6.1",
-                                "org.slf4j" % "slf4j-simple" % "1.7.5")
-    )
+  lazy val macros = Project("macros", file("macros")) dependsOn(common)
+  lazy val generate = Project("generate", file("generate"))
+  val generateSources = TaskKey[Unit]("generateCode", "Runs a template engine to generate source code.")
 }
