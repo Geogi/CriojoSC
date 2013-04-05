@@ -65,7 +65,7 @@ class index extends Specification {
     val CLASSNAME_REGEX = """([\p{L}_$][\p{L}\p{N}_$]*\.)*[\p{L}_$][\p{L}\p{N}_$]*""".r
     def result(m: Matcher): Stream[String] =
       if (m.find) {
-        val fullName = List(packageName, m.group(1).trim).mkString(".") + suffix
+        val fullName = List(packageName, m.group(1).trim).mkString("") + suffix
         Stream.cons(fullName, result(m))
       } else Stream.empty
 
@@ -83,6 +83,6 @@ class index extends Specification {
 
     // extract the packages section at the beginning of the file
     val packages = content.split("\n").filter(_.trim.startsWith("package")).mkString("\n")
-    result(JavaPattern.compile(pattern).matcher(packages)).mkString(".")
+    result(JavaPattern.compile(pattern).matcher(packages)).mkString("")
   }
 }
