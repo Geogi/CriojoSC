@@ -11,12 +11,16 @@ Some useful resources:
 
 Building
 --------
-The build chain is currently in disarray, and will be until I complete the switch to SBT.
-Use 62473a6c60f9d70b3408141ef4c693220928b0cc if needed.
+1. Install the following dependencies: [Git](http://git-scm.com/), [SBT](http://www.scala-sbt.org/). On Linux, get them from your distro repositories.
+2. Clone from GitHub: `$ git clone https://github.com/Geogi/criojomin.git`.
+3. Run the code generator then compile CriojoSC: `$ sbt sbt ";project generate; run; project main; compile"`. The .class files will be located at `target/${scalaVersion}/classes/`.
+4. If you want the JAR: `$ sbt package`. It will be located at `target/`.
 
 Generating the API
 ------------------
-Same as Building above.
+Do the first two steps above then `$ sbt doc`. The API will be located at `target/${scalaVersion}/api/index.html`.
+
+The [Specs2](http://etorreborre.github.com/specs2/) specification can be generated with `$ sbt test`. It will be located at `target/specs2-reports/index.html`.
 
 Using
 -----
