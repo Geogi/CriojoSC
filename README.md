@@ -17,6 +17,9 @@ Building
    The .class files will be located at `target/${scalaVersion}/classes/`.
 4. If you want the JAR: `$ sbt package`. It will be located at `target/`.
 
+If you get a lot of memory related exceptions when running SBT, run the following and retry (in the same console):
+`export SBT_OPTS="-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=384M"`
+
 Generating the API
 ------------------
 Build the project then `$ sbt doc`. The API will be located at `target/${scalaVersion}/api/index.html`.
