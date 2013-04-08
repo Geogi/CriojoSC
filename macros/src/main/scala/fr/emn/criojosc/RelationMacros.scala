@@ -18,14 +18,14 @@
  */
 
 package fr.emn.criojosc
-
+/*
 import language.experimental.macros
 import reflect.macros.Context
-
+*/
 object RelationMacros {
-  def genClosedAtom(symbol: Relation, value: Any): ClosedAtom = macro genClosedAtomImpl
-  def genClosedAtomImpl(c: Context)(symbol: c.Expr[Relation], value: c.Expr[Any]): c.Expr[ClosedAtom] = {
+  def genClosedAtom(symbol: RelationSymbol, value: Any): ClosedAtom = new ClosedAtom(symbol, value, "")/*macro genClosedAtomImpl
+  def genClosedAtomImpl(c: Context)(symbol: c.Expr[RelationSymbol], value: c.Expr[Any]): c.Expr[ClosedAtom] = {
     import c.universe._
     reify(new ClosedAtom(symbol.splice, value.splice, c.Expr[String](Literal(Constant(show(value)))).splice))
-  }
+  }*/
 }

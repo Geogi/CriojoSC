@@ -27,7 +27,7 @@ package fr.emn.criojosc
   *
   * Usage:
   * {{{
-  * val R = Relation[Int]          // TypedRelation
+  * val R = RelationSymbol[Int]          // TypedRelation
   * val p = Var[Int]               // Pattern
   * R(p)                           // OpenAtom (argument is a Pattern)
   * R(!p)                          // ClosedAtom (argument is not a Pattern)
@@ -35,7 +35,7 @@ package fr.emn.criojosc
   */
 
 /** An identifier for an unary atom. See [[fr.emn.criojosc.TypedRelation]] for more details. */
-class TypedRelation[T] extends Relation {
+class TypedRelation[T] extends RelationSymbol {
   def apply(v: T) = RelationMacros.genClosedAtom(this, v)
 
   def ?(p: Pattern[T]): OpenAtom = new OpenAtom(this, p)

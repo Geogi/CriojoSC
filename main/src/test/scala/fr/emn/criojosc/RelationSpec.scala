@@ -22,7 +22,7 @@ package fr.emn.criojosc
 import org.specs2._
 
 class RelationSpec extends Specification { def is =
-  "Relation specification."                         ^
+  "RelationSymbol specification."                         ^
                                                     p^
   "Creating a new relation with its companion"      ^
     "Unary"                                         ! createRelation1^

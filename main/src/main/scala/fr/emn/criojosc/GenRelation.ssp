@@ -31,7 +31,7 @@ object Relation {
 }
 
 #for (i <- 2 to 22)
-class TypedRelation<%=i%>[<%=tl(i)%>] extends Relation {
+class TypedRelation<%=i%>[<%=tl(i)%>] extends RelationSymbol {
   def apply(<%=gt(i, j => "v" + j + ": T" + j)%>) = RelationMacros.genClosedAtom(this, (<%=gt(i, "v" + _)%>))
   def ?(<%=gt(i,j => "p" + j + ": Pattern[T" + j + "]")%>) = new OpenAtom(this, new Tuple<%=i%>Pattern((<%=gt(i, "p" + _)%>)))
 }

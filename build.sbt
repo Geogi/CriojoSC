@@ -9,4 +9,4 @@ libraryDependencies ++= Seq("org.specs2" %% "specs2" % "1.14" % "test",
 
 testOptions in Test += Tests.Argument("html")
 
-javaOptions in ThisBuild += "-Xmx4096m"
+javaOptions in Compile += "-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=384M"

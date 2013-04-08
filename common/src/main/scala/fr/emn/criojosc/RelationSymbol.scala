@@ -19,4 +19,4 @@
 
 package fr.emn.criojosc
 
-trait Relation extends EntitySymbol
+trait RelationSymbol extends EntitySymbol
