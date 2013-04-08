@@ -18,9 +18,17 @@
  */
 
 import sbt._
+import Keys._
 
 object CriojoSCBuild extends Build {
-  lazy val root = Project("criojosc-root", file(".")) aggregate(main, macros, common)
+  lazy val root = Project("criojosc-root", file(".")) aggregate(main, macros, common) settings (
+    mappings in (Compile, packageBin) <++= mappings in (main, Compile, packageBin),
+    mappings in (Compile, packageSrc) <++= mappings in (main, Compile, packageSrc),
+    mappings in (Compile, packageBin) <++= mappings in (macros, Compile, packageBin),
+    mappings in (Compile, packageSrc) <++= mappings in (macros, Compile, packageSrc),
+    mappings in (Compile, packageBin) <++= mappings in (common, Compile, packageBin),
+    mappings in (Compile, packageSrc) <++= mappings in (common, Compile, packageSrc)
+    )
   lazy val main = Project("criojosc-main", file("main")) dependsOn(macros, common)
   lazy val macros = Project("criojosc-macros", file("macros")) dependsOn(common)
   lazy val common = Project("criojosc-common", file("common"))

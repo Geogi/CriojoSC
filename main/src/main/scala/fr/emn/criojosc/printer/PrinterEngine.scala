@@ -18,13 +18,15 @@
  */
 
 package fr.emn.criojosc
+package printer
 
-trait ChannelSymbol extends EntitySymbol
-
-/** A communication channel between agents. !CURRENTLY A STUB! */
-trait Channel[T] extends ChannelSymbol {
-  val info: ChannelInfo
+class PrinterEngine(val agents: Iterable[Agent]) extends Engine {
+  def run() {
+    println(
+      agents.map{ agent =>
+        "agent" + (agent.relations ++ agent.channels).mkString("[", ", ", "]") +
+          agent.solution.content.mkString("(", ", ", ")") + " {\n}"
+      }.mkString("\n")
+    )
+  }
 }
-
-
-object Channel

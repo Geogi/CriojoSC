@@ -19,8 +19,4 @@
 
 package fr.emn.criojosc
 
-
-
-
-
-class ClosedMessage(val symbol: EntitySymbol, val info: ChannelInfo, val value: Any, override val toString: String) extends ClosedReactant
+class ChannelInfo
