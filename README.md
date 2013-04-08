@@ -19,7 +19,7 @@ Building
 
 Generating the API
 ------------------
-Do the first two steps above then `$ sbt doc`. The API will be located at `target/${scalaVersion}/api/index.html`.
+Build the project then `$ sbt doc`. The API will be located at `target/${scalaVersion}/api/index.html`.
 
 The [Specs2](http://etorreborre.github.com/specs2/) specification can be generated with `$ sbt test`. It will be located at `target/specs2-reports/index.html`.
 
