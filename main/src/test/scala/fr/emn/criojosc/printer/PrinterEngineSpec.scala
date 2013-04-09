@@ -33,13 +33,13 @@ class PrinterEngineSpec extends Specification { def is =
       val R = Relation[List[String], Int]
       val A = new Rule {
         val x = Var[String]
-        val premise = R?(x :: Nip, 1)
+        val premise = new Premise(List(R?(x :: Nip, 1)))
         def right_hand(implicit s: Valuation) = (true, new Conclusion(R(!x :: "a" :: Nil, 2) :: Nil))
       }
       val channels = Nil
       val relations = Seq(R)
       val rules = Seq(A)
-      val solution = Seq(R("a" :: Nil, 1))
+      val solution = Solution(R("a" :: Nil, 1))
     }
     val stream = new java.io.ByteArrayOutputStream()
     Console.withOut(stream) {
