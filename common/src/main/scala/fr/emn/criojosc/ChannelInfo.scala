@@ -19,4 +19,4 @@
 
 package fr.emn.criojosc
 
-class ChannelInfo
+trait ChannelInfo

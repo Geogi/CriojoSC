@@ -25,7 +25,7 @@ import org.specs2._
 class PrinterEngineSpec extends Specification { def is =
   "Printer engine specification."                         ^
                                                           p^
-  "Print two agents"                                      ! success ^
+  "Print two agents"                                      ! testPrinter ^
                                                           end
 
   def testPrinter = {
@@ -34,10 +34,8 @@ class PrinterEngineSpec extends Specification { def is =
       val A = new Rule {
         val x = Var[String]
         val premise = new Premise(List(R?(x :: Nip, 1)))
-        def right_hand(implicit s: Valuation) = (true, new Conclusion(R(!x :: "a" :: Nil, 2) :: Nil))
+        def right_hand(implicit s: Valuation) = (true, new Conclusion(R(!x :: "a" :: Nil, 1) :: Nil))
       }
-      val channels = Nil
-      val relations = Seq(R)
       val rules = Seq(A)
       val solution = Solution(R("a" :: Nil, 1))
     }
@@ -47,9 +45,8 @@ class PrinterEngineSpec extends Specification { def is =
     }
     val output = stream.toString
     stream.close()
-    output must beMatching(
-      """agent\[R@[0-9]{7}\] {
+    output === """agent[R] {
         |}
-      """.stripMargin)
+        |""".stripMargin
   }
 }

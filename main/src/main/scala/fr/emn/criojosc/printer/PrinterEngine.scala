@@ -21,12 +21,20 @@ package fr.emn.criojosc
 package printer
 
 class PrinterEngine(val agents: Iterable[Agent]) extends Engine {
+  import PrinterEngine._
+
+  private val someEntity = new EntitySymbol
+
   def run() {
     println(
       agents.map{ agent =>
-        "agent" + (agent.relations ++ agent.channels).mkString("[", ", ", "]") +
-          agent.solution.content.mkString("(", ", ", ")") + " {\n}"
+        "agent[" + membersOfType(agent, someEntity).mkString(", ") + "] {\n}"
       }.mkString("\n")
     )
   }
+}
+
+object PrinterEngine {
+  def membersOfType(p: Object, s: Object) = p.getClass.getMethods.
+    filter(m => s.getClass.isAssignableFrom(m.getReturnType)).map(_.getName)
 }
