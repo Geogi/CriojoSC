@@ -30,4 +30,4 @@ package fr.emn.criojosc
   * @param symbol The Atom this instance refers to.
   * @param value The value (Any) that defines the state of this instance.
   */
-class ClosedAtom(val symbol: EntitySymbol, val value: Any, override val toString: String) extends ClosedReactant
+class ClosedAtom(val symbol: EntitySymbol, val value: Any, val metadata: CRMetadata) extends ClosedReactant

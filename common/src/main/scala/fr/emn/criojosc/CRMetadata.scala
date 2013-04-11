@@ -19,13 +19,5 @@
 
 package fr.emn.criojosc
 
-/** Something that exist in the [[fr.emn.criojosc.Solution]] or can be created by a [[fr.emn.criojosc.Rule]]. */
-trait ClosedReactant {
-  def value: Any
-
-  def symbol: EntitySymbol
-
-  def metadata: CRMetadata
-
-  override def toString = metadata.asString
-}
+case class CRMetadata(asString: String,
+                      allExcl: Iterable[String])
