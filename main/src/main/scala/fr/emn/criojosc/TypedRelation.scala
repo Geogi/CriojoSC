@@ -38,7 +38,7 @@ import language.experimental.macros
 
 /** An identifier for an unary atom. See [[fr.emn.criojosc.TypedRelation]] for more details. */
 class TypedRelation[T] extends RelationSymbol {
-  def apply(v: T) = macro RelationMacros.genClosedAtom
+  def apply(v: T): ClosedAtom = macro RelationMacros.genClosedAtom
 
   def ?(p: Pattern[T]): OpenAtom = new OpenAtom(this, p)
 }
