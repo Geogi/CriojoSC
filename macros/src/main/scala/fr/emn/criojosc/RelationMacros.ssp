@@ -25,14 +25,14 @@ package fr.emn.criojosc
 import reflect.macros.Context
 
 object RelationMacros {
-  def genClosedAtom(c: Context)(v: c.Expr[Any])(symbol: c.Expr[RelationSymbol]): c.Expr[ClosedAtom] = {
+  def genClosedAtom(c: Context { type PrefixType = EntitySymbol })(v: c.Expr[Any]): c.Expr[ClosedAtom] = {
     import c.universe._
-    reify(new ClosedAtom(symbol.splice, v.splice, c.Expr[String](Literal(Constant(show(v)))).splice))
+    reify(new ClosedAtom(c.prefix.splice, v.splice, c.Expr[String](Literal(Constant(show(v)))).splice))
   }
 #for (i <- 2 to 22)
-  def genClosedAtom<%=i%>[<%=gt(i, "T" + _ + ": c.WeakTypeTag")%>](c: Context)(<%=gt(i, j => "v" + j + ": c.Expr[T" + j + "]")%>)(symbol: c.Expr[RelationSymbol]): c.Expr[ClosedAtom] = {
+  def genClosedAtom<%=i%>[<%=gt(i, "T" + _ + ": c.WeakTypeTag")%>](c: Context { type PrefixType = EntitySymbol })(<%=gt(i, j => "v" + j + ": c.Expr[T" + j + "]")%>): c.Expr[ClosedAtom] = {
     import c.universe._
-    genClosedAtom(c)(reify((<%=gt(i, "v" + _ + ".splice")%>)))(symbol)
+    genClosedAtom(c)(reify((<%=gt(i, "v" + _ + ".splice")%>)))
   }
 #end
 }
