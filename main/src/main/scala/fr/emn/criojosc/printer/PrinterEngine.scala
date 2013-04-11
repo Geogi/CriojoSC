@@ -28,7 +28,8 @@ class PrinterEngine(val agents: Iterable[Agent]) extends Engine {
   def run() {
     println(
       agents.map{ agent =>
-        "agent[" + membersOfType(agent, someEntity).mkString(", ") + "] {\n}"
+        "agent[" + membersOfType(agent, someEntity).mkString(", ") + "](" +
+          agent.solution.content.mkString(" & ") + ") {\n}"
       }.mkString("\n")
     )
   }

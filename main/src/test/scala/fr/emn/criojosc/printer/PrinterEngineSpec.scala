@@ -45,7 +45,7 @@ class PrinterEngineSpec extends Specification { def is =
     }
     val output = stream.toString
     stream.close()
-    output === """agent[R] {
+    output === """agent[R](R("a" :: Nil, 1)) {
         |}
         |""".stripMargin
   }

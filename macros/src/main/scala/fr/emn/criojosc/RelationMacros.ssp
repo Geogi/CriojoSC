@@ -19,24 +19,20 @@
 
 <%
  def gt(i: Int, f: (Int) => String) = (1 to i).map(f).mkString(", ")
- def tl(i: Int) = gt(i, "T" + _)
 %>
 package fr.emn.criojosc
 
-import language.experimental.macros
+import reflect.macros.Context
 
-object Relation {
-  def apply[T1] = new TypedRelation[T1]
+object RelationMacros {
+  def genClosedAtom(c: Context)(v: c.Expr[Any])(symbol: c.Expr[RelationSymbol]): c.Expr[ClosedAtom] = {
+    import c.universe._
+    reify(new ClosedAtom(symbol.splice, v.splice, c.Expr[String](Literal(Constant(show(v)))).splice))
+  }
 #for (i <- 2 to 22)
-  def apply[<%=tl(i)%>] = new TypedRelation<%=i%>[<%=tl(i)%>]
+  def genClosedAtom<%=i%>[<%=gt(i, "T" + _ + ": c.WeakTypeTag")%>](c: Context)(<%=gt(i, j => "v" + j + ": c.Expr[T" + j + "]")%>)(symbol: c.Expr[RelationSymbol]): c.Expr[ClosedAtom] = {
+    import c.universe._
+    genClosedAtom(c)(reify((<%=gt(i, "v" + _ + ".splice")%>)))(symbol)
+  }
 #end
 }
-
-#for (i <- 2 to 22)
-class TypedRelation<%=i%>[<%=tl(i)%>] extends RelationSymbol {
-  implicit val symbol = this
-  def apply(<%=gt(i, j => "v" + j + ": T" + j)%>)(implicit symbol: RelationSymbol) = macro RelationMacros.genClosedAtom<%=i%>[<%=tl(i)%>]
-  def ?(<%=gt(i,j => "p" + j + ": Pattern[T" + j + "]")%>) = new OpenAtom(this, new Tuple<%=i%>Pattern((<%=gt(i, "p" + _)%>)))
-}
-
-#end
