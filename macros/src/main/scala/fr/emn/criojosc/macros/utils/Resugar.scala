@@ -19,6 +19,19 @@
 
 package fr.emn.criojosc.macros.utils
 
-object Desugar {
-  def
+import reflect.macros.Context
+
+object Resugar {
+  def resugar(c: Context)(t: c.Tree): c.Tree = {
+    // compose any re-sugaring below
+    val nt = listCons(c)(t)
+    if (t == nt)
+      nt
+    else
+      resugar(c)(nt)
+  }
+
+  private def listCons(c: Context)(t: c.Tree): c.Tree = {
+    t
+  }
 }
