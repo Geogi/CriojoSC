@@ -19,6 +19,6 @@
 
 package fr.emn.criojosc
 
-import reflect.macros.Context
+import reflect.runtime.universe.Tree
 
-class ClosedMessage(val symbol: EntitySymbol, val info: ChannelInfo, val value: Any, val tree: Context#Tree) extends ClosedReactant
+class ClosedMessage(val symbol: EntitySymbol, val info: ChannelInfo, val value: Any, val tree: Tree) extends ClosedReactant

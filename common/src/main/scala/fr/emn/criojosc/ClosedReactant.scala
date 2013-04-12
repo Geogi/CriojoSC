@@ -19,7 +19,7 @@
 
 package fr.emn.criojosc
 
-import reflect.macros.Context
+import reflect.runtime.universe.Tree
 
 /** Something that exist in the [[fr.emn.criojosc.Solution]] or can be created by a [[fr.emn.criojosc.Rule]]. */
 trait ClosedReactant {
@@ -27,7 +27,7 @@ trait ClosedReactant {
 
   def symbol: EntitySymbol
 
-  def tree: Context#Tree
+  def tree: Tree
 
   override def toString = tree.toString
 }

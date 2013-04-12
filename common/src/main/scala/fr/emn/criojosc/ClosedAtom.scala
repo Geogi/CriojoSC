@@ -19,7 +19,7 @@
 
 package fr.emn.criojosc
 
-import reflect.macros.Context
+import reflect.runtime.universe.Tree
 
 /** An instance of an [[fr.emn.criojosc.TypedRelation]] in a given state (a list of patterns).<br />
   * It may exist in [[fr.emn.criojosc.Solution]] or be the product of a [[fr.emn.criojosc.Rule]]
@@ -32,4 +32,4 @@ import reflect.macros.Context
   * @param symbol The Atom this instance refers to.
   * @param value The value (Any) that defines the state of this instance.
   */
-class ClosedAtom(val symbol: EntitySymbol, val value: Any, val tree: Context#Tree) extends ClosedReactant
+class ClosedAtom(val symbol: EntitySymbol, val value: Any, val tree: Tree) extends ClosedReactant
