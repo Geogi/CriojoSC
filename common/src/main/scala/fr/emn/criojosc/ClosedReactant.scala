@@ -29,5 +29,6 @@ trait ClosedReactant {
 
   def tree: Tree
 
-  override def toString = tree.toString
+  override def toString = tree.toString().
+    replaceAll("Tuple[0-9]{1,2}\.apply", "")
 }
