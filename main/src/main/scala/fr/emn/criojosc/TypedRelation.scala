@@ -20,6 +20,7 @@
 package fr.emn.criojosc
 
 import language.experimental.macros
+import fr.emn.criojosc.macros.RelationMacros
 
 /** An atom identifier, which can create [[fr.emn.criojosc.OpenAtom]]s and
   * [[fr.emn.criojosc.ClosedAtom]]s.<br />

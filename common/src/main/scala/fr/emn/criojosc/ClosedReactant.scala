@@ -19,13 +19,15 @@
 
 package fr.emn.criojosc
 
+import reflect.macros.Context
+
 /** Something that exist in the [[fr.emn.criojosc.Solution]] or can be created by a [[fr.emn.criojosc.Rule]]. */
 trait ClosedReactant {
   def value: Any
 
   def symbol: EntitySymbol
 
-  def metadata: CRMetadata
+  def tree: Context#Tree
 
-  override def toString = metadata.asString
+  override def toString = tree.toString
 }

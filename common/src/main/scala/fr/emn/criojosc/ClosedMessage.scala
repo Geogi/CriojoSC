@@ -19,4 +19,6 @@
 
 package fr.emn.criojosc
 
-class ClosedMessage(val symbol: EntitySymbol, val info: ChannelInfo, val value: Any, val metadata: CRMetadata) extends ClosedReactant
+import reflect.macros.Context
+
+class ClosedMessage(val symbol: EntitySymbol, val info: ChannelInfo, val value: Any, val tree: Context#Tree) extends ClosedReactant
