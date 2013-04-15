@@ -25,6 +25,10 @@ package macros.utils
 
 import reflect.macros.Context
 
+object ResugarTuples {
+  def resugar(c: Context)(
+}
+
 #for (i <- 2 to 22)
 case class Tuple<%=i%>Tree(<%=gt(i, "t"+_+":
 
