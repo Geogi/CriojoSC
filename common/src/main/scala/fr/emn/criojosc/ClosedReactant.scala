@@ -19,8 +19,6 @@
 
 package fr.emn.criojosc
 
-import reflect.runtime.universe.Tree
-
 /** Something that exist in the [[fr.emn.criojosc.Solution]] or can be created by a [[fr.emn.criojosc.Rule]]. */
 trait ClosedReactant {
   def value: Any
@@ -29,6 +27,5 @@ trait ClosedReactant {
 
   def tree: Tree
 
-  override def toString = tree.toString().
-    replaceAll("Tuple[0-9]{1,2}\\.apply", "")
+  override def toString = tree.toString
 }

@@ -17,7 +17,7 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.macros.utils
+package fr.emn.criojosc
 
 import scala.collection.immutable.ListMap
 
