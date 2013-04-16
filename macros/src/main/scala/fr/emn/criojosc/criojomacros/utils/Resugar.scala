@@ -17,25 +17,11 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-<%
- def gt(i: Int, f: (Int) => String) = (1 to i).map(f).mkString(", ")
- def tl(i: Int) = gt(i, "T" + _)
-%>
-package fr.emn.criojosc
+package fr.emn.criojosc.criojomacros
+package utils
 
-import language.experimental.macros
+import reflect.macros.Context
 
-object Relation {
-  def apply[T1] = new TypedRelation[T1]
-#for (i <- 2 to 22)
-  def apply[<%=tl(i)%>] = new TypedRelation<%=i%>[<%=tl(i)%>]
-#end
+object Resugar {
+  def resugar(c: Context)(t: c.Expr[Tree]): c.Expr[Tree] = t
 }
-
-#for (i <- 2 to 22)
-class TypedRelation<%=i%>[<%=tl(i)%>] extends RelationSymbol {
-  def apply(<%=gt(i, j => "v" + j + ": T" + j)%>): ClosedAtom = macro RelationMacros.genClosedAtom<%=i%>[<%=tl(i)%>]
-  def ?(<%=gt(i,j => "p" + j + ": Pattern[T" + j + "]")%>): OpenAtom = new OpenAtom(this, new Tuple<%=i%>Pattern((<%=gt(i, "p" + _)%>)))
-}
-
-#end
