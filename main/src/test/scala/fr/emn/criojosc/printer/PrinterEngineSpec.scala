@@ -25,7 +25,7 @@ import org.specs2._
 class PrinterEngineSpec extends Specification { def is =
   "Printer engine specification."                         ^
                                                           p^
-  "Print two agents"                                      ! testPrinter ^
+  "Print two agents"                                      ! pending ^
                                                           end
 
   def testPrinter = {

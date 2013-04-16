@@ -17,17 +17,13 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
+package fr.emn.criojosc.criojomacros
+package utils
 
-import fr.emn.criojosc.criojomacros.Tree
+import reflect.macros.Context
 
-/** Something that exist in the [[fr.emn.criojosc.Solution]] or can be created by a [[fr.emn.criojosc.Rule]]. */
-trait ClosedReactant {
-  def value: Any
-
-  def symbol: EntitySymbol
-
-  def tree: Tree
-
-  override def toString = tree.toString
+object ToPrivTree {
+  def toPrivTree(c: Context)(t: c.Tree): c.Expr[Tree] = t match {
+    case _ => c.universe.reify(UnknownNode)
+  }
 }
