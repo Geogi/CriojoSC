@@ -19,6 +19,8 @@
 
 package fr.emn.criojosc
 
+import fr.emn.criojosc.criojomacros.Tree
+
 /** Something that exist in the [[fr.emn.criojosc.Solution]] or can be created by a [[fr.emn.criojosc.Rule]]. */
 trait ClosedReactant {
   def value: Any

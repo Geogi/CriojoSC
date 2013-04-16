@@ -21,18 +21,18 @@
  def gt(i: Int, f: (Int) => String) = (1 to i).map(f).mkString(", ")
 %>
 package fr.emn.criojosc
-package macros
+package criojomacros
 
 import reflect.macros.Context
-import Resugar.resugar
+import utils._
 
 object RelationMacros {
-  def genClosedAtom(c: Context { type PrefixType = EntitySymbol })(v: c.Expr[Any]): c.Expr[ClosedAtom] = {
-    val tree = resugar(v)
+  def genClosedAtom(c: Context { type PrefixType <: RelationSymbol })(v: c.Expr[Any]): c.Expr[ClosedAtom] = {
+    val tree = Resugar.resugar(c)(ToPrivTree.toPrivTree(c)(v.tree))
     c.universe.reify(new ClosedAtom(c.prefix.splice, v.splice, tree.splice))
   }
 #for (i <- 2 to 22)
-  def genClosedAtom<%=i%>[<%=gt(i, "T" + _ + ": c.WeakTypeTag")%>](c: Context { type PrefixType = EntitySymbol })(<%=gt(i, j => "v" + j + ": c.Expr[T" + j + "]")%>): c.Expr[ClosedAtom] = {
+  def genClosedAtom<%=i%>[<%=gt(i, "T" + _ + ": c.WeakTypeTag")%>](c: Context { type PrefixType <: RelationSymbol })(<%=gt(i, j => "v" + j + ": c.Expr[T" + j + "]")%>): c.Expr[ClosedAtom] = {
     genClosedAtom(c)(c.universe.reify((<%=gt(i, "v" + _ + ".splice")%>)))
   }
 #end

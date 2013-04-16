@@ -19,7 +19,7 @@
 
 package fr.emn.criojosc
 
-import reflect.runtime.universe.Tree
+import fr.emn.criojosc.criojomacros.Tree
 
 /** An instance of an [[fr.emn.criojosc.TypedRelation]] in a given state (a list of patterns).<br />
   * It may exist in [[fr.emn.criojosc.Solution]] or be the product of a [[fr.emn.criojosc.Rule]]

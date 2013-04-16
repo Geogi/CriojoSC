@@ -17,21 +17,11 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.macros.utils
+package fr.emn.criojosc.criojomacros
+package utils
 
 import reflect.macros.Context
 
 object Resugar {
-  def resugar(c: Context)(t: c.Tree): c.Tree = {
-    // compose any re-sugaring below
-    val nt = tuples(c)(t)
-    if (t == nt)
-      nt
-    else
-      resugar(c)(nt)
-  }
-
-  private def tuples(c: Context)(t: c.Tree): c.Tree = {
-    t
-  }
+  def resugar(c: Context)(t: c.Expr[Tree]): c.Expr[Tree] = t
 }

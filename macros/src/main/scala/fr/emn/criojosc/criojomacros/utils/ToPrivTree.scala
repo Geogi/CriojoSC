@@ -17,19 +17,13 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-<%
- def gt(i: Int, f: (Int) => String) = (1 to i).map(f).mkString(", ")
-%>
-package fr.emn.criojosc
-package macros.utils
+package fr.emn.criojosc.criojomacros
+package utils
 
 import reflect.macros.Context
 
-object ResugarTuples {
-  def resugar(c: Context)(
+object ToPrivTree {
+  def toPrivTree(c: Context)(t: c.Tree): c.Expr[Tree] = t match {
+    case _ => c.universe.reify(UnknownNode)
+  }
 }
-
-#for (i <- 2 to 22)
-case class Tuple<%=i%>Tree(<%=gt(i, "t"+_+":
-
-#end

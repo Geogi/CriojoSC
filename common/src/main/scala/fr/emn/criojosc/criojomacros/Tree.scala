@@ -17,7 +17,7 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
+package fr.emn.criojosc.criojomacros
 
 import scala.collection.immutable.ListMap
 
@@ -92,3 +92,6 @@ trait RefTree
 trait Modifiers
 trait Type
 trait Scope
+
+// fallback tree
+case object UnknownNode extends Tree
