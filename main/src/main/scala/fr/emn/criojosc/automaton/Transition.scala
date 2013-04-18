@@ -20,6 +20,10 @@
 package fr.emn.criojosc
 package automaton
 
-class Transition {
+class Transition(val parent: Option[Transition]) {
+  def productElement(n: Int) = ???
 
+  def canEqual(that: Any) = ???
+
+  def productArity = ???
 }

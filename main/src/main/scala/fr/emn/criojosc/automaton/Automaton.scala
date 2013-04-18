@@ -20,6 +20,18 @@
 package fr.emn.criojosc
 package automaton
 
+import scala.collection.mutable
+
 class Automaton(premise: Premise) {
-  val states = premise.reactants.map(_.)
+  import Automaton._
+  val states = combinations(premise.reactants) :+ Nil
+  val transitions = new mutable.HashMap[Transition, Set[Valuation]] with mutable.MultiMap[Transition, Valuation]
+}
+
+object Automaton {
+  def combinations[T](in: List[T], sup: List[T] = Nil, out: List[List[T]] = Nil): List[List[T]] =
+    if (in.isEmpty && sup.isEmpty) out
+    else if (in.isEmpty) combinations(sup.dropRight(1), sup.tail, out :+ sup)
+    else if (sup.isEmpty) combinations(in.dropRight(1), in.tail, out :+ in)
+    else combinations(in.dropRight(1), sup, out :+ in)
 }

@@ -22,5 +22,4 @@ package automaton
 
 class Engine(val agents: Iterable[Agent]) extends fr.emn.criojosc.Engine {
   val automatons = agents.flatMap(a => a.rules.map(r => new Automaton(r.premise)))
-
 }
