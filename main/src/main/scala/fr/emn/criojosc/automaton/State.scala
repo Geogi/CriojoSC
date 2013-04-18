@@ -20,6 +20,6 @@
 package fr.emn.criojosc
 package automaton
 
-class Transition(val init: State, val fin: State) {
-
+class State(val reactants: Set[OpenReactant], scope: Set[OpenReactant]) {
+  require(reactants subsetOf scope)
 }
