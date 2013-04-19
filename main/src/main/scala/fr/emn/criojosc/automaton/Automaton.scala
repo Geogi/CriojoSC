@@ -23,11 +23,13 @@ package automaton
 class Automaton(premise: Premise) {
   private val scope = premise.reactants.toSet
   val states = (Automaton.combinations(scope) + Set.empty[OpenReactant]).map(reactants => new State(reactants.toSet, scope))
-  val transitions = ???
+  val transitions = (states, states).zipped.filter(
+    (s1, s2) => (s1.reactants subsetOf s2.reactants) && (s1.reactants.size + 1 == s2.reactants.size)
+  ).zipped.map((s1, s2) => new Transition(s1, s2))
 }
 
 object Automaton {
-  def combinations[T](in: Set[T], sup: Set[T] = Nil, out: Set[Set[T]] = Nil): Set[Set[T]] =
+  def combinations[T](in: Set[T], sup: Set[T] = Set.empty[T], out: Set[Set[T]] = Set.empty[Set[T]]): Set[Set[T]] =
     if (in.isEmpty && sup.isEmpty) out
     else if (in.isEmpty) combinations(sup.dropRight(1), sup.tail, out + sup)
     else if (sup.isEmpty) combinations(in.dropRight(1), in.tail, out + in)
