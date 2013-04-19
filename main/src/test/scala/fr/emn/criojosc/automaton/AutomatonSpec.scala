@@ -20,13 +20,20 @@
 package fr.emn.criojosc
 package automaton
 
-class Automaton(val premise: Premise) {
-  val states = Automaton.combinations(premise.reactants).map(xs => new State(xs))
-}
+import org.specs2._
 
-object Automaton {
-  def combinations[T](in: List[T]): List[List[Option[T]]] = in match {
-    case x :: xs => combinations(xs).map(None :: _) ::: combinations(xs).map(Some(x) :: _)
-    case _ => List(Nil)
+class AutomatonSpec extends Specification { def is =
+  "Automaton specification."                                 ^
+                                                             p^
+  "Be the rule: R(x) -> T? R(1)"                             ^
+    ""
+
+  lazy val R = Relation[Int]
+  lazy val rule = new Rule {
+    val premise = new Premise(List(R?(1)))
+    def right_hand(implicit s: Valuation) = (true, new Conclusion(R(1) :: Nil))
   }
+  lazy val ruleAutomaton = new Automaton(rule.premise)
+
+  def testAutomaton = ruleAutomaton.states
 }
