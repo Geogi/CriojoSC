@@ -20,5 +20,8 @@
 package fr.emn.criojosc
 package automaton
 
-case object NoMatch
-case class Propose(cr: ClosedReactant)
+trait Message
+case object NoMatch extends Message
+case class NotInterested(s: EntitySymbol) extends Message
+case class Propose(cr: ClosedReactant) extends Message
+case class Completed(av: AssociatedValuation) extends Message

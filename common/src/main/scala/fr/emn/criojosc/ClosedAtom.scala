@@ -32,4 +32,4 @@ import fr.emn.criojosc.criojomacros.Tree
   * @param symbol The Atom this instance refers to.
   * @param value The value (Any) that defines the state of this instance.
   */
-class ClosedAtom(val symbol: EntitySymbol, val value: Any, val tree: Tree) extends ClosedReactant
+case class ClosedAtom(symbol: EntitySymbol, value: Any, tree: Tree) extends ClosedReactant

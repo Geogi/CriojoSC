@@ -19,13 +19,8 @@
 
 package fr.emn.criojosc
 
-class Valuation(val content: Map[Variable[Any], Any] = Map.empty[Variable[Any], Any]) {
+case class Valuation(content: Map[Variable[Any], Any] = Map.empty[Variable[Any], Any]) {
   def get(x: Variable[Any]) = content.get(x)
 
   def +(x: Variable[Any], v: Any) = new Valuation(content + (x -> v))
-
-  override def equals(that: Any) = that match {
-    case s: Valuation => this.content == s.content
-    case _ => false
-  }
 }

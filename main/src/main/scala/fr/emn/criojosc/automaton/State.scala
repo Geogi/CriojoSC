@@ -20,4 +20,12 @@
 package fr.emn.criojosc
 package automaton
 
-case class State(val has: Array[Boolean])
+case class State(has: Array[Boolean]) {
+  lazy val complete = has.forall(b=>b)
+  lazy val lacking = has.zipWithIndex.filter(!_._1).map(_._2)
+  def add(i: Int) = {
+    val new_has = has
+    new_has(i) = true
+    State(new_has)
+  }
+}

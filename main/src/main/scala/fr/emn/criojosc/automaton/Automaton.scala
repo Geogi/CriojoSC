@@ -24,24 +24,32 @@ import collection.mutable
 import akka.actor.Actor
 
 class Automaton(premise: Premise) extends Actor {
-  private val index = premise.reactants.toList
+  private val index = premise.reactants.toVector
   private val symbols = premise.reactants.map(_.symbol).toSet
-  val states = new mutable.HashMap[State, mutable.Set[Valuation]] with mutable.MultiMap[State, Valuation]
+  val states = new mutable.HashMap[State, mutable.Set[AssociatedValuation]] with mutable.MultiMap[State, AssociatedValuation]
 
-  private val bottomValuation = new Valuation
+  private val bottomValuation = Valuation()
   private val initialState = State(Array.fill(index.size)(false))
-  states.addBinding(initialState) = bottomValuation
+  states.addBinding(initialState) = (bottomValuation, Set.empty[ClosedReactant])
 
-  def update(state: State, valuation: Valuation) { states.addBinding(state, valuation) }
-  def remove(state: State, valuation: Valuation) { states.removeBinding(state, valuation) }
-  def removeAll(state: State) { states.remove(state) }
-  def apply(state: State) = states(state)
-  def contains(state: State, valuation: Valuation) = states.entryExists(state, _ == valuation)
+  private val resolvedSymbols = new mutable.HashMap[EntitySymbol, mutable.Set[(Int, State)]] with mutable.MultiMap[EntitySymbol, (Int, State)]
+  index.zipWithIndex.foreach { case (or, i) =>
+    resolvedSymbols.addBinding(or.symbol, (i, State(Array.fill(index.size)(false))))
+  }
 
   def receive = {
     case Propose(cr) =>
-      if (!symbols.contains(cr.symbol)) sender ! NoMatch
+      if (!symbols.contains(cr.symbol)) sender ! NotInterested(cr.symbol)
       else {
+        resolvedSymbols(cr.symbol).foreach { case (i, state) =>
+          val toUpdate = states(state).map { case (s, crs) => (index(i).matching(cr, s), crs + cr) }.filter(_._1._1).map(o => (o._1._2, o._2))
+          val newState = state.add(i)
+          toUpdate.foreach { av =>
+            states.addBinding(newState, av)
+          }
+          if (!newState.complete) newState.lacking.foreach(i => resolvedSymbols.addBinding(index(i).symbol, (i, newState))
+          else toUpdate.foreach(sender ! Completed(_))
+        }
       }
     case _ =>
   }

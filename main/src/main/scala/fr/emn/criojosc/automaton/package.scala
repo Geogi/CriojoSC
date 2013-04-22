@@ -19,6 +19,7 @@
 
 package fr.emn.criojosc
 
-import fr.emn.criojosc.criojomacros.Tree
+package object automaton {
+  type AssociatedValuation = (Valuation, Set[ClosedReactant])
 
-case class ClosedMessage(symbol: EntitySymbol, info: ChannelInfo, value: Any, tree: Tree) extends ClosedReactant
+}
