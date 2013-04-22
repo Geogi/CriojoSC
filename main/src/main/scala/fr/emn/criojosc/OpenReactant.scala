@@ -23,6 +23,10 @@ trait OpenReactant {
   def pattern: Pattern[Any]
 
   def symbol: EntitySymbol
+
+  def matching(or: ClosedReactant, s: Valuation) =
+    if (symbol != or.symbol) (false, s)
+    else pattern.matching(or.value, s)
 }
 
 /** A symbolic representation of an [[fr.emn.criojosc.TypedRelation]], as used in rule premises and "existence" guards.<br />

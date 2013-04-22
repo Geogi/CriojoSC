@@ -21,9 +21,11 @@ package fr.emn.criojosc
 package automaton
 
 import collection.mutable
+import akka.actor.Actor
 
-class Automaton(premise: Premise) {
+class Automaton(premise: Premise) extends Actor {
   private val index = premise.reactants.toList
+  private val symbols = premise.reactants.map(_.symbol).toSet
   val states = new mutable.HashMap[State, mutable.Set[Valuation]] with mutable.MultiMap[State, Valuation]
 
   private val bottomValuation = new Valuation
@@ -35,4 +37,12 @@ class Automaton(premise: Premise) {
   def removeAll(state: State) { states.remove(state) }
   def apply(state: State) = states(state)
   def contains(state: State, valuation: Valuation) = states.entryExists(state, _ == valuation)
+
+  def receive = {
+    case Propose(cr) =>
+      if (!symbols.contains(cr.symbol)) sender ! NoMatch
+      else {
+      }
+    case _ =>
+  }
 }
