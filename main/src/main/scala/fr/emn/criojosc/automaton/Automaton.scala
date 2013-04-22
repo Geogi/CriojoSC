@@ -20,13 +20,19 @@
 package fr.emn.criojosc
 package automaton
 
-class Automaton(val premise: Premise) {
-  val states = Automaton.combinations(premise.reactants).map(xs => new State(xs))
-}
+import collection.mutable
 
-object Automaton {
-  def combinations[T](in: List[T]): List[List[Option[T]]] = in match {
-    case x :: xs => combinations(xs).map(None :: _) ::: combinations(xs).map(Some(x) :: _)
-    case _ => List(Nil)
-  }
+class Automaton(val premise: Premise) {
+  private val index = premise.reactants.toList
+  val states = new mutable.HashMap[State, mutable.Set[Valuation]] with mutable.MultiMap[State, Valuation]
+
+  private val bottomValuation = new Valuation
+  private val initialState = State(Array.fill(index.size)(false))
+  states.addBinding(initialState) = bottomValuation
+
+  def update(state: State, valuation: Valuation) { states.addBinding(state, valuation) }
+  def remove(state: State, valuation: Valuation) { states.removeBinding(state, valuation) }
+  def removeAll(state: State) { states.remove(state) }
+  def apply(state: State) = states(state)
+  def contains(state: State, valuation: Valuation) = states.entryExists(state, _ == valuation)
 }

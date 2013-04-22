@@ -20,8 +20,4 @@
 package fr.emn.criojosc
 package automaton
 
-class State(val reactants: List[Option[OpenReactant]]) {
-  lazy val ini = reactants.forall(_.isEmpty)
-  lazy val fin = reactants.forall(_.isDefined)
-  lazy val defined = reactants.flatten
-}
+case class State(val has: Array[Boolean])
