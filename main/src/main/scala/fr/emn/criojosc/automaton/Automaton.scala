@@ -22,7 +22,7 @@ package automaton
 
 import collection.mutable
 
-class Automaton(val premise: Premise) {
+class Automaton(premise: Premise) {
   private val index = premise.reactants.toList
   val states = new mutable.HashMap[State, mutable.Set[Valuation]] with mutable.MultiMap[State, Valuation]
 

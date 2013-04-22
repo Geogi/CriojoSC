@@ -21,5 +21,6 @@ package fr.emn.criojosc
 package automaton
 
 class Engine(val agents: Iterable[Agent]) extends fr.emn.criojosc.Engine {
-  val automatons = agents.flatMap(a => a.rules.map(r => new Automaton(r.premise)))
+  val automatons = agents.map(a => (a, a.rules.map(r => new Automaton(r.premise)))).toMap
+  agents.foreach(a => a.solution.content.foreach(r => automatons(a)))
 }
