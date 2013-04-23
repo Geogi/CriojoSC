@@ -24,8 +24,20 @@ class Engine(val agents: Iterable[Agent]) extends fr.emn.criojosc.Engine {
   val automatons = agents.map(a => (a, a.rules.map(r => new Automaton(r.premise)))).toMap
 
   def run() {
-    automatons.foreach { case (agent, autos) =>
+  }
 
+  def init() {
+    automatons.foreach { case (agent, autos) =>
+      val updated_states = autos.map { auto =>
+        (auto, agent.solution.content.map{ cr =>
+          auto.propose(cr)
+        })
+      }.toMap
+      val completed_states = up
     }
+  }
+
+  def step() {
+
   }
 }

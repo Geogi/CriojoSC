@@ -20,4 +20,6 @@
 package fr.emn.criojosc
 package automaton
 
-case class PartialExecution(valuation: Valuation, using: Iterable[ClosedReactant], complete: Boolean)
+case class PartialExecution(valuation: Valuation, using: List[ClosedReactant], lacking: Int) {
+  val complete = lacking == 0
+}

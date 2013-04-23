@@ -27,5 +27,19 @@ class Automaton(premise: Premise) {
     case x :: xs => gen_states(xs).flatMap(s => List(State(s.has + (x -> true)), State(s.has + (x -> false))))
     case _ => List(State(Map.empty[OpenReactant, Boolean]))
   }
-  val states = gen_states()
+  val states = gen_states().map((_, mutable.Set.empty[PartialExecution])).toMap
+
+  private val initialState = State(premise.reactants.toList.map((_, false)).toMap)
+  states(initialState) += PartialExecution(Valuation(), Nil, premise.reactants.size)
+
+  def propose(cr: ClosedReactant) = states.map { case (state, pes) =>
+    (state, state.has.flatMap {
+      case (or, present) if !present && cr.symbol == or.symbol =>
+        pes.map {
+          pe => (or.matching(cr, pe.valuation), pe)
+        }.map {
+          case ((matched, valuation), pe) if matched => PartialExecution(valuation, cr :: pe.using, pe.lacking - 1)
+        }
+    })
+  }.toMap
 }
