@@ -18,24 +18,6 @@
  */
 
 package fr.emn.criojosc
-package printer
+package automaton
 
-class PrinterEngine(val agents: Iterable[Agent]) extends Engine {
-  import PrinterEngine._
-
-  private val someEntity = new EntitySymbol
-
-  def run() {
-    println(
-      agents.map{ agent =>
-        "agent[" + membersOfType(agent, someEntity).mkString(", ") + "](" +
-          agent.solution.content.mkString(" & ") + ") {\n}"
-      }.mkString("\n")
-    )
-  }
-}
-
-object PrinterEngine {
-  def membersOfType(p: Object, s: Object) = p.getClass.getMethods.
-    filter(m => s.getClass.isAssignableFrom(m.getReturnType)).map(_.getName)
-}
+case class PartialExecution(valuation: Valuation, using: Iterable[ClosedReactant], complete: Boolean)

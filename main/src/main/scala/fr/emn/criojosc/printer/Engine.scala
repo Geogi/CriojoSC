@@ -18,8 +18,24 @@
  */
 
 package fr.emn.criojosc
+package printer
 
-package object automaton {
-  type AssociatedValuation = (Valuation, Set[ClosedReactant])
+class Engine(val agents: Iterable[Agent]) extends fr.emn.criojosc.Engine {
+  import Engine._
 
+  private val someEntity = new EntitySymbol
+
+  def run() {
+    println(
+      agents.map{ agent =>
+        "agent[" + membersOfType(agent, someEntity).mkString(", ") + "](" +
+          agent.solution.content.mkString(" & ") + ") {\n}"
+      }.mkString("\n")
+    )
+  }
+}
+
+object Engine {
+  def membersOfType(p: Object, s: Object) = p.getClass.getMethods.
+    filter(m => s.getClass.isAssignableFrom(m.getReturnType)).map(_.getName)
 }

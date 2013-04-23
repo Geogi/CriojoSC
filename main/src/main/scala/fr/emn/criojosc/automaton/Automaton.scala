@@ -21,36 +21,11 @@ package fr.emn.criojosc
 package automaton
 
 import collection.mutable
-import akka.actor.Actor
 
-class Automaton(premise: Premise) extends Actor {
-  private val index = premise.reactants.toVector
-  private val symbols = premise.reactants.map(_.symbol).toSet
-  val states = new mutable.HashMap[State, mutable.Set[AssociatedValuation]] with mutable.MultiMap[State, AssociatedValuation]
-
-  private val bottomValuation = Valuation()
-  private val initialState = State(Array.fill(index.size)(false))
-  states.addBinding(initialState) = (bottomValuation, Set.empty[ClosedReactant])
-
-  private val resolvedSymbols = new mutable.HashMap[EntitySymbol, mutable.Set[(Int, State)]] with mutable.MultiMap[EntitySymbol, (Int, State)]
-  index.zipWithIndex.foreach { case (or, i) =>
-    resolvedSymbols.addBinding(or.symbol, (i, State(Array.fill(index.size)(false))))
+class Automaton(premise: Premise) {
+  private def gen_states(ors: List[OpenReactant] = premise.reactants.toList): List[State] = ors match {
+    case x :: xs => gen_states(xs).flatMap(s => List(State(s.has + (x -> true)), State(s.has + (x -> false))))
+    case _ => List(State(Map.empty[OpenReactant, Boolean]))
   }
-
-  def receive = {
-    case Propose(cr) =>
-      if (!symbols.contains(cr.symbol)) sender ! NotInterested(cr.symbol)
-      else {
-        resolvedSymbols(cr.symbol).foreach { case (i, state) =>
-          val toUpdate = states(state).map { case (s, crs) => (index(i).matching(cr, s), crs + cr) }.filter(_._1._1).map(o => (o._1._2, o._2))
-          val newState = state.add(i)
-          toUpdate.foreach { av =>
-            states.addBinding(newState, av)
-          }
-          if (!newState.complete) newState.lacking.foreach(i => resolvedSymbols.addBinding(index(i).symbol, (i, newState))
-          else toUpdate.foreach(sender ! Completed(_))
-        }
-      }
-    case _ =>
-  }
+  val states = gen_states()
 }

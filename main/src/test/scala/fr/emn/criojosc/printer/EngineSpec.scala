@@ -22,7 +22,7 @@ package printer
 
 import org.specs2._
 
-class PrinterEngineSpec extends Specification { def is =
+class EngineSpec extends Specification { def is =
   "Printer engine specification."                         ^
                                                           p^
   "Print two agents"                                      ! pending ^
@@ -41,7 +41,7 @@ class PrinterEngineSpec extends Specification { def is =
     }
     val stream = new java.io.ByteArrayOutputStream()
     Console.withOut(stream) {
-      new PrinterEngine(Seq(agent1)).run()
+      new Engine(Seq(agent1)).run()
     }
     val output = stream.toString
     stream.close()

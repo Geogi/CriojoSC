@@ -20,13 +20,12 @@
 package fr.emn.criojosc
 package automaton
 
-import akka.actor.Actor
-
-class Engine(val agents: Iterable[Agent]) extends fr.emn.criojosc.Engine with Actor {
+class Engine(val agents: Iterable[Agent]) extends fr.emn.criojosc.Engine {
   val automatons = agents.map(a => (a, a.rules.map(r => new Automaton(r.premise)))).toMap
-  agents.foreach(a => a.solution.content.foreach(r => automatons(a)))
 
-  def receive = {
-    case _ =>
+  def run() {
+    automatons.foreach { case (agent, autos) =>
+
+    }
   }
 }
