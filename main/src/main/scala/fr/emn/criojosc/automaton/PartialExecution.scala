@@ -20,4 +20,17 @@
 package fr.emn.criojosc
 package automaton
 
-case class PartialExecution(valuation: Valuation, using: List[ClosedReactant])
+trait PartialExecution {
+  def valuation: Valuation
+  def using: List[ClosedReactant]
+}
+
+object PartialExecution {
+  def apply(valuation: Valuation, using: List[ClosedReactant]) = new FullPartialExecution(valuation, using)
+}
+
+class FullPartialExecution(val valuation: Valuation, val using: List[ClosedReactant]) extends PartialExecution
+
+class DeltaPartialExecution(val valuation: Valuation, parent: Option[PartialExecution], added: ClosedReactant) extends PartialExecution {
+  override lazy val using = parent.map { added :: _.using } getOrElse List(added)
+}

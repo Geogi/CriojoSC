@@ -31,7 +31,7 @@ object Valuation {
 }
 
 case object EmptyValuation extends Valuation {
-  val content = Map.empty[Variable[Any], Any]
+  override val content = Map.empty[Variable[Any], Any]
 
   override def +(x: Variable[Any], v: Any) = Valuation(None, x -> v)
 }
