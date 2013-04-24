@@ -22,25 +22,22 @@ package fr.emn.criojosc
 trait Valuation {
   val content: Map[Variable[Any], Any]
   def get(x: Variable[Any]) = content.get(x)
-  def +(x: Variable[Any], v: Any): Valuation
+  def +(x: Variable[Any], v: Any): Valuation = Valuation(Some(Valuation.this), x -> v)
 }
 
 object Valuation {
   def apply(parent: Option[Valuation], delta: (Variable[Any], Any)) = DeltaValuation(parent, delta)
+  def apply() = EmptyValuation
 }
 
 case object EmptyValuation extends Valuation {
-  val content = Map()
+  val content = Map.empty[Variable[Any], Any]
 
-  def +(x: Variable[Any], v: Any) = Valuation(None, x -> v)
+  override def +(x: Variable[Any], v: Any) = Valuation(None, x -> v)
 }
 
-case class FullValuation(content: Map[Variable[Any], Any] = Map.empty[Variable[Any], Any]) extends Valuation {
-  def +(x: Variable[Any], v: Any) = FullValuation(content + (x -> v))
-}
+case class FullValuation(content: Map[Variable[Any], Any] = Map.empty[Variable[Any], Any]) extends Valuation
 
 case class DeltaValuation(parent: Option[Valuation], delta: (Variable[Any], Any)) extends Valuation {
-  override lazy val content = Map(delta) ++ parent.map(_.content)
-
-  def +(x: Variable[Any], v: Any) = DeltaValuation(Some(this), x -> v)
+  override lazy val content = parent map { _.content + delta } getOrElse Map(delta)
 }

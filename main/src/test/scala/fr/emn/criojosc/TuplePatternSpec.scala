@@ -35,7 +35,7 @@ class TuplePatternSpec extends Specification { def is =
 
   import RuleImplicits.const
 
-  val s = new Valuation
+  val s = Valuation()
 
   val tuple3 = new Tuple3Pattern[Int, String, List[AnyVal]]((1, "a", 0 :: 'b' :: Nip))
   def testTuple3_1 = tuple3.matching((1, "a", 0 :: 'b' :: Nil), s)._1 must beTrue

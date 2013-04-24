@@ -35,7 +35,7 @@ class Engine(val agents: Iterable[Agent]) extends fr.emn.criojosc.Engine {
           auto.propose(cr)
         })
       }.toMap
-      val completed_states = up
+      val completed_states = ???
     }
   }
 
