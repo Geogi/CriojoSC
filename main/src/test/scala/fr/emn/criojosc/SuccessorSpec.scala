@@ -37,7 +37,7 @@ class SuccessorSpec extends Specification with RuleImplicits { def is =
     "Create an Int term by applying the companion object or 'S'."  ! isIntInsideRight ^
     "It will be the successor of the parameter: S(1) = 2."         ! { S(1) === 2 }
 
-  val s = new Valuation
+  val s = Valuation()
 
   def bePatternInt = beAnInstanceOf[Pattern[Int]]
 
