@@ -19,8 +19,18 @@
 
 package fr.emn.criojosc
 
-case class Valuation(content: Map[Variable[Any], Any] = Map.empty[Variable[Any], Any]) {
+trait Valuation {
+  val content: Map[Variable[Any], Any]
   def get(x: Variable[Any]) = content.get(x)
+  def +(x: Variable[Any], v: Any)
+}
 
-  def +(x: Variable[Any], v: Any) = new Valuation(content + (x -> v))
+case class FullValuation(content: Map[Variable[Any], Any] = Map.empty[Variable[Any], Any]) extends Valuation {
+  def +(x: Variable[Any], v: Any) = FullValuation(content + (x -> v))
+}
+
+case class DeltaValuation(parent: Option[Valuation], delta: (Variable[Any], Any)) extends Valuation {
+  override lazy val content = Map(delta) ++ parent.map(_.content)
+
+  def +(x: Variable[Any], v: Any) = DeltaValuation(Some(this), x -> v)
 }
