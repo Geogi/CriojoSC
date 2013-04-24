@@ -25,18 +25,29 @@ import collection.mutable
 trait PartialExecution {
   def valuation: Valuation
   def using: List[ClosedReactant]
-  val children: mutable.Iterable[PartialExecution]
+  val children: mutable.Set[PartialExecution] = mutable.HashSet.empty[PartialExecution]
+  def +(ns: Valuation, cr: ClosedReactant): PartialExecution = {
+    val child = new DeltaPartialExecution(ns, Some(PartialExecution.this), cr)
+    children += child
+    child
+  }
 }
 
 object PartialExecution {
   def apply(valuation: Valuation, using: List[ClosedReactant]) = new FullPartialExecution(valuation, using)
+  def apply(valuation: Valuation, parent: Option[PartialExecution], added: ClosedReactant) = new DeltaPartialExecution(valuation, parent, added)
+  def apply() = EmptyExecution
 }
 
-class FullPartialExecution(val valuation: Valuation, val using: List[ClosedReactant]) extends PartialExecution {
-  val children = mutable.HashSet.empty[PartialExecution]
-}
+class FullPartialExecution(val valuation: Valuation, val using: List[ClosedReactant]) extends PartialExecution
 
 class DeltaPartialExecution(val valuation: Valuation, parent: Option[PartialExecution], added: ClosedReactant) extends PartialExecution {
   override lazy val using = parent.map { added :: _.using } getOrElse List(added)
-  val children = mutable.HashSet.empty[PartialExecution]
+}
+
+object EmptyExecution extends PartialExecution {
+  override val valuation = EmptyValuation
+  override def using = Nil
+
+  override def +(s: Valuation, cr: ClosedReactant) = PartialExecution(s, None, cr)
 }

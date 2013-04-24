@@ -32,7 +32,7 @@ class Automaton(premise: Premise) {
 
   private val initialState = State(premise.reactants.toList.map((_, false)).toMap)
   private val finalState = State(premise.reactants.toList.map((_, true)).toMap)
-  states(initialState) += PartialExecution(EmptyValuation, Nil)
+  states(initialState) += PartialExecution()
 
   def propose(cr: ClosedReactant) = {
     val new_states = states.flatMap { case (state, pes) =>
@@ -42,7 +42,7 @@ class Automaton(premise: Premise) {
             pe => (or.matching(cr, pe.valuation), pe)
           }.map {
             case ((matched, valuation), pe) if matched =>
-              ((state + or), PartialExecution(valuation, cr :: pe.using))
+              ((state + or), PartialExecution(valuation, Some(pe), cr))
           }
       }
     }
