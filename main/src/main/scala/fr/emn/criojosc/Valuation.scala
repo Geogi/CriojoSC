@@ -22,7 +22,17 @@ package fr.emn.criojosc
 trait Valuation {
   val content: Map[Variable[Any], Any]
   def get(x: Variable[Any]) = content.get(x)
-  def +(x: Variable[Any], v: Any)
+  def +(x: Variable[Any], v: Any): Valuation
+}
+
+object Valuation {
+  def apply(parent: Option[Valuation], delta: (Variable[Any], Any)) = DeltaValuation(parent, delta)
+}
+
+case object EmptyValuation extends Valuation {
+  val content = Map()
+
+  def +(x: Variable[Any], v: Any) = Valuation(None, x -> v)
 }
 
 case class FullValuation(content: Map[Variable[Any], Any] = Map.empty[Variable[Any], Any]) extends Valuation {
