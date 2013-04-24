@@ -20,10 +20,7 @@
 package fr.emn.criojosc
 
 class Variable[+T] extends Pattern[T] {
-  def matching[S >: T](proposed: S, s: Valuation) = s.get(this) match {
-    case Some(real) => (proposed == real, s)
-    case None => (true, s + (this, proposed))
-  }
+  def matching[S >: T](proposed: S, s: Valuation) = if (s.contains(this)) (false, s) else (true, s + (this, proposed))
 
   def unary_!(implicit s: Valuation): T = (s.get(this) getOrElse
     (throw new NoSuchElementException("Unbound variable"))).asInstanceOf[T]

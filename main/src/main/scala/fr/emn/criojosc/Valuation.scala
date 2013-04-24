@@ -22,7 +22,10 @@ package fr.emn.criojosc
 trait Valuation {
   val content: Map[Variable[Any], Any]
   def get(x: Variable[Any]) = content.get(x)
+  def contains(x: Variable[Any]) = content.contains(x)
   def +(x: Variable[Any], v: Any): Valuation = Valuation(Some(Valuation.this), Map(x -> v))
+  def ++(that: Valuation) = this ++ that.content
+  def ++(that: Map[Variable[Any], Any]) = Valuation(Some(Valuation.this), that)
 }
 
 object Valuation {
