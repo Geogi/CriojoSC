@@ -30,7 +30,7 @@ class ValuationSpec extends Specification { def is =
 
   def implicitTest = {
     val x = new Variable[Int]
-    implicit val s = Valuation(None, x -> 3)
+    implicit val s = Valuation(None, Map(x -> 3))
     !x === 3
   }
 }
