@@ -38,11 +38,11 @@ class GuardSpec extends Specification { def is =
                                                                                          end
   def nativeGuard = {
     val x = new Variable[Int]
-    implicit val sx = new Valuation(Map((x, 1)))
+    implicit val sx = Valuation(None, x -> 1)
     new NativeGuard((_: Valuation) => !x == 1).evaluate(sx) must beTrue
   }
 
-  val dummyValuation = new Valuation
+  val dummyValuation = Valuation()
 
   def implicitGuard = {
     val implicitly: Guard = false

@@ -38,7 +38,7 @@ class ListPatternSpec extends Specification { def is =
 
   import RuleImplicits.const
 
-  val s = new Valuation
+  val s = Valuation()
 
   def consTest = (0 :: 1 :: 2 :: Nip) must beAnInstanceOf[Pattern[List[Int]]]
 

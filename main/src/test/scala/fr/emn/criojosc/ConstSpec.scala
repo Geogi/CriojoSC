@@ -27,6 +27,6 @@ class ConstSpec extends Specification { def is =
   "A constant pattern matches its value"                      ! constTest^
                                                               end
 
-  val s = new Valuation
+  val s = Valuation()
   def constTest = new Const("a").matching("a", s)._1 must beTrue
 }

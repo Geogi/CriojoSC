@@ -40,13 +40,13 @@ class VariableSpec extends Specification { def is =
 
   def testValuation = {
     val x = new Variable[Int]
-    val s1 = new Valuation
+    val s1 = Valuation()
     val s2 = s1 + (x, 3)
     x.unary_!(s2) === 3
   }
 
   def bindTest = {
-    val s = new Valuation
+    val s = Valuation()
     val x = new Variable[String]
     val (r1, s1) = x.matching("something", s)
     val (r2, s2) = x.matching("something", s1)
