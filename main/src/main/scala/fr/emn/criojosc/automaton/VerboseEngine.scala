@@ -1,0 +1,59 @@
+/*
+ * Copyright (c) 2013 Mines Nantes.
+ *
+ * This file is part of CriojoSC.
+ *
+ * CriojoSC is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * CriojoSC is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package fr.emn.criojosc.automaton
+
+import fr.emn.criojosc.{ClosedReactant, EntitySymbol, Agent}
+
+import collection.mutable
+
+class VerboseEngine(thisAgents: List[Agent]) extends Engine(thisAgents) {
+  private val agentNames = agents.zipWithIndex.toMap.mapValues(i => "A" + (i + 1))
+  private val entitiesNames = mutable.Map.empty[EntitySymbol, String]
+
+  private def crs(es: ClosedReactant) = {
+    if (!entitiesNames.contains(es.symbol)) entitiesNames += es.symbol -> ("R" + (entitiesNames.size + 1))
+    entitiesNames(es.symbol) + "(" + es.value.toString + ")"
+  }
+
+  private def verboseRun(i: Int) {
+    println("## Step " + i)
+    println("### Unprocessed reactants")
+    val hasUnprocessed = agents.groupBy(unprocessed(_).nonEmpty)
+    hasUnprocessed.get(false).foreach(as => println("**None:** " + as.map(agentNames(_)).mkString(", ")))
+    hasUnprocessed.get(true).foreach(_.foreach(a => println("* **" + agentNames(a) + ":** " +
+      unprocessed(a).map(crs).mkString(", "))))
+    println("### Automaton states")
+    val allInitial = agents.groupBy(automatons(_).forall(a => a.states.forall(s =>
+      if (s == a.initialState) s == Set(PartialExecution())
+      else s._2.isEmpty)))
+    allInitial.get(true).foreach(as => println("**Initial state:** " + as.map(agentNames(_)).mkString(", ")))
+    allInitial.get(false).foreach(_.foreach { a =>
+
+    })
+    if(step()) verboseRun(i + 1)
+    else println("# Equilibrium")
+  }
+
+  override def run() {
+    println("# Run")
+    println("Starting engine...")
+    verboseRun(0)
+  }
+}

@@ -39,7 +39,7 @@ class EngineSpec extends Specification { def is =
     val rules = List(rule)
     val solution = new Solution(Set(R(1), R(2)))
   }
-  lazy val engine = new Engine(List(agent))
+  lazy val engine = new VerboseEngine(List(agent))
 
   def testAutomaton = {
     val stream = new java.io.ByteArrayOutputStream()

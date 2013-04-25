@@ -23,15 +23,14 @@ package automaton
 import collection.mutable
 
 class Engine(val agents: List[Agent]) extends fr.emn.criojosc.Engine {
-  private val automatons = agents.map(a => a -> a.rules.map(r => new Automaton(r))).toMap
-  private val unprocessed = agents.map(a => a -> a.solution.content.to[mutable.ListBuffer]).toMap
+  protected val automatons = agents.map(a => a -> a.rules.map(r => new Automaton(r))).toMap
+  protected val unprocessed = agents.map(a => a -> a.solution.content.to[mutable.ListBuffer]).toMap
 
   def run() {
     if (step()) run()
-    else println("Equilibrium reached.")
   }
 
-  private def step(): Boolean = {
+  protected def step(): Boolean = {
     agents.map(agent => {
       // proposes closed atoms, get completed executions
       val complete = automatons(agent).flatMap(a => unprocessed(agent).flatMap(a.propose(_)))
