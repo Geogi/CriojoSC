@@ -34,6 +34,9 @@ class Automaton(premise: Premise) {
   private val finalState = State(premise.reactants.toList.map((_, true)).toMap)
   states(initialState) += PartialExecution()
 
+  private val ancestors = new mutable.HashMap[ClosedReactant, mutable.Set[PartialExecution]]
+    with mutable.MultiMap[ClosedReactant, PartialExecution]
+
   def propose(cr: ClosedReactant) = {
     val new_states = states.flatMap { case (state, pes) =>
       state.has.flatMap {
@@ -42,7 +45,9 @@ class Automaton(premise: Premise) {
             pe => (or.matching(cr, pe.valuation), pe)
           }.map {
             case ((matched, valuation), pe) if matched =>
-              ((state + or), PartialExecution(valuation, Some(pe), cr))
+              val newExec = PartialExecution(valuation, Some(pe), cr)
+              ancestors.addBinding(cr, newExec)
+              ((state + or), newExec)
           }
       }
     }
