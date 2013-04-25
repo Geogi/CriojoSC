@@ -20,24 +20,31 @@
 package fr.emn.criojosc
 package automaton
 
-class Engine(val agents: Iterable[Agent]) extends fr.emn.criojosc.Engine {
-  val automatons = agents.map(a => (a, a.rules.map(r => new Automaton(r.premise)))).toMap
+import collection.mutable
+
+class Engine(val agents: List[Agent]) extends fr.emn.criojosc.Engine {
+  private val automatons = agents.map(a => a -> a.rules.map(r => new Automaton(r))).toMap
+  private val unprocessed = agents.map(a => a -> a.solution.content.to[mutable.ListBuffer]).toMap
 
   def run() {
-    init()
-
+    if (step()) run()
+    else println("Equilibrium reached.")
   }
 
-  private def init() = {
-    automatons.foreach { case (agent, autos) =>
-      val updated_states = autos.map { auto =>
-        (auto, agent.solution.content.map{ cr =>
-          auto.propose(cr)
-        })
-      }.toMap
-      val completed_states = ???
-    }
+  private def step(): Boolean = {
+    agents.map(agent => {
+      // proposes closed atoms, get completed executions
+      val complete = automatons(agent).flatMap(a => unprocessed(agent).flatMap(a.propose(_)))
+      // clears the unprocessed reactants list
+      unprocessed(agent).clear()
+      // chooses one execution (dummy: first)
+      val chosen = complete.headOption
+      // if defined, applies the valuation to the conclusion of the rule
+      val products = chosen.map { case (a, pe) => a.execute(pe) }
+      // if defined, destroys the PEs that use the same CRs
+      products.foreach (op => automatons(agent).foreach(_.purge(op)))
+      // returns true if defined
+      chosen.isDefined
+    }).contains(true)
   }
-
-  private def step():Boolean = ???
 }

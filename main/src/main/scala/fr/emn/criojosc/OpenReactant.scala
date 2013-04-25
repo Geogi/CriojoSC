@@ -41,7 +41,9 @@ trait OpenReactant {
   * @param symbol The Atom this particular representation refers to.
   * @param pattern The list of Patterns used by the matching process.
   */
-class OpenAtom(val symbol: EntitySymbol, val pattern: Pattern[Any]) extends OpenReactant
+class OpenAtom(val symbol: EntitySymbol, val pattern: Pattern[Any]) extends OpenReactant {
+  override def toString = symbol.toString + "(" + pattern.toString + ")"
+}
 
 /** A symbolic representation of a Message. !CURRENTLY A STUB! */
 class OpenMessage(val symbol: EntitySymbol, val info: ChannelInfo, val pattern: Pattern[Any]) extends OpenReactant

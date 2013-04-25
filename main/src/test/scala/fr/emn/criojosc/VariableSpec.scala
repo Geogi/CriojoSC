@@ -49,10 +49,8 @@ class VariableSpec extends Specification { def is =
     val s = Valuation()
     val x = new Variable[String]
     val (r1, s1) = x.matching("something", s)
-    val (r2, s2) = x.matching("something", s1)
-    val (r3, _) = x.matching("something else", s2)
+    val (r3, _) = x.matching("something else", s1)
     (r1 must beTrue) and (s1 !== s) and      // matches because free and the valuation is updated
-      (r2 must beTrue) and (s2 === s1) and   // matches with bound value and valuation not updated
       (r3 must beFalse)                      // doesn't match with other value
   }
 }
