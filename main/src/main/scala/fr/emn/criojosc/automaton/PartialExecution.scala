@@ -25,10 +25,10 @@ import collection.mutable
 trait PartialExecution {
   def valuation: Valuation
   def using: List[ClosedReactant]
-  val children: mutable.Set[PartialExecution] = mutable.HashSet.empty[PartialExecution]
-  def +(ns: Valuation, cr: ClosedReactant): PartialExecution = {
+  val children: mutable.Set[(State, PartialExecution)] = mutable.HashSet.empty[(State, PartialExecution)]
+  def +(ns: Valuation, cr: ClosedReactant, state: State): PartialExecution = {
     val child = new DeltaPartialExecution(ns, Some(PartialExecution.this), cr)
-    children += child
+    children += state -> child
     child
   }
 }
@@ -49,5 +49,5 @@ object EmptyExecution extends PartialExecution {
   override val valuation = EmptyValuation
   override def using = Nil
 
-  override def +(s: Valuation, cr: ClosedReactant) = PartialExecution(s, None, cr)
+  override def +(s: Valuation, cr: ClosedReactant, state: State) = PartialExecution(s, None, cr)
 }
