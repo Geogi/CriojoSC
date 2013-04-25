@@ -22,19 +22,33 @@ package automaton
 
 import org.specs2._
 
-class AutomatonSpec extends Specification { def is =
-  "Automaton specification."                                 ^
+class EngineSpec extends Specification { def is =
+  "Automaton engine specification."                          ^
                                                              p^
   "Be the rule: R(x) & R(y) -> T? R(x + y)"                  ^
-    ""
+    "Test output"                                            ! testAutomaton ^
+                                                             end
 
-  lazy val R = Relation[Int]
-  lazy val rule = new Rule {
-    val x, y = Var[Int]
-    val premise = new Premise(List(R?(1)))
-    def right_hand(implicit s: Valuation) = (true, new Conclusion(R(1) :: Nil))
+  lazy val agent = new Agent {
+    lazy val R = Relation[Int]
+    lazy val rule = new Rule {
+      val x, y = Var[Int]
+      val premise = new Premise(List(R?(1)))
+      def right_hand(implicit s: Valuation) = (true, new Conclusion(R(1) :: Nil))
+    }
+    val rules = List(rule)
+    val solution = new Solution(Set(R(1), R(2)))
   }
-  lazy val ruleAutomaton = new Automaton(rule.premise)
+  lazy val engine = new Engine(List(agent))
 
-  def testAutomaton = ruleAutomaton.states
+  def testAutomaton = {
+    val stream = new java.io.ByteArrayOutputStream()
+    Console.withOut(stream) {
+      engine.run()
+    }
+    val output = stream.toString
+    stream.close()
+    output === """Equilibrium reached.
+                 |""".stripMargin
+  }
 }
