@@ -22,20 +22,21 @@ package automaton
 
 import collection.mutable
 
-class Automaton(premise: Premise) {
+class Automaton(val rule: Rule) {
+  private val premise = rule.premise
   private def gen_states(ors: List[OpenReactant] = premise.reactants.toList): List[State] = ors match {
     case x :: xs => gen_states(xs).flatMap(s => List(s + x, s - x))
     case _ => List(State(Map.empty[OpenReactant, Boolean]))
   }
-  val states: Map[State, mutable.Set[PartialExecution]] =
+  private val states: Map[State, mutable.Set[PartialExecution]] =
     gen_states().map((_, mutable.Set.empty[PartialExecution])).toMap
 
   private val initialState = State(premise.reactants.toList.map((_, false)).toMap)
   private val finalState = State(premise.reactants.toList.map((_, true)).toMap)
   states(initialState) += PartialExecution()
 
-  private val ancestors = new mutable.HashMap[ClosedReactant, mutable.Set[PartialExecution]]
-    with mutable.MultiMap[ClosedReactant, PartialExecution]
+  private val ancestors = new mutable.HashMap[ClosedReactant, mutable.Set[(State, PartialExecution)]]
+    with mutable.MultiMap[ClosedReactant, (State, PartialExecution)]
 
   def propose(cr: ClosedReactant) = {
     val new_states = states.flatMap { case (state, pes) =>
@@ -46,7 +47,7 @@ class Automaton(premise: Premise) {
           }.map {
             case ((matched, valuation), pe) if matched =>
               val newExec = PartialExecution(valuation, Some(pe), cr)
-              ancestors.addBinding(cr, newExec)
+              ancestors.addBinding(cr, state -> newExec)
               ((state + or), newExec)
           }
       }
@@ -54,6 +55,18 @@ class Automaton(premise: Premise) {
     new_states.foreach {
       case (k, v) => states(k) += v
     }
-    states(finalState)
+    states(finalState).map(this -> _)
+  }
+
+  def execute(pe: PartialExecution): Iterable[ClosedReactant] = rule.right_hand(pe.valuation)._2.content
+
+  def purge(crs: Iterable[ClosedReactant]) {
+    // for all input CRs
+    crs.foreach(cr =>
+      // if defined in ancestors, drop it and purge from states
+      ancestors.remove(cr).foreach ( _.foreach {
+        case (state, pe) => states(state) -= pe
+      })
+    )
   }
 }

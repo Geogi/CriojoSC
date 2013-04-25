@@ -25,11 +25,12 @@ import org.specs2._
 class AutomatonSpec extends Specification { def is =
   "Automaton specification."                                 ^
                                                              p^
-  "Be the rule: R(x) -> T? R(1)"                             ^
+  "Be the rule: R(x) & R(y) -> T? R(x + y)"                  ^
     ""
 
   lazy val R = Relation[Int]
   lazy val rule = new Rule {
+    val x, y = Var[Int]
     val premise = new Premise(List(R?(1)))
     def right_hand(implicit s: Valuation) = (true, new Conclusion(R(1) :: Nil))
   }
