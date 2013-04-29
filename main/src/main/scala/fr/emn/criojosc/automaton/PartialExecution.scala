@@ -31,6 +31,8 @@ trait PartialExecution {
     children += state -> child
     child
   }
+
+  override def toString = "PE(" + valuation + ": " + using.mkString(", ") + ")"
 }
 
 object PartialExecution {
@@ -50,4 +52,6 @@ object EmptyExecution extends PartialExecution {
   override def using = Nil
 
   override def +(s: Valuation, cr: ClosedReactant, state: State) = PartialExecution(s, None, cr)
+
+  override def toString = "PE()"
 }

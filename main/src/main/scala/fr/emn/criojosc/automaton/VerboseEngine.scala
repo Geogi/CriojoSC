@@ -54,8 +54,11 @@ class VerboseEngine(thisAgents: List[Agent]) extends Engine(thisAgents) {
       initialAutomatons.get(false).foreach(_.foreach { a =>
         println("###### Rule " + a.rule.premise)
         val emptyStates = a.states.groupBy(_._2.isEmpty)
-        emptyStates.get(true).foreach(ss => println("**Empty states:** " + ss.mkString(", ")))
-        emptyStates.get(false).foreach(_.foreach { case (s, pes) => println("* **" + s + ":** " + pes.mkString(", "))})
+        emptyStates.get(true).foreach(ss => println("**Empty states:** " + ss.map(_._1).mkString(", ") + "\n"))
+        emptyStates.get(false).foreach(_.foreach { case (s, pes) =>
+          println("* " + s + ":")
+          pes.foreach(pe => println("    * " + pe))
+        })
         println()
       })
     })
@@ -64,7 +67,14 @@ class VerboseEngine(thisAgents: List[Agent]) extends Engine(thisAgents) {
   }
 
   override def run() {
-    println("Starting engine...")
+    println("### Startup")
+    agents.foreach { a =>
+      println("#### Agent " + agentNames(a))
+      println("**Initial solution:** " + a.solution)
+      println()
+      println("**Rules:**")
+      a.rules.foreach(r => println("* " + r.premise))
+    }
     verboseRun(0)
   }
 }

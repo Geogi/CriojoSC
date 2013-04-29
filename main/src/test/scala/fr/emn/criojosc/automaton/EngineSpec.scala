@@ -27,6 +27,7 @@ class EngineSpec extends Specification { def is =
                                                                   p^
   "Be a sole agent with the rule: R(x) & R(y) -> T? R(x + y)"     ^
     "Given R(1) & R(2) & R(3)"                                    ^
+                                                                  endp^
     automatonOut                                                  ^
                                                                   end
 
