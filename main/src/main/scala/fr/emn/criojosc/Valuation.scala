@@ -26,6 +26,8 @@ trait Valuation {
   def +(x: Variable[Any], v: Any): Valuation = Valuation(Some(Valuation.this), Map(x -> v))
   def ++(that: Valuation): Valuation = this ++ that.content
   def ++(that: Map[Variable[Any], Any]): Valuation = Valuation(Some(Valuation.this), that)
+
+  override def toString = content.mkString(", ")
 }
 
 object Valuation {

@@ -29,5 +29,7 @@ trait ClosedReactant {
 
   def tree: Tree
 
-  override def toString = tree.toString
+  def treeString = tree.toString
+
+  override def toString = symbol.toString + "(" + value.toString + ")"
 }

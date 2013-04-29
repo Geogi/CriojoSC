@@ -28,10 +28,10 @@ class Automaton(val rule: Rule) {
     case x :: xs => gen_states(xs).flatMap(s => List(s + x, s - x))
     case _ => List(State(Map.empty[OpenReactant, Boolean]))
   }
-  private val states: Map[State, mutable.Set[PartialExecution]] =
+  val states: Map[State, mutable.Set[PartialExecution]] =
     gen_states().map(_ -> mutable.Set.empty[PartialExecution]).toMap
 
-  private val initialState = State(premise.reactants.toList.map((_, false)).toMap)
+  val initialState = State(premise.reactants.toList.map((_, false)).toMap)
   private val finalState = State(premise.reactants.toList.map((_, true)).toMap)
   states(initialState) += PartialExecution()
 
