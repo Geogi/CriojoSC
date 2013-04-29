@@ -34,8 +34,8 @@ class EngineSpec extends Specification { def is =
     lazy val R = Relation[Int]
     lazy val rule = new Rule {
       val x, y = Var[Int]
-      val premise = new Premise(List(R?(1)))
-      def right_hand(implicit s: Valuation) = (true, new Conclusion(R(1) :: Nil))
+      val premise = new Premise(List(R?(x), R?(y)))
+      def right_hand(implicit s: Valuation) = (true, new Conclusion(R(!x + !y) :: Nil))
     }
     val rules = List(rule)
     val solution = new Solution(Set(R(1), R(2), R(3)))

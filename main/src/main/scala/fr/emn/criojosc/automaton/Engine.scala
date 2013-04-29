@@ -39,9 +39,10 @@ class Engine(val agents: List[Agent]) extends fr.emn.criojosc.Engine {
       // chooses one execution (dummy: first)
       val chosen = complete.headOption
       // if defined, applies the valuation to the conclusion of the rule
-      val products = chosen.map { case (a, pe) => a.execute(pe) }
+      // and adds the products to the unprocessed reactant list
+      chosen.map { case (a, pe) => a.execute(pe) }.map(unprocessed(agent) ++= _)
       // if defined, destroys the PEs that use the same CRs
-      products.foreach (op => automatons(agent).foreach(_.purge(op)))
+      chosen.foreach { case (a, pe) => automatons(agent).foreach(_.purge(pe.using)) }
       // returns true if defined
       chosen.isDefined
     }).contains(true)
