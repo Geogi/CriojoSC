@@ -37,7 +37,7 @@ class EngineSpec extends Specification { def is =
       def right_hand(implicit s: Valuation) = (true, new Conclusion(R(1) :: Nil))
     }
     val rules = List(rule)
-    val solution = new Solution(Set(R(1), R(2)))
+    val solution = new Solution(Set(R(1), R(2), R(3)))
   }
   lazy val engine = new VerboseEngine(List(agent))
 
