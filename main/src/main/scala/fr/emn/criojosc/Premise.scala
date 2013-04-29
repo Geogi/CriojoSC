@@ -19,4 +19,6 @@
 
 package fr.emn.criojosc
 
-class Premise(val reactants: List[OpenReactant])
+class Premise(val reactants: List[OpenReactant]) {
+  override def toString = reactants.mkString(" & ")
+}

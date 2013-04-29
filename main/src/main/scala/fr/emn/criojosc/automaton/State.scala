@@ -23,4 +23,6 @@ package automaton
 case class State(has: Map[OpenReactant, Boolean]) {
   def +(or: OpenReactant) = State(has + (or -> true))
   def -(or: OpenReactant) = State(has + (or -> false))
+
+  override def toString = has.map { case (or, p) => if(p) or.toString else "_" + or + "_" }.mkString(", ")
 }

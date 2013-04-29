@@ -19,7 +19,9 @@
 
 package fr.emn.criojosc
 
-class Solution(val content: Set[ClosedReactant])
+class Solution(val content: Set[ClosedReactant]) {
+  override def toString = content.mkString(" & ")
+}
 
 object Solution {
   def apply(rs: ClosedReactant*) = new Solution(rs.toSet)
