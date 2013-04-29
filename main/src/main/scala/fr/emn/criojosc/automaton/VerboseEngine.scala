@@ -33,34 +33,34 @@ class VerboseEngine(thisAgents: List[Agent]) extends Engine(thisAgents) {
   }
 
   private def verboseRun(i: Int) {
-    println("# Step " + i)
-    println("## Unprocessed reactants")
+    println("### Step " + i)
+    println("#### Unprocessed reactants")
     val hasUnprocessed = agents.groupBy(unprocessed(_).nonEmpty)
     hasUnprocessed.get(false).foreach(as => println("**None:** " + as.map(agentNames(_)).mkString(", ")))
     hasUnprocessed.get(true).foreach(_.foreach(a => println("* **" + agentNames(a) + ":** " +
       unprocessed(a).map(crs).mkString(", "))))
     println()
-    println("## Automaton states")
+    println("#### Automaton states")
     val allInitial = agents.groupBy(automatons(_).forall(a => a.states.forall { case (s, pes) =>
       if (s == a.initialState) pes == Set(PartialExecution())
       else pes.isEmpty}))
     allInitial.get(true).foreach(as => println("**All in initial state:** " + as.map(agentNames(_)).mkString(", ")))
     allInitial.get(false).foreach(_.foreach { case agent =>
-      println("### Agent " + agentNames(agent))
+      println("##### Agent " + agentNames(agent))
       val initialAutomatons = automatons(agent).groupBy(a => a.states.forall { case (s, pes) =>
         if (s == a.initialState) pes == Set(PartialExecution())
         else pes.isEmpty})
       initialAutomatons.get(true).foreach(as => println("**Initial state:**" + as.map(_.rule.premise).mkString("\n")))
       initialAutomatons.get(false).foreach(_.foreach { a =>
-        println("#### Rule " + a.rule.premise)
+        println("###### Rule " + a.rule.premise)
         val emptyStates = a.states.groupBy(_._2.isEmpty)
         emptyStates.get(true).foreach(ss => println("**Empty states:** " + ss.mkString(", ")))
-        emptyStates.get(false).foreach(_.foreach { case (s, pes) => println("* " + s + ": " + pes.mkString(", "))})
+        emptyStates.get(false).foreach(_.foreach { case (s, pes) => println("* **" + s + ":** " + pes.mkString(", "))})
         println()
       })
     })
     if(step()) verboseRun(i + 1)
-    else println("# Equilibrium reached")
+    else println("### Equilibrium reached")
   }
 
   override def run() {

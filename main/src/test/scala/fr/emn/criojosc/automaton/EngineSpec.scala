@@ -23,11 +23,12 @@ package automaton
 import org.specs2._
 
 class EngineSpec extends Specification { def is =
-  "Automaton engine specification."                          ^
-                                                             p^
-  "Be the rule: R(x) & R(y) -> T? R(x + y)"                  ^
-    "Test output"                                            ! testAutomaton ^
-                                                             end
+  "Automaton engine specification."                               ^
+                                                                  p^
+  "Be a sole agent with the rule: R(x) & R(y) -> T? R(x + y)"     ^
+    "Given R(1) & R(2) & R(3)"                                    ^
+    automatonOut                                                  ^
+                                                                  end
 
   lazy val agent = new Agent {
     lazy val R = Relation[Int]
@@ -41,14 +42,13 @@ class EngineSpec extends Specification { def is =
   }
   lazy val engine = new VerboseEngine(List(agent))
 
-  def testAutomaton = {
+  lazy val automatonOut = {
     val stream = new java.io.ByteArrayOutputStream()
     Console.withOut(stream) {
       engine.run()
     }
     val output = stream.toString
     stream.close()
-    output === """Equilibrium reached.
-                 |""".stripMargin
+    output
   }
 }
