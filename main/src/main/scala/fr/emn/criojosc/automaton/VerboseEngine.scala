@@ -19,17 +19,37 @@
 
 package fr.emn.criojosc.automaton
 
-import fr.emn.criojosc.{ClosedReactant, EntitySymbol, Agent}
+import fr.emn.criojosc._
 
 import collection.mutable
 
-class VerboseEngine(thisAgents: List[Agent]) extends Engine(thisAgents) {
+class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.Engine(thisAgents) {
   private val agentNames = agents.zipWithIndex.toMap.mapValues(i => "A" + (i + 1))
   private val entitiesNames = mutable.Map.empty[EntitySymbol, String]
 
   private def crs(es: ClosedReactant) = {
     if (!entitiesNames.contains(es.symbol)) entitiesNames += es.symbol -> ("R" + (entitiesNames.size + 1))
     entitiesNames(es.symbol) + "(" + es.value.toString + ")"
+  }
+
+  private def ors(es: OpenReactant) = {
+    if (!entitiesNames.contains(es.symbol)) entitiesNames += es.symbol -> ("R" + (entitiesNames.size + 1))
+    entitiesNames(es.symbol) + "?(" + es.pattern.toString + ")"
+  }
+  private def premise_s(p: Premise) = p.reactants.map(ors).mkString(" & ")
+
+  override def run() {
+    println("### Startup")
+    agents.foreach { a =>
+      println("#### Agent " + agentNames(a))
+      println("**Initial solution:** " + a.solution.content.map(crs).mkString(", "))
+      println()
+      println("**Rules:**")
+      println()
+      a.rules.foreach(r => println("* " + premise_s(r.premise)))
+    }
+    println()
+    verboseRun(0)
   }
 
   private def verboseRun(i: Int) {
@@ -50,31 +70,22 @@ class VerboseEngine(thisAgents: List[Agent]) extends Engine(thisAgents) {
       val initialAutomatons = automatons(agent).groupBy(a => a.states.forall { case (s, pes) =>
         if (s == a.initialState) pes == Set(PartialExecution())
         else pes.isEmpty})
-      initialAutomatons.get(true).foreach(as => println("**Initial state:**" + as.map(_.rule.premise).mkString("\n")))
+      initialAutomatons.get(true).foreach(as => println("**Initial state:**" + as.map(a => premise_s(a.rule.premise)).mkString("\n")))
       initialAutomatons.get(false).foreach(_.foreach { a =>
-        println("###### Rule " + a.rule.premise)
-        val emptyStates = a.states.groupBy(_._2.isEmpty)
-        emptyStates.get(true).foreach(ss => println("**Empty states:** " + ss.map(_._1).mkString(", ") + "\n"))
-        emptyStates.get(false).foreach(_.foreach { case (s, pes) =>
-          println("* " + s + ":")
-          pes.foreach(pe => println("    * " + pe))
-        })
+        println("###### Rule " + premise_s(a.rule.premise))
+        println(a.rule.premise.reactants.mkString(" | "))
+        println(a.rule.premise.reactants.map(or => "-" * or.toString.length).mkString(" | "))
+        a.states.filter(_._2.nonEmpty).foreach { case (s, pes) =>
+          println(a.rule.premise.reactants.map { or =>
+            if (s.has(or)) " " * math.floor((or.toString.length - 1) / 2.0).toInt + "X" + " " * math.ceil((or.toString.length - 1) / 2.0).toInt
+            else " " * or.toString.length
+          }.mkString(" | "))
+          pes.foreach(pe => println(" " + pe + " " + "|" * (a.rule.premise.reactants.size - 1)))
+        }
         println()
       })
     })
     if(step()) verboseRun(i + 1)
     else println("### Equilibrium reached")
-  }
-
-  override def run() {
-    println("### Startup")
-    agents.foreach { a =>
-      println("#### Agent " + agentNames(a))
-      println("**Initial solution:** " + a.solution)
-      println()
-      println("**Rules:**")
-      a.rules.foreach(r => println("* " + r.premise))
-    }
-    verboseRun(0)
   }
 }
