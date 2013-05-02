@@ -20,7 +20,6 @@
 package fr.emn.criojosc
 
 trait Rule extends RuleImplicits {
-
   def Var[T] = new Variable[T]
 
   val premise: Premise

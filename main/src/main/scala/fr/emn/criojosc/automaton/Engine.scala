@@ -23,12 +23,10 @@ package automaton
 import collection.mutable
 
 class Engine(val agents: List[Agent]) extends fr.emn.criojosc.Engine {
-  protected val automatons = agents.map { a =>
-    a -> a.rules.flatMap { r =>
-      Seq(new Automaton(r, None))
-    }
-  }.toMap
+  protected val automatons = agents.map(a => a -> a.rules.flatMap(recurAuto)).toMap
   protected val unprocessed = agents.map(a => a -> a.solution.content.to[mutable.ListBuffer]).toMap
+
+  private def recurAuto(r: Rule): List[Automaton] = Nil
 
   def run() {
     if (step()) run()
