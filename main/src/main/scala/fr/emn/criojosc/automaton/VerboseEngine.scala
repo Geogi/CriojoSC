@@ -26,45 +26,57 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
 
   override def run() {
     println("### Startup")
+    println()
     agents.foreach { a =>
       println("#### Agent " + a)
+      println()
       println("**Initial solution:** " + a.solution.content.mkString(", "))
       println()
       println("**Rules:**")
       println()
       a.rules.foreach(r => println("* **" + r + ":** " + r.printed))
+      println()
     }
-    println()
     verboseRun(0)
   }
 
   private def verboseRun(i: Int) {
     println("### Step " + i)
+    println()
     println("#### Unprocessed reactants")
+    println()
     val hasUnprocessed = agents.groupBy(unprocessed(_).nonEmpty)
     hasUnprocessed.get(false).foreach(as => println("**None:** " + as.mkString(", ")))
     hasUnprocessed.get(true).foreach(_.foreach(a => println("* **" + a + ":** " +
       unprocessed(a).mkString(", "))))
     println()
     println("#### Automaton states")
+    println()
     val allInitial = agents.groupBy(automatons(_).forall(a => a.states.forall { case (s, pes) =>
       if (s == a.initialState) pes == Set(PartialExecution())
       else pes.isEmpty}))
     allInitial.get(true).foreach(as => println("**All in initial state:** " + as.mkString(", ")))
+    println()
     allInitial.get(false).foreach(_.foreach { case agent =>
       println("##### Agent " + agent)
+      println()
       val initialAutomatons = automatons(agent).groupBy(a => a.states.forall { case (s, pes) =>
         if (s == a.initialState) pes == Set(PartialExecution())
         else pes.isEmpty})
-      initialAutomatons.get(true).foreach(as => println("**Initial state:**" + as.mkString("\n")))
+      initialAutomatons.get(true).foreach { as =>
+        println("**Initial state:**")
+        println()
+        as.foreach(a => println("* " + a.rule))
+        println()
+      }
       initialAutomatons.get(false).foreach(_.foreach { a =>
         println("###### Rule " + a.rule)
         println()
         println(a.rule.premise.reactants.mkString("| ", " | ", " |"))
         println(a.rule.premise.reactants.map(or => "-" * (or.toString.length - 2)).mkString("| :", " :|: ", ": |"))
-        a.states.filter(_._2.nonEmpty).foreach { case (s, pes) =>
+        a.states.filter { case (s, pes) => s != a.initialState && pes.nonEmpty }.foreach { case (s, pes) =>
           println(a.rule.premise.reactants.map { or =>
-            if (s.has(or)) " " * math.floor((or.toString.length - 1) / 2.0).toInt + "X" + " " * math.ceil((or.toString.length - 1) / 2.0).toInt
+            if (s.has(or)) " " * math.floor((or.toString.length - 7) / 2.0).toInt + "***X***" + " " * math.ceil((or.toString.length - 7) / 2.0).toInt
             else " " * or.toString.length
           }.mkString("| ", " | ", " |"))
           pes.foreach(pe => println("| " + pe + " " + "|" * a.rule.premise.reactants.size))

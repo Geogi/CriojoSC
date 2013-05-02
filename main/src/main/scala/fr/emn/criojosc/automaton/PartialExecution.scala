@@ -32,7 +32,7 @@ trait PartialExecution {
     child
   }
 
-  override def toString = "PE(" + valuation + ": " + using.mkString(", ") + ")"
+  override def toString = valuation.toString + " ⇒ " + using.mkString(", ")
 }
 
 object PartialExecution {
