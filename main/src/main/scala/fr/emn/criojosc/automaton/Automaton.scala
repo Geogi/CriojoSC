@@ -35,6 +35,8 @@ class Automaton(val rule: Rule) {
   private val finalState = State(premise.reactants.toList.map((_, true)).toMap)
   states(initialState) += PartialExecution()
 
+  def completedExecution = states(finalState).headOption
+
   private val ancestors = new mutable.HashMap[ClosedReactant, mutable.Set[(State, PartialExecution)]]
     with mutable.MultiMap[ClosedReactant, (State, PartialExecution)]
 
@@ -59,7 +61,7 @@ class Automaton(val rule: Rule) {
     states(finalState).map(this -> _)
   }
 
-  def execute(pe: PartialExecution): Iterable[ClosedReactant] = rule.right_hand(pe.valuation)._2.content
+  def execute(pe: PartialExecution): Iterable[ClosedReactant] = rule.conclusion(pe.valuation).content
 
   def purge(crs: Iterable[ClosedReactant]) {
     def purgePE(binding: (State, PartialExecution)) {
