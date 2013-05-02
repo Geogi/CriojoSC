@@ -29,15 +29,19 @@ class EngineSpec extends Specification { def is =
                                                                   end
 
   lazy val agent = new Agent {
-    lazy val R = Relation[Int]
+    lazy val R, S = Relation[Int]
     lazy val rule = new Rule {
       val x, y = Var[Int]
       val premise = new Premise(List(R?(x), R?(y)))
-      val guard: Guard = true
+      val guard: Guard = ! new ControlGuard {
+        val z = Var[Int]
+        val premise = new Premise(List(S?(z)))
+        val guard: Guard = true
+      }
       def conclusion(implicit s: Valuation) = new Conclusion(R(!x + !y) :: Nil)
     }
     val rules = List(rule)
-    val solution = new Solution(Set(R(1), R(2), R(3)))
+    val solution = new Solution(Set(R(1), R(2), R(3), S(0)))
   }
   lazy val engine = new VerboseEngine(List(agent))
 
