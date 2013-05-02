@@ -22,7 +22,7 @@ package automaton
 
 import collection.mutable
 
-class Automaton(val rule: Rule, val children: List[Automaton] = Nil) {
+class Automaton(val rule: Rule) {
   private val premise = rule.premise
   private def gen_states(ors: List[OpenReactant] = premise.reactants.toList): List[State] = ors match {
     case x :: xs => gen_states(xs).flatMap(s => List(s + x, s - x))
@@ -34,6 +34,8 @@ class Automaton(val rule: Rule, val children: List[Automaton] = Nil) {
   val initialState = State(premise.reactants.toList.map((_, false)).toMap)
   private val finalState = State(premise.reactants.toList.map((_, true)).toMap)
   states(initialState) += PartialExecution()
+
+  def completedExecution = states(finalState).headOption
 
   private val ancestors = new mutable.HashMap[ClosedReactant, mutable.Set[(State, PartialExecution)]]
     with mutable.MultiMap[ClosedReactant, (State, PartialExecution)]
