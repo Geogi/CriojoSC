@@ -94,4 +94,34 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
       }
     }
   }
+
+  override def step() = {
+    println("#### Processing")
+    agents.map(agent => {
+      // proposes closed atoms, get completed executions (filter guards) whose guards are verified
+      val complete = automatons(agent).flatMap(a => unprocessed(agent).flatMap(a.propose(_))).filter {
+        case (automaton, pe) => !automaton.rule.isInstanceOf[ControlGuard] && evaluateGuard(automaton.rule.guard, pe.valuation)
+      }
+      println("**Completed rules:**")
+      println()
+      complete.foreach { case (automaton, pe) => println("* **" + automaton.rule + ":** " + pe) }
+      println()
+      // clears the unprocessed reactants list
+      unprocessed(agent).clear()
+      // takes the first choice, if any
+      val chosen = complete.headOption
+      println("**Chosen:** " + chosen.map { case (automaton, pe) => automaton.rule + " *with* " + pe }.getOrElse("None"))
+      println()
+      // if defined, applies the valuation to the conclusion of the rule
+      // and adds the products to the unprocessed reactant list
+      val products = chosen.map { case (a, pe) => a.execute(pe) }
+      println("**Products:** " + products.map(_.mkString(" & ")).getOrElse("None"))
+      println()
+      products.map(unprocessed(agent) ++= _)
+      // if defined, destroys the PEs that use the same CRs
+      chosen.foreach { case (a, pe) => automatons(agent).foreach(_.purge(pe.using)) }
+      // returns true if defined
+      chosen.isDefined
+    }).contains(true)
+  }
 }

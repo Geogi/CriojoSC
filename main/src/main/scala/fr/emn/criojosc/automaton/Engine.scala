@@ -44,7 +44,7 @@ class Engine(val agents: List[Agent]) extends fr.emn.criojosc.Engine {
     if (step()) run()
   }
 
-  private def evaluateGuard(guard: Guard, s: Valuation): Boolean = guard match {
+  protected def evaluateGuard(guard: Guard, s: Valuation): Boolean = guard match {
     case AndGuard(left, right) => evaluateGuard(left, s) && evaluateGuard(right, s)
     case NotGuard(subGuard) => !evaluateGuard(subGuard, s)
     case NativeGuard(test) => test(s)
