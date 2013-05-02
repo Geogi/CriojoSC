@@ -56,16 +56,14 @@ class Engine(val agents: List[Agent]) extends fr.emn.criojosc.Engine {
 
   protected def step(): Boolean = {
     agents.map(agent => {
-      // proposes closed atoms, get completed executions (filter guards)
+      // proposes closed atoms, get completed executions (filter guards) whose guards are verified
       val complete = automatons(agent).flatMap(a => unprocessed(agent).flatMap(a.propose(_))).filter {
-        case (automaton, pe) => !automaton.rule.isInstanceOf[ControlGuard]
+        case (automaton, pe) => !automaton.rule.isInstanceOf[ControlGuard] && evaluateGuard(automaton.rule.guard, pe.valuation)
       }
       // clears the unprocessed reactants list
       unprocessed(agent).clear()
-      // finds an execution whose guard is verified
-      val chosen = complete.find {
-        case (automaton, pe) => evaluateGuard(automaton.rule.guard, pe.valuation)
-      }
+      // takes the first choice, if any
+      val chosen = complete.headOption
       // if defined, applies the valuation to the conclusion of the rule
       // and adds the products to the unprocessed reactant list
       chosen.map { case (a, pe) => a.execute(pe) }.map(unprocessed(agent) ++= _)

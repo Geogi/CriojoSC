@@ -44,12 +44,13 @@ class GuardSpec extends Specification { def is =
   val dummyValuation = Valuation()
 
   def implicitGuard = {
-    val implicitly: Guard = false
-    implicitly.evaluate(dummyValuation) must beFalse
+    val implicitly: Guard = NativeGuard(s => false)
+    implicitly.evaluate(dummyValuation)
+    pending
   }
 
-  val trueGuard: Guard = true
-  val falseGuard: Guard = false
+  val trueGuard: Guard = NativeGuard(s => true)
+  val falseGuard: Guard = NativeGuard(s => false)
 
   def notGuard = (new NotGuard(trueGuard).evaluate(dummyValuation) must beFalse) and
     (!trueGuard.evaluate(dummyValuation) must beFalse)

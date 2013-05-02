@@ -65,6 +65,4 @@ case object NoConclusion extends Conclusion(Nil)
 
 object Guard {
   import language.implicitConversions
-
-  implicit def bool2Guard(bool: Boolean) = new NativeGuard(Function.const[Boolean, Valuation](bool))
 }

@@ -31,12 +31,12 @@ class EngineSpec extends Specification { def is =
   lazy val agent = new Agent {
     lazy val R, S = Relation[Int]
     lazy val rule = new Rule {
-      val x, y = Var[Int]
+      val x, y = Variable[Int]
       val premise = new Premise(List(R?(x), R?(y)))
       val guard: Guard = ! new ControlGuard {
-        val z = Var[Int]
+        val z = Variable[Int]
         val premise = new Premise(List(S?(z)))
-        val guard: Guard = true
+        val guard: Guard = NativeGuard(s => true)
       }
       def conclusion(implicit s: Valuation) = new Conclusion(R(!x + !y) :: Nil)
     }

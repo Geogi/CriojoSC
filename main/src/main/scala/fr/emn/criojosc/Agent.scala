@@ -20,7 +20,7 @@
 package fr.emn.criojosc
 
 /** A universe complying with the chemical computing model. !CURRENTLY A STUB! */
-trait Agent {
+trait Agent extends OptNamed {
   /** How entities react. */
   val rules: Iterable[Rule]
   /** What entities this universe currently holds. */

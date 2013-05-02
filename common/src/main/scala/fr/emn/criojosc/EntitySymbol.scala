@@ -19,6 +19,4 @@
 
 package fr.emn.criojosc
 
-class EntitySymbol
-
-
+class EntitySymbol extends OptNamed

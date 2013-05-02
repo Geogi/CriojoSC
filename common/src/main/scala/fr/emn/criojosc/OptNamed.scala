@@ -19,16 +19,8 @@
 
 package fr.emn.criojosc
 
-class Variable[+T] extends Pattern[T] with OptNamed {
-  def matching[S >: T](proposed: S, s: Valuation) = if (s.contains(this)) (false, s) else (true, s + (this, proposed))
+trait OptNamed {
+  val name: Option[String] = None
 
-  def unary_!(implicit s: Valuation): T = (s.get(this) getOrElse
-    (throw new NoSuchElementException("Unbound variable"))).asInstanceOf[T]
-}
-
-object Variable {
-  def apply[T] = new Variable[T]
-  def apply[T](s: String) = new Variable[T] {
-    override val name = Some(s)
-  }
+  override def toString = name.getOrElse(super.toString)
 }

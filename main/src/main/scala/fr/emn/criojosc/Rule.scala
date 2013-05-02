@@ -19,9 +19,7 @@
 
 package fr.emn.criojosc
 
-trait Rule extends RuleImplicits {
-  def Var[T] = new Variable[T]
-
+trait Rule extends RuleImplicits with OptNamed {
   val premise: Premise
 
   val guard: Guard
