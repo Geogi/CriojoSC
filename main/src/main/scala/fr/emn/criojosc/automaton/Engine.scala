@@ -23,17 +23,20 @@ package automaton
 import collection.mutable
 
 class Engine(val agents: List[Agent]) extends fr.emn.criojosc.Engine {
-  protected val automatons = agents.map(a => a -> a.rules.flatMap(recurAuto(_))).toMap
+  protected val automatons = agents.map(a => a -> a.rules.flatMap(recurAuto(_)())).toMap
   protected val unprocessed = agents.map(a => a -> a.solution.content.to[mutable.ListBuffer]).toMap
 
-  private def recurAuto(p: Rule, c: List[Guard] = Nil): List[Automaton] = p.guard(EmptyValuation) match {
-    case AndGuard(l, r) => recurAuto(p, l :: r :: c)
-    case NotGuard(g) => recurAuto(p, g :: c)
-    case g: ControlGuard => {
-      val subAutos = recurAuto(g)
-      new Automaton(p, subAutos) :: subAutos
+  private def recurAuto(parent: Rule)(guards: List[Guard] = List(parent.guard),
+                                      children: List[Automaton] = Nil): List[Automaton] = guards match {
+    case x :: xs => x match {
+      case AndGuard(left, right) => recurAuto(parent)(left :: right :: xs, children)
+      case NotGuard(guard) => recurAuto(parent)(guard :: xs, children)
+      case NativeGuard(test) => recurAuto(parent)(xs, children)
+      case guard: ControlGuard =>
+        val subAutos = recurAuto(guard)()
+        subAutos ::: recurAuto(parent)(xs, subAutos ::: children)
     }
-    case _ => List(new Automaton(p))
+    case _ => List(new Automaton(parent, children))
   }
 
   def run() {

@@ -27,7 +27,7 @@ package fr.emn.criojosc
   */
 trait Guard {
   /** Truth of this guard. Will probably be changed when guards are implemented with state machines. !CURRENTLY A STUB! */
-  def evaluate(implicit s: Valuation): () => Boolean
+  def evaluate(implicit s: Valuation): Boolean
 
   def unary_! = NotGuard(this)
 
@@ -35,11 +35,11 @@ trait Guard {
 }
 
 case class NotGuard(sub: Guard) extends Guard {
-  def evaluate(implicit s: Valuation) = () => !sub.evaluate(s)()
+  def evaluate(implicit s: Valuation) = !sub.evaluate
 }
 
 case class AndGuard(left: Guard, right: Guard) extends Guard {
-  def evaluate(implicit s: Valuation) = () => left.evaluate(s)() && right.evaluate(s)()
+  def evaluate(implicit s: Valuation) = left.evaluate(s) && right.evaluate(s)
 }
 
 /** Guard whose truth value comes from a Scala boolean. !CURRENTLY A STUB!
@@ -51,7 +51,7 @@ case class AndGuard(left: Guard, right: Guard) extends Guard {
   * @param test A Boolean to evaluate to.
   */
 case class NativeGuard(test: (Valuation) => Boolean) extends Guard {
-  def evaluate(implicit s: Valuation) = () => test(s)
+  def evaluate(implicit s: Valuation) = test(s)
 }
 
 /** `true` if the premise match and, given the updated [[fr.emn.criojosc.Valuation]], the sub-guard is `true` !CURRENTLY A STUB! */

@@ -24,7 +24,7 @@ trait Rule extends RuleImplicits {
 
   val premise: Premise
 
-  def guard(implicit s: Valuation): Guard
+  val guard: Guard
 
   def conclusion(implicit s: Valuation): Conclusion
 }
