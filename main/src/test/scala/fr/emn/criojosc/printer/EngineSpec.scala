@@ -34,7 +34,7 @@ class EngineSpec extends Specification { def is =
       val A = new Rule {
         val x = Var[String]
         val premise = new Premise(List(R?(x :: Nip, 1)))
-        def guard(implicit s: Valuation) = true
+        val guard: Guard = true
         def conclusion(implicit s: Valuation) = new Conclusion(R(!x :: "a" :: Nil, 1) :: Nil)
       }
       val rules = Seq(A)
