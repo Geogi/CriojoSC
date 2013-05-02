@@ -56,11 +56,9 @@ case class NativeGuard(test: (Valuation) => Boolean) extends Guard {
 
 /** `true` if the premise match and, given the updated [[fr.emn.criojosc.Valuation]], the sub-guard is `true` !CURRENTLY A STUB! */
 trait ControlGuard extends Rule with Guard {
-  def guard(implicit s: Valuation): Guard
+  override def evaluate(implicit s: Valuation) = guard.evaluate(s)
 
-  override def evaluate(implicit s: Valuation) = right_hand._1.evaluate
-
-  override def right_hand(implicit s: Valuation) = (guard, NoConclusion)
+  override def conclusion(implicit s: Valuation) = NoConclusion
 }
 
 case object NoConclusion extends Conclusion(Nil)
