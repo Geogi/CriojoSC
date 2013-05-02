@@ -32,8 +32,6 @@ trait Guard {
   def unary_! = NotGuard(this)
 
   def &&(that: Guard) = AndGuard(this, that)
-
-  def ||(that: Guard) = OrGuard(this, that)
 }
 
 case class NotGuard(sub: Guard) extends Guard {
@@ -42,10 +40,6 @@ case class NotGuard(sub: Guard) extends Guard {
 
 case class AndGuard(left: Guard, right: Guard) extends Guard {
   def evaluate(implicit s: Valuation) = left.evaluate && right.evaluate
-}
-
-case class OrGuard(left: Guard, right: Guard) extends Guard {
-  def evaluate(implicit s: Valuation) = left.evaluate || right.evaluate
 }
 
 /** Guard whose truth value comes from a Scala boolean. !CURRENTLY A STUB!
@@ -72,7 +66,6 @@ trait ControlGuard extends Rule with Guard {
 case object NoConclusion extends Conclusion(Nil)
 
 object Guard {
-
   import language.implicitConversions
 
   implicit def bool2Guard(bool: Boolean) = new NativeGuard(Function.const[Boolean, Valuation](bool))

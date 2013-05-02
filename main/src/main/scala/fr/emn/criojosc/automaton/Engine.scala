@@ -23,7 +23,9 @@ package automaton
 import collection.mutable
 
 class Engine(val agents: List[Agent]) extends fr.emn.criojosc.Engine {
-  protected val automatons = agents.map(a => a -> a.rules.map(r => new Automaton(r))).toMap
+  protected val automatons = agents.map { a =>
+    a -> a.rules.map(r => new Automaton(r, None))
+  }.toMap
   protected val unprocessed = agents.map(a => a -> a.solution.content.to[mutable.ListBuffer]).toMap
 
   def run() {
