@@ -30,7 +30,6 @@ trait Rule extends RuleImplicits {
 }
 
 trait RuleImplicits {
-
   import language.implicitConversions
 
   implicit def const[T](v: T) = new Const(v)

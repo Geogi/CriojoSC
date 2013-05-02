@@ -26,7 +26,7 @@ class Engine(val agents: List[Agent]) extends fr.emn.criojosc.Engine {
   protected val automatons = agents.map(a => a -> a.rules.flatMap(recurAuto)).toMap
   protected val unprocessed = agents.map(a => a -> a.solution.content.to[mutable.ListBuffer]).toMap
 
-  private def recurAuto(r: Rule): List[Automaton] = Nil
+  private def recurAuto(r: Rule): List[Automaton] = ???
 
   def run() {
     if (step()) run()

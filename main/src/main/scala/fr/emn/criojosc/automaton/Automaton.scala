@@ -22,7 +22,7 @@ package automaton
 
 import collection.mutable
 
-class Automaton(val rule: Rule, val guards: List[Automaton]) {
+class Automaton(val rule: Rule) {
   private val premise = rule.premise
   private def gen_states(ors: List[OpenReactant] = premise.reactants.toList): List[State] = ors match {
     case x :: xs => gen_states(xs).flatMap(s => List(s + x, s - x))
