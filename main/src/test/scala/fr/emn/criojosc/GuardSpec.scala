@@ -31,7 +31,6 @@ class GuardSpec extends Specification { def is =
   "Unary construct: !negated"                                                            ! notGuard^
   "Binary constructs:"                                                                   ^
     "left && right"                                                                      ! andGuard^
-    "left || right"                                                                      ! orGuard^
                                                                                          endp^
   "Control guards act as a pseudo-rules, and evaluate against the solution. " +
     "They're stubs for now"                                                              ! pending^
@@ -57,7 +56,4 @@ class GuardSpec extends Specification { def is =
 
   def andGuard = (new AndGuard(trueGuard, falseGuard).evaluate(dummyValuation) must beFalse) and
     ((trueGuard && falseGuard).evaluate(dummyValuation) must beFalse)
-
-  def orGuard = (new OrGuard(trueGuard, falseGuard).evaluate(dummyValuation) must beTrue) and
-    ((trueGuard || falseGuard).evaluate(dummyValuation) must beTrue)
 }

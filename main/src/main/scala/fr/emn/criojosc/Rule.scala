@@ -20,16 +20,16 @@
 package fr.emn.criojosc
 
 trait Rule extends RuleImplicits {
-
   def Var[T] = new Variable[T]
 
   val premise: Premise
 
-  def right_hand(implicit s: Valuation): (Guard, Conclusion)
+  val guard: Guard
+
+  def conclusion(implicit s: Valuation): Conclusion
 }
 
 trait RuleImplicits {
-
   import language.implicitConversions
 
   implicit def const[T](v: T) = new Const(v)
