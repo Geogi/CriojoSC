@@ -42,7 +42,7 @@ class Tuple<%=i%>Pattern[<%=gt(i, "+T" + _)%>](val origin: (<%=gt(i, "Pattern[T"
     (true, ps)
   }
 
-  override def toString = "~(" + <%=(1 to i).map("origin._" + _).mkString(" + \", \" + ")%> + ")"
+  override def toString = <%=(1 to i).map("origin._" + _).mkString(" + \", \" + ")%>
 }
 
 #end

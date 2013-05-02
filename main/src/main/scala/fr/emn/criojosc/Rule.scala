@@ -25,6 +25,8 @@ trait Rule extends RuleImplicits with OptNamed {
   val guard: Guard
 
   def conclusion(implicit s: Valuation): Conclusion
+
+  lazy val printed = premise.reactants.mkString(" & ") + " → " + guard.toString + " ? [conclusion]"
 }
 
 trait RuleImplicits {

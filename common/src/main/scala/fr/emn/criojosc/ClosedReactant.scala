@@ -31,5 +31,8 @@ trait ClosedReactant {
 
   def treeString = tree.toString
 
-  override def toString = symbol.toString + "(" + value.toString + ")"
+  override def toString = symbol.toString + (value.toString match {
+    case s if s.startsWith("(") && s.endsWith(")") => s
+    case s => "(" + s + ")"
+  })
 }

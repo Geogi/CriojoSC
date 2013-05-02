@@ -33,7 +33,7 @@ class TransitiveClosureSpec extends Specification { def is =
     override val name = Some("TransitiveClosure")
 
     lazy val R = Relation[String, String]("R")
-    lazy val Rs = Relation[String, String]("R*")
+    lazy val Rs = Relation[String, String]("R+")
     val solution = new Solution(Set(R("A", "B"), R("B", "C")))
     val rules = Seq(
       new Rule {

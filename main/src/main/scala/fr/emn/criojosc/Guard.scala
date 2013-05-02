@@ -36,10 +36,14 @@ trait Guard {
 
 case class NotGuard(sub: Guard) extends Guard {
   def evaluate(implicit s: Valuation) = !sub.evaluate
+
+  override def toString = "¬(" + sub + ")"
 }
 
 case class AndGuard(left: Guard, right: Guard) extends Guard {
   def evaluate(implicit s: Valuation) = left.evaluate(s) && right.evaluate(s)
+
+  override def toString = "(" + left + " ∧ " + right + ")"
 }
 
 /** Guard whose truth value comes from a Scala boolean. !CURRENTLY A STUB!
@@ -52,6 +56,8 @@ case class AndGuard(left: Guard, right: Guard) extends Guard {
   */
 case class NativeGuard(test: (Valuation) => Boolean) extends Guard {
   def evaluate(implicit s: Valuation) = test(s)
+
+  override def toString = "[native]"
 }
 
 /** `true` if the premise match and, given the updated [[fr.emn.criojosc.Valuation]], the sub-guard is `true` !CURRENTLY A STUB! */
@@ -59,6 +65,10 @@ trait ControlGuard extends Rule with Guard {
   override def evaluate(implicit s: Valuation) = guard.evaluate(s)
 
   override def conclusion(implicit s: Valuation) = NoConclusion
+
+  override def toString = premise.reactants.mkString(" & ") + " → " + guard.toString
+
+  override lazy val printed = toString
 }
 
 case object NoConclusion extends Conclusion(Nil)

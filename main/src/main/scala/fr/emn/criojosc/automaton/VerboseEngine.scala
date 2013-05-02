@@ -21,8 +21,6 @@ package fr.emn.criojosc.automaton
 
 import fr.emn.criojosc._
 
-import collection.mutable
-
 class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.Engine(thisAgents) {
   var MAX_ITS: Option[Int] = None
 
@@ -34,7 +32,7 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
       println()
       println("**Rules:**")
       println()
-      a.rules.foreach(r => println("* " + r.premise))
+      a.rules.foreach(r => println("* **" + r + ":** " + r.printed))
     }
     println()
     verboseRun(0)
@@ -60,7 +58,7 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
         else pes.isEmpty})
       initialAutomatons.get(true).foreach(as => println("**Initial state:**" + as.mkString("\n")))
       initialAutomatons.get(false).foreach(_.foreach { a =>
-        println("###### Rule " + a.rule.premise)
+        println("###### Rule " + a.rule)
         println()
         println(a.rule.premise.reactants.mkString("| ", " | ", " |"))
         println(a.rule.premise.reactants.map(or => "-" * (or.toString.length - 2)).mkString("| :", " :|: ", ": |"))
@@ -75,8 +73,13 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
       })
     })
     if(step() && MAX_ITS.map(i < _).getOrElse(true)) verboseRun(i + 1)
-    else
+    else {
       if (MAX_ITS.map(i < _).getOrElse(true)) println("### Equilibrium reached")
-      else println("### Maximum iteration reached: " + i)
+      else {
+        println("### Stopped")
+        println()
+        println("Maximum iteration reached: " + i)
+      }
+    }
   }
 }
