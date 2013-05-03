@@ -40,7 +40,7 @@ class Automaton(val rule: Rule) {
     with mutable.MultiMap[ClosedReactant, (State, PartialExecution)]
 
   def propose(cr: ClosedReactant) {
-    val new_states: Iterable[(State, PartialExecution)] = states.flatMap { case (state, pes) =>
+    val new_states: List[(State, PartialExecution)] = states.toList.flatMap { case (state, pes) =>
       state.has.collect {
         case (or, present) if !present && cr.symbol == or.symbol =>
           pes.map {
@@ -48,7 +48,7 @@ class Automaton(val rule: Rule) {
           }.collect {
             case ((matched, valuation), pe) if matched =>
               val newState = state + or
-              val binding = newState -> (pe + (valuation, cr, newState))
+              val binding = (newState, (pe + (valuation, cr, newState)))
               ancestors.addBinding(cr, binding)
               binding
           }
