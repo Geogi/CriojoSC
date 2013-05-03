@@ -29,11 +29,13 @@ class BubbleSortSpec extends Specification { def is =
   automatonOut                                                  ^
                                                                 end
 
+  val max = 10
+
   lazy val bubbleSort = new Agent {
     override val name = Some("BubbleSort")
 
     lazy val R = Relation[Int, Int]("R")
-    val solution = new Solution(Set(R(0, 3), R(1, 7), R(2, 1)))
+    val solution = new Solution(Set((0 until max).map(i => )))
     val rules = Seq(
       new Rule {
         override val name = Some("Sort")
