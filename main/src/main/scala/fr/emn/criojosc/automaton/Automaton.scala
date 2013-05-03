@@ -36,12 +36,10 @@ class Automaton(val rule: Rule) {
   private val finalState = State(premise.reactants.toList.map((_, true)).toMap)
   states(initialState) += PartialExecution()
 
-  def completedExecution = states(finalState).headOption
-
   private val ancestors = new mutable.HashMap[ClosedReactant, mutable.Set[(State, PartialExecution)]]
     with mutable.MultiMap[ClosedReactant, (State, PartialExecution)]
 
-  def propose(cr: ClosedReactant) = {
+  def propose(cr: ClosedReactant) {
     val new_states: Iterable[(State, PartialExecution)] = states.flatMap { case (state, pes) =>
       state.has.collect {
         case (or, present) if !present && cr.symbol == or.symbol =>
@@ -59,8 +57,9 @@ class Automaton(val rule: Rule) {
     new_states.foreach {
       case (k, v) => states(k) += v
     }
-    states(finalState).map(this -> _)
   }
+
+  def getCompleted = states(finalState).map(this -> _)
 
   def execute(pe: PartialExecution): Iterable[ClosedReactant] = rule.conclusion(pe.valuation).content
 

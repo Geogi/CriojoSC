@@ -70,7 +70,7 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
         println()
       }
       initialAutomatons.get(false).foreach(_.foreach { a =>
-        println("###### Rule " + a.rule + (if (a.completedExecution.isDefined) " (completed)" else ""))
+        println("###### Rule " + a.rule)
         println()
         println(a.rule.premise.reactants.mkString("| ", " | ", " |"))
         println(a.rule.premise.reactants.map(or => "-" * (or.toString.length - 2)).mkString("| :", " :|: ", ": |"))
@@ -98,14 +98,18 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
   override def step() = {
     println("#### Processing")
     agents.map(agent => {
-      // proposes closed atoms, get completed executions (filter guards) whose guards are verified
-      val complete = automatons(agent).flatMap(a => unprocessed(agent).flatMap(a.propose(_))).filter {
+      // proposes closed atoms
+      automatons(agent).foreach(a => unprocessed(agent).foreach(a.propose(_)))
+      // get completed executions (filter guards) whose guards are verified
+      val complete = automatons(agent).flatMap(_.getCompleted).filter {
         case (automaton, pe) => !automaton.rule.isInstanceOf[ControlGuard] && evaluateGuard(automaton.rule.guard, pe.valuation)
       }
-      println("**Completed rules:**")
+      println("**Completed rules:**" + complete.headOption.map(_=>"").getOrElse(" None"))
       println()
-      complete.foreach { case (automaton, pe) => println("* **" + automaton.rule + ":** " + pe) }
-      println()
+      if (complete.nonEmpty) {
+        complete.foreach { case (automaton, pe) => println("* **" + automaton.rule + ":** " + pe) }
+        println()
+      }
       // clears the unprocessed reactants list
       unprocessed(agent).clear()
       // takes the first choice, if any
