@@ -17,11 +17,19 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
-package automaton
+package fr.emn.criojosc.examples
 
 import org.specs2._
-import fr.emn.criojosc.Agent
+import fr.emn.criojosc._
+import scala.Some
+import scala.Some
+import scala.Some
+import scala.Some
+import scala.Some
+import scala.Some
+import fr.emn.criojosc.NativeGuard
+import scala.Some
+import fr.emn.criojosc.automaton.VerboseEngine
 
 class TransitiveClosureSpec extends Specification { def is =
   "Test CriojoSC with the transitive closure algorithm"         ^
@@ -34,7 +42,7 @@ class TransitiveClosureSpec extends Specification { def is =
 
     lazy val R = Relation[String, String]("R")
     lazy val Rs = Relation[String, String]("R+")
-    val solution = new Solution(Set(R("A", "B"), R("B", "C")))
+    val solution = new Solution(Set(R("A", "B"), R("B", "C"), R("C", "A")))
     val rules = Seq(
       new Rule {
         override val name = Some("Init")
