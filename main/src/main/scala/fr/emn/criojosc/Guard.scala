@@ -25,7 +25,7 @@ package fr.emn.criojosc
   * tests that would not be possible only with the premise.<br />
   * For instance, `Abs(~A)` test if no [[fr.emn.criojosc.ClosedAtom]] of A is present in the solution.
   */
-trait Guard {
+trait Guard extends Printable {
   /** Truth of this guard. Will probably be changed when guards are implemented with state machines. !CURRENTLY A STUB! */
   def evaluate(implicit s: Valuation): Boolean
 
@@ -37,13 +37,17 @@ trait Guard {
 case class NotGuard(sub: Guard) extends Guard {
   def evaluate(implicit s: Valuation) = !sub.evaluate
 
-  override def toString = "¬(" + sub + ")"
+  override def printed = "¬(" + sub.printed + ")"
+
+  override def toString = printed
 }
 
 case class AndGuard(left: Guard, right: Guard) extends Guard {
   def evaluate(implicit s: Valuation) = left.evaluate(s) && right.evaluate(s)
 
-  override def toString = "(" + left + " ∧ " + right + ")"
+  override def printed = "(" + left.printed + " ∧ " + right.printed + ")"
+
+  override def toString = printed
 }
 
 /** Guard whose truth value comes from a Scala boolean. !CURRENTLY A STUB!
@@ -57,9 +61,11 @@ case class AndGuard(left: Guard, right: Guard) extends Guard {
 case class NativeGuard(test: (Valuation) => Boolean) extends Guard with OptExplicit {
   def evaluate(implicit s: Valuation) = test(s)
 
+  override val explicitAlt = "native"
+
   override def toString = explicitly
 
-  override val explicitAlt = "native"
+  override def printed = explicitly
 }
 
 /** `true` if the premise match and, given the updated [[fr.emn.criojosc.Valuation]], the sub-guard is `true` !CURRENTLY A STUB! */
@@ -68,13 +74,7 @@ trait ControlGuard extends Rule with Guard {
 
   override def conclusion(implicit s: Valuation) = NoConclusion
 
-  override def toString = premise.reactants.mkString(" & ") + " → " + guard.toString
-
-  override lazy val printed = toString
+  override lazy val printed = premise.reactants.mkString(" & ") + " → " + guard.toString
 }
 
 case object NoConclusion extends Conclusion(Nil)
-
-object Guard {
-  import language.implicitConversions
-}

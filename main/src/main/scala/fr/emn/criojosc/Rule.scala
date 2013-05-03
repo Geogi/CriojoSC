@@ -19,14 +19,14 @@
 
 package fr.emn.criojosc
 
-trait Rule extends RuleImplicits with OptNamed with OptExplicit {
+trait Rule extends RuleImplicits with OptNamedPrintedFallback with OptExplicit {
   val premise: Premise
 
   val guard: Guard
 
   def conclusion(implicit s: Valuation): Conclusion
 
-  lazy val printed = premise.reactants.mkString(" & ") + " → " + guard.toString + " ? " + explicitly
+  lazy val printed = premise.reactants.mkString(" & ") + " → " + guard.printed + " ? " + explicitly
 
   override val explicitAlt = "conclusion"
 }
