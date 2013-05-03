@@ -19,8 +19,6 @@
 
 package fr.emn.criojosc
 
-import fr.emn.criojosc.criojomacros.Tree
-
 /** An instance of an [[fr.emn.criojosc.TypedRelation]] in a given state (a list of patterns).<br />
   * It may exist in [[fr.emn.criojosc.Solution]] or be the product of a [[fr.emn.criojosc.Rule]]
   * (listed in its conclusion).
@@ -32,4 +30,4 @@ import fr.emn.criojosc.criojomacros.Tree
   * @param symbol The Atom this instance refers to.
   * @param value The value (Any) that defines the state of this instance.
   */
-case class ClosedAtom(symbol: EntitySymbol, value: Any, tree: Tree) extends ClosedReactant
+case class ClosedAtom(symbol: EntitySymbol, value: Any) extends ClosedReactant

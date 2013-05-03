@@ -19,9 +19,6 @@
 
 package fr.emn.criojosc
 
-import language.experimental.macros
-import fr.emn.criojosc.criojomacros.RelationMacros
-
 /** An atom identifier, which can create [[fr.emn.criojosc.OpenAtom]]s and
   * [[fr.emn.criojosc.ClosedAtom]]s.<br />
   *
@@ -39,7 +36,7 @@ import fr.emn.criojosc.criojomacros.RelationMacros
 
 /** An identifier for an unary atom. See [[fr.emn.criojosc.TypedRelation]] for more details. */
 class TypedRelation[T] extends RelationSymbol {
-  def apply(v: T): ClosedAtom = macro RelationMacros.genClosedAtom
+  def apply(v: T): ClosedAtom = ClosedAtom(this, v)
 
   def ?(p: Pattern[T]): OpenAtom = new OpenAtom(this, p)
 }

@@ -17,11 +17,6 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.criojomacros
-package utils
+package fr.emn.criojosc
 
-import reflect.macros.Context
-
-object Resugar {
-  def resugar(c: Context)(t: c.Expr[Tree]): c.Expr[Tree] = t
-}
+case class ClosedMessage(symbol: EntitySymbol, info: ChannelInfo, value: Any) extends ClosedReactant

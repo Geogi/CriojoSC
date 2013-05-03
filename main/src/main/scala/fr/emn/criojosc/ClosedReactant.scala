@@ -19,6 +19,14 @@
 
 package fr.emn.criojosc
 
-import fr.emn.criojosc.criojomacros.Tree
+/** Something that exist in the [[fr.emn.criojosc.Solution]] or can be created by a [[fr.emn.criojosc.Rule]]. */
+trait ClosedReactant {
+  def value: Any
 
-case class ClosedMessage(symbol: EntitySymbol, info: ChannelInfo, value: Any, tree: Tree) extends ClosedReactant
+  def symbol: EntitySymbol
+
+  override def toString = symbol.toString + (value.toString match {
+    case s if s.startsWith("(") && s.endsWith(")") => s
+    case s => "(" + s + ")"
+  })
+}
