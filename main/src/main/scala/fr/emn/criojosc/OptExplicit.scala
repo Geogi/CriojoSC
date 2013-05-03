@@ -19,24 +19,8 @@
 
 package fr.emn.criojosc
 
-trait Rule extends RuleImplicits with OptNamed with OptExplicit {
-  val premise: Premise
-
-  val guard: Guard
-
-  def conclusion(implicit s: Valuation): Conclusion
-
-  lazy val printed = premise.reactants.mkString(" & ") + " → " + guard.toString + " ? " + explicitly
-
-  override val explicitAlt = "conclusion"
+trait OptExplicit {
+  val explicitAlt: String = "unavailable"
+  val explicitVal: Option[String] = None
+  def explicitly = "[" + explicitVal.getOrElse(explicitAlt) + "]"
 }
-
-trait RuleImplicits {
-  import language.implicitConversions
-
-  implicit def const[T](v: T) = new Const(v)
-}
-
-object RuleImplicits extends RuleImplicits
-
-class Conclusion(val content: Iterable[ClosedReactant])

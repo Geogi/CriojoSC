@@ -58,7 +58,9 @@ class Engine(val agents: List[Agent]) extends fr.emn.criojosc.Engine {
     agents.map(agent => {
       // proposes closed atoms, get completed executions (filter guards) whose guards are verified
       val complete = automatons(agent).flatMap(a => unprocessed(agent).flatMap(a.propose(_))).filter {
-        case (automaton, pe) => !automaton.rule.isInstanceOf[ControlGuard] && evaluateGuard(automaton.rule.guard, pe.valuation)
+        case (automaton, pe) =>
+          !automaton.isGuard &&
+            evaluateGuard(automaton.rule.guard, pe.valuation)
       }
       // clears the unprocessed reactants list
       unprocessed(agent).clear()

@@ -40,24 +40,32 @@ class TransitiveClosureSpec extends Specification { def is =
         override val name = Some("Init")
         lazy val (x, y) = (Variable[String]("x"), Variable[String]("y"))
         def conclusion(implicit s: Valuation) = new Conclusion(List(Rs(!x, !y), R(!x, !y)))
+        override val explicitVal = Some("R+(x, y) & R(x, y)")
 
         val premise = new Premise(List(R?(x, y)))
         val guard = ! new ControlGuard {
           lazy val (u, v) = (Variable[String]("u"), Variable[String]("v"))
           val premise = new Premise(List(Rs?(u, v)))
-          val guard: Guard = NativeGuard({implicit s: Valuation => !x == !u && !y == !v})
+          val guard = new NativeGuard({implicit s: Valuation => !x == !u && !y == !v}) {
+            override val explicitVal = Some("x == u && y == v")
+          }
         }
       },
       new Rule {
         override val name = Some("Extend")
         lazy val (x, y, u, v) = (Variable[String]("x"), Variable[String]("y"), Variable[String]("u"), Variable[String]("v"))
-        def conclusion(implicit s: Valuation) = new Conclusion(List(Rs(!x, !v), Rs(!u, !v), R(!x, !y)))
+        def conclusion(implicit s: Valuation) = new Conclusion(List(Rs(!x, !v), Rs(!u, !v), Rs(!x, !y)))
+        override val explicitVal = Some("R+(x, v) & R+(y, v) & R+(x, y)")
 
-        val premise = new Premise(List(R?(x, y), Rs?(u, v)))
-        val guard: Guard = NativeGuard({implicit s: Valuation => !y == !u}) && ! new ControlGuard {
+        val premise = new Premise(List(Rs?(x, y), Rs?(u, v)))
+        val guard: Guard = new NativeGuard({implicit s: Valuation => !y == !u}) {
+          override val explicitVal = Some("y == u")
+        } && ! new ControlGuard {
           lazy val (i, j) = (Variable[String]("i"), Variable[String]("j"))
           val premise = new Premise(List(Rs?(i, j)))
-          val guard: Guard = NativeGuard({implicit s: Valuation => !i == !x && !j == !v})
+          val guard = new NativeGuard({implicit s: Valuation => !i == !x && !j == !v}) {
+            override val explicitVal = Some("i == x && j == v")
+          }
         }
       }
     )

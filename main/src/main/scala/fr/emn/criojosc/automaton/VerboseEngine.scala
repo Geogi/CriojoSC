@@ -70,7 +70,7 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
         println()
       }
       initialAutomatons.get(false).foreach(_.foreach { a =>
-        println("###### Rule " + a.rule)
+        println("###### Rule " + a.rule + (if (a.completedExecution.isDefined) " (completed)" else ""))
         println()
         println(a.rule.premise.reactants.mkString("| ", " | ", " |"))
         println(a.rule.premise.reactants.map(or => "-" * (or.toString.length - 2)).mkString("| :", " :|: ", ": |"))

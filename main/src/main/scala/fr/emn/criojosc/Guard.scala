@@ -54,10 +54,12 @@ case class AndGuard(left: Guard, right: Guard) extends Guard {
   *
   * @param test A Boolean to evaluate to.
   */
-case class NativeGuard(test: (Valuation) => Boolean) extends Guard {
+case class NativeGuard(test: (Valuation) => Boolean) extends Guard with OptExplicit {
   def evaluate(implicit s: Valuation) = test(s)
 
-  override def toString = "[native]"
+  override def toString = explicitly
+
+  override val explicitAlt = "native"
 }
 
 /** `true` if the premise match and, given the updated [[fr.emn.criojosc.Valuation]], the sub-guard is `true` !CURRENTLY A STUB! */
