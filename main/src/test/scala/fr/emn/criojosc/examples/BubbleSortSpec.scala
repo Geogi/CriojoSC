@@ -2,6 +2,7 @@ package fr.emn.criojosc
 package examples
 
 import org.specs2._
+import fr.emn.criojosc.automaton.VerboseEngine
 
 class BubbleSortSpec extends Specification { def is =
   "Test CriojoSC with the transitive closure algorithm"         ^
