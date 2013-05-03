@@ -42,8 +42,8 @@ class BubbleSortSpec extends Specification { def is =
         override val explicitVal = Some("R(i, v) & R(j, u))")
 
         val premise = new Premise(List(R?(i, u), R?(j, v)))
-        val guard = ! new NativeGuard({implicit s: Valuation => !j == !i + 1}) {
-          override val explicitVal = Some("j == i + 1")
+        val guard = new NativeGuard({implicit s: Valuation => !j == !i + 1 && !u > !v}) {
+          override val explicitVal = Some("j == i + 1 && u > v")
         }
       }
     )
