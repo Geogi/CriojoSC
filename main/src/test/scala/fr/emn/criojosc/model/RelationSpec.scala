@@ -17,7 +17,8 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc
+package model
 
 import org.specs2._
 

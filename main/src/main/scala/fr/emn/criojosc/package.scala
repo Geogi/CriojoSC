@@ -32,6 +32,9 @@ package fr.emn
   */
 
 package object criojosc {
+  val Nip = model.NilPatternList
+  val S = model.Successor
+
   def engine(agents: model.Agent*) = new automaton.VerboseEngine(agents.toList)
 
   def agent(args: Either[model.Rule, model.ClosedReactant]*) = new model.Agent {
