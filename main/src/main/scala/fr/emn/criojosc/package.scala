@@ -42,6 +42,12 @@ package object criojosc {
     val rules = args.filter(_.isLeft).map(_.left.get)
   }
 
+  def namedAgent(name: String)(args: Either[model.Rule, model.ClosedReactant]*) = new model.Agent {
+    override val optName = Some(name)
+    val solution = new model.Solution(args.filter(_.isRight).map(_.right.get).toSet)
+    val rules = args.filter(_.isLeft).map(_.left.get)
+  }
+
   import language.implicitConversions
   implicit def rule2left(ru: model.Rule) = Left(ru)
   implicit def cr2right(cr: model.ClosedReactant) = Right(cr)

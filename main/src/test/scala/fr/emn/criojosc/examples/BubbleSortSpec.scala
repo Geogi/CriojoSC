@@ -30,8 +30,8 @@ class BubbleSortSpec extends Specification { def is =
 
   val bubbleSort = engine (
     {
-      val R = Relation[Int, Int]
-      agent(
+      val R = Relation[Int, Int]("R")
+      namedAgent("BubbleSort")(
       {
         val i, j, u, v = Variable[Int]
         ((R?(i, u) & R?(j, v)).-->
