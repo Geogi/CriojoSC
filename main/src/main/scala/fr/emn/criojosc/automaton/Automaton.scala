@@ -21,6 +21,7 @@ package fr.emn.criojosc
 package automaton
 
 import collection.mutable
+import fr.emn.criojosc.model.{Rule, OpenReactant, Guard, ClosedReactant}
 
 class Automaton(val rule: Rule) {
   val isGuard = rule.isInstanceOf[Guard]

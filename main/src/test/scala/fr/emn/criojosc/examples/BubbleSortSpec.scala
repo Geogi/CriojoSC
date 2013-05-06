@@ -22,6 +22,9 @@ package examples
 
 import org.specs2._
 import fr.emn.criojosc.automaton.VerboseEngine
+import fr.emn.criojosc.model._
+import fr.emn.criojosc.model.NativeGuard
+import scala.Some
 
 class BubbleSortSpec extends Specification { def is =
   "Test CriojoSC with the transitive closure algorithm"         ^
@@ -35,7 +38,7 @@ class BubbleSortSpec extends Specification { def is =
     override val name = Some("BubbleSort")
 
     lazy val R = Relation[Int, Int]("R")
-    val solution = new Solution(Set((0 until max).map(i => )))
+    val solution = new Solution(Set(R(0, 0)))
     val rules = Seq(
       new Rule {
         override val name = Some("Sort")

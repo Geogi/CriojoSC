@@ -20,6 +20,8 @@
 package fr.emn.criojosc
 package automaton
 
+import fr.emn.criojosc.model.OpenReactant
+
 case class State(has: Map[OpenReactant, Boolean]) {
   def +(or: OpenReactant) = State(has + (or -> true))
   def -(or: OpenReactant) = State(has + (or -> false))

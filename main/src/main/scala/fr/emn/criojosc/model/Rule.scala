@@ -17,23 +17,26 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn
+package fr.emn.criojosc.model
 
-import fr.emn.criojosc.model.{Successor, NilPatternList}
+trait Rule extends RuleImplicits with OptNamedPrintedFallback with OptExplicit {
+  val premise: Premise
 
-/** CriojoSC is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with guaranteed causal order.<br />
-  * It sounds cool, but it's far from complete at the moment.
-  *
-  * CriojoSC uses Scala and is GPL licenced.
-  *
-  * Some useful resources:
-  * <ul>
-  * <li>The mainline implementation by Mayleen Lacouture: [[https://github.com/maylencita/CRIOJO/tree/version2.0 maylencita/CRIOJO@GitHub]]</li>
-  * <li>The latest CRIOJO research paper: [[http://hal.inria.fr/hal-00676083/]]</li>
-  * </ul>
-  */
+  val guard: Guard
 
-package object criojosc {
-  def S = Successor
-  val Nip = NilPatternList
+  def conclusion(implicit s: Valuation): Conclusion
+
+  lazy val printed = premise.reactants.mkString(" & ") + " → " + guard.printed + " ? " + explicitly
+
+  override val explicitAlt = "conclusion"
 }
+
+trait RuleImplicits {
+  import language.implicitConversions
+
+  implicit def const[T](v: T) = new Const(v)
+}
+
+object RuleImplicits extends RuleImplicits
+
+class Conclusion(val content: Iterable[ClosedReactant])

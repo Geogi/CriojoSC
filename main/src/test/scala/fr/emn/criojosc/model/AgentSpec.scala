@@ -17,23 +17,21 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn
+package fr.emn.criojosc.model
 
-import fr.emn.criojosc.model.{Successor, NilPatternList}
+import org.specs2._
 
-/** CriojoSC is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with guaranteed causal order.<br />
-  * It sounds cool, but it's far from complete at the moment.
-  *
-  * CriojoSC uses Scala and is GPL licenced.
-  *
-  * Some useful resources:
-  * <ul>
-  * <li>The mainline implementation by Mayleen Lacouture: [[https://github.com/maylencita/CRIOJO/tree/version2.0 maylencita/CRIOJO@GitHub]]</li>
-  * <li>The latest CRIOJO research paper: [[http://hal.inria.fr/hal-00676083/]]</li>
-  * </ul>
-  */
+class AgentSpec extends Specification { def is =
 
-package object criojosc {
-  def S = Successor
-  val Nip = NilPatternList
+  "Agent specification."                           ^
+                                                   p^
+  "An agent is created by implementing its trait." ! createAgent^
+                                                   end
+
+  def createAgent = {
+    val myAgent = new Agent {
+      val (channels, relations, rules, solution) = (List(), List(), List(), Solution())
+    }
+    myAgent must beAnInstanceOf[Agent]
+  }
 }

@@ -17,23 +17,17 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn
+package fr.emn.criojosc.model
 
-import fr.emn.criojosc.model.{Successor, NilPatternList}
-
-/** CriojoSC is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with guaranteed causal order.<br />
-  * It sounds cool, but it's far from complete at the moment.
+/** An instance of an [[TypedRelation]] in a given state (a list of patterns).<br />
+  * It may exist in [[Solution]] or be the product of a [[Rule]]
+  * (listed in its conclusion).
   *
-  * CriojoSC uses Scala and is GPL licenced.
+  * Note that while [[ClosedAtom]] is not typed itself, it is created by
+  * a ([[TypedRelation]] `apply` method, that is typed, ensuring a consistent state.<br />
+  * This is why instances of this class should not be created manually, but using `TypedRelation.apply`.
   *
-  * Some useful resources:
-  * <ul>
-  * <li>The mainline implementation by Mayleen Lacouture: [[https://github.com/maylencita/CRIOJO/tree/version2.0 maylencita/CRIOJO@GitHub]]</li>
-  * <li>The latest CRIOJO research paper: [[http://hal.inria.fr/hal-00676083/]]</li>
-  * </ul>
+  * @param symbol The Atom this instance refers to.
+  * @param value The value (Any) that defines the state of this instance.
   */
-
-package object criojosc {
-  def S = Successor
-  val Nip = NilPatternList
-}
+case class ClosedAtom(symbol: EntitySymbol, value: Any) extends ClosedReactant

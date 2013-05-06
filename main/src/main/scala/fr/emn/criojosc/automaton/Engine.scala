@@ -21,8 +21,9 @@ package fr.emn.criojosc
 package automaton
 
 import collection.mutable
+import fr.emn.criojosc.model._
 
-class Engine(val agents: List[Agent]) extends fr.emn.criojosc.Engine {
+class Engine(val agents: List[Agent]) extends model.Engine {
   protected val automatons = agents.map(a => a -> a.rules.flatMap(recurAuto(_)())).toMap
   protected val unprocessed = agents.map(a => a -> a.solution.content.to[mutable.ListBuffer]).toMap
 
@@ -53,25 +54,23 @@ class Engine(val agents: List[Agent]) extends fr.emn.criojosc.Engine {
     }
   }
 
-  protected def step(): Boolean = {
-    agents.map(agent => {
-      // proposes closed atoms, get completed executions (filter guards) whose guards are verified
-      automatons(agent).foreach(a => unprocessed(agent).foreach(a.propose(_)))
-      // get completed executions (filter guards) whose guards are verified
-      val complete = automatons(agent).flatMap(_.getCompleted).filter {
-        case (automaton, pe) => !automaton.rule.isInstanceOf[ControlGuard] && evaluateGuard(automaton.rule.guard, pe.valuation)
-      }
-      // clears the unprocessed reactants list
-      unprocessed(agent).clear()
-      // takes the first choice, if any
-      val chosen = complete.headOption
-      // if defined, applies the valuation to the conclusion of the rule
-      // and adds the products to the unprocessed reactant list
-      chosen.map { case (a, pe) => a.execute(pe) }.map(unprocessed(agent) ++= _)
-      // if defined, destroys the PEs that use the same CRs
-      chosen.foreach { case (a, pe) => automatons(agent).foreach(_.purge(pe.using)) }
-      // returns true if defined
-      chosen.isDefined
-    }).contains(true)
-  }
+  protected def step(): Boolean = agents.map { agent =>
+    // proposes closed atoms, get completed executions (filter guards) whose guards are verified
+    automatons(agent).foreach(a => unprocessed(agent).foreach(a.propose(_)))
+    // get completed executions (filter guards) whose guards are verified
+    val complete = automatons(agent).flatMap(_.getCompleted).filter {
+      case (automaton, pe) => !automaton.rule.isInstanceOf[ControlGuard] && evaluateGuard(automaton.rule.guard, pe.valuation)
+    }
+    // clears the unprocessed reactants list
+    unprocessed(agent).clear()
+    // takes the first choice, if any
+    val chosen = complete.headOption
+    // if defined, applies the valuation to the conclusion of the rule
+    // and adds the products to the unprocessed reactant list
+    chosen.map { case (a, pe) => a.execute(pe) }.map(unprocessed(agent) ++= _)
+    // if defined, destroys the PEs that use the same CRs
+    chosen.foreach { case (a, pe) => automatons(agent).foreach(_.purge(pe.using)) }
+    // returns true if defined
+    chosen.isDefined
+  }.contains(true)
 }

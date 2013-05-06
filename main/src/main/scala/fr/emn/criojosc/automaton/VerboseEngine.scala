@@ -20,6 +20,7 @@
 package fr.emn.criojosc.automaton
 
 import fr.emn.criojosc._
+import fr.emn.criojosc.model.{ControlGuard, Agent}
 
 class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.Engine(thisAgents) {
   var MAX_ITS: Option[Int] = None

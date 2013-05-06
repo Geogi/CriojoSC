@@ -21,6 +21,8 @@ package fr.emn.criojosc
 package automaton
 
 import org.specs2._
+import fr.emn.criojosc.model._
+import fr.emn.criojosc.model.NativeGuard
 
 class EngineSpec extends Specification { def is =
   "Automaton engine specification."                               ^
