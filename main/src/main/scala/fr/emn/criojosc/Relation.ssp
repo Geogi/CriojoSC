@@ -17,18 +17,23 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+<%
+ def gt(i: Int, f: (Int) => String) = (1 to i).map(f).mkString(", ")
+ def tl(i: Int) = gt(i, "T" + _)
+%>
+package fr.emn.criojosc
 
-/** Something that exist in the [[Solution]] or can be created by a [[Rule]]. */
-trait ClosedReactant {
-  def value: Any
+import model._
 
-  def symbol: EntitySymbol
-
-  override def toString = symbol.toString + (value.toString match {
-    case s if s.startsWith("(") && s.endsWith(")") => s
-    case s => "(" + s + ")"
-  })
-
-  def &(that: ClosedReactant) = new Conclusion(List(this, that))
+object Relation {
+  def apply[T1] = new TypedRelation[T1]
+  def apply[T1](s: String) = new TypedRelation[T1] {
+    override val optName = Some(s)
+  }
+#for (i <- 2 to 22)
+  def apply[<%=tl(i)%>] = new TypedRelation<%=i%>[<%=tl(i)%>]
+  def apply[<%=tl(i)%>](s: String) = new TypedRelation<%=i%>[<%=tl(i)%>] {
+    override val optName = Some(s)
+  }
+#end
 }

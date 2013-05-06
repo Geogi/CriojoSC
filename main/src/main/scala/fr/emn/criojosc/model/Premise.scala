@@ -21,4 +21,23 @@ package fr.emn.criojosc.model
 
 class Premise(val reactants: List[OpenReactant]) {
   override def toString = reactants.mkString(" & ")
+
+  def &(that: OpenReactant) = new Premise(reactants :+ that)
+
+  def -->(that: () => Conclusion) = new Rule {
+    def conclusion(implicit s: Valuation) = {implicit s: Valuation => that()}
+
+    val premise = this
+    val guard = TrueGuard
+  }
+
+  def -->(that: Guard) = new ControlGuard {
+    val premise = this
+    val guard = that
+  }
+
+  def -->(that: () => Boolean) = new ControlGuard {
+    val premise = this
+    val guard = NativeGuard({implicit s: Valuation => that()})
+  }
 }

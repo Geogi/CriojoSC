@@ -27,6 +27,8 @@ trait OpenReactant {
   def matching(cr: ClosedReactant, s: Valuation) =
     if (symbol != cr.symbol) (false, s)
     else pattern.matching(cr.value, s)
+
+  def &(that: OpenReactant) = new Premise(List(this, that))
 }
 
 /** A symbolic representation of an [[TypedRelation]], as used in rule premises and "existence" guards.<br />

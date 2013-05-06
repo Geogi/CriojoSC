@@ -20,7 +20,7 @@
 package fr.emn.criojosc.model
 
 trait OptNamed {
-  val name: Option[String] = None
+  val optName: Option[String] = None
 
-  override def toString = name.getOrElse(super.toString)
+  override def toString = optName.getOrElse(super.toString)
 }

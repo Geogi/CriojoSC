@@ -17,7 +17,9 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc
+
+import fr.emn.criojosc.model.{Valuation, OptNamed, Pattern}
 
 class Variable[+T] extends Pattern[T] with OptNamed {
   def matching[S >: T](proposed: S, s: Valuation) = if (s.contains(this)) (false, s) else (true, s + (this, proposed))
@@ -29,6 +31,6 @@ class Variable[+T] extends Pattern[T] with OptNamed {
 object Variable {
   def apply[T] = new Variable[T]
   def apply[T](s: String) = new Variable[T] {
-    override val name = Some(s)
+    override val optName = Some(s)
   }
 }

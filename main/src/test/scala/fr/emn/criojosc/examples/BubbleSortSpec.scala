@@ -21,10 +21,6 @@ package fr.emn.criojosc
 package examples
 
 import org.specs2._
-import fr.emn.criojosc.automaton.VerboseEngine
-import fr.emn.criojosc.model._
-import fr.emn.criojosc.model.NativeGuard
-import scala.Some
 
 class BubbleSortSpec extends Specification { def is =
   "Test CriojoSC with the transitive closure algorithm"         ^
@@ -32,34 +28,21 @@ class BubbleSortSpec extends Specification { def is =
   automatonOut                                                  ^
                                                                 end
 
-  val max = 10
-
-  lazy val bubbleSort = new Agent {
-    override val name = Some("BubbleSort")
-
-    lazy val R = Relation[Int, Int]("R")
-    val solution = new Solution(Set(R(0, 0)))
-    val rules = Seq(
-      new Rule {
-        override val name = Some("Sort")
-        lazy val (i, j, u, v) = (Variable[Int]("i"), Variable[Int]("j"), Variable[Int]("u"), Variable[Int]("v"))
-        def conclusion(implicit s: Valuation) = new Conclusion(List(R(!i, !v), R(!j, !u)))
-        override val explicitVal = Some("R(i, v) & R(j, u))")
-
-        val premise = new Premise(List(R?(i, u), R?(j, v)))
-        val guard = new NativeGuard({implicit s: Valuation => !j == !i + 1 && !u > !v}) {
-          override val explicitVal = Some("j == i + 1 && u > v")
-        }
-      }
+  val bubbleSort = {
+    val R = Relation[Int, Int]("R")
+    agent (
+      {
+        val i, j, u, v = Variable[Int]
+        ((R?(i, u) & R?(j, v)) --> (() => !j == !i + 1 && !u > !v)) ? (() => R(!i, !v) & R(!j, !u))
+      },
+      R(0, 0), R(1, 3), R(2, 2)
     )
   }
-  lazy val engine = new VerboseEngine(List(bubbleSort))
-  engine.MAX_ITS = Some(100)
 
   lazy val automatonOut = {
     val stream = new java.io.ByteArrayOutputStream()
     Console.withOut(stream) {
-      engine.run()
+      engine(bubbleSort).run()
     }
     val output = stream.toString
     stream.close()

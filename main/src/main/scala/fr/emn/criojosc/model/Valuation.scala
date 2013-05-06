@@ -19,6 +19,8 @@
 
 package fr.emn.criojosc.model
 
+import fr.emn.criojosc.Variable
+
 trait Valuation {
   val content: Map[Variable[Any], Any]
   def get(x: Variable[Any]) = content.get(x)

@@ -42,6 +42,14 @@ case class NotGuard(sub: Guard) extends Guard {
   override def toString = printed
 }
 
+case object TrueGuard extends Guard {
+  def evaluate(implicit s: Valuation) = true
+
+  override def printed = "true"
+
+  override def toString = printed
+}
+
 case class AndGuard(left: Guard, right: Guard) extends Guard {
   def evaluate(implicit s: Valuation) = left.evaluate(s) && right.evaluate(s)
 
@@ -75,6 +83,13 @@ trait ControlGuard extends Rule with Guard {
   override def conclusion(implicit s: Valuation) = NoConclusion
 
   override lazy val printed = premise.reactants.mkString(" & ") + " → " + guard.toString
+
+  def ?(that: () => Conclusion) = new Rule {
+    def conclusion(implicit s: Valuation) = {implicit s: Valuation => that()}
+
+    val premise = this.premise
+    val guard = this.guard
+  }
 }
 
 case object NoConclusion extends Conclusion(Nil)

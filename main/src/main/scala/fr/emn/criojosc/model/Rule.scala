@@ -39,4 +39,6 @@ trait RuleImplicits {
 
 object RuleImplicits extends RuleImplicits
 
-class Conclusion(val content: Iterable[ClosedReactant])
+class Conclusion(val content: List[ClosedReactant]) {
+  def &(that: ClosedReactant) = new Conclusion(content :+ that)
+}

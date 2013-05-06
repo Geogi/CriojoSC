@@ -17,18 +17,10 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc
 
-/** Something that exist in the [[Solution]] or can be created by a [[Rule]]. */
-trait ClosedReactant {
-  def value: Any
+import fr.emn.criojosc.model.Agent
 
-  def symbol: EntitySymbol
-
-  override def toString = symbol.toString + (value.toString match {
-    case s if s.startsWith("(") && s.endsWith(")") => s
-    case s => "(" + s + ")"
-  })
-
-  def &(that: ClosedReactant) = new Conclusion(List(this, that))
+object AgentInit {
+  def apply(defs: AnyRef) = new AgentInit with defs.type
 }

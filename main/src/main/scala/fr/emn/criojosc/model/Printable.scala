@@ -24,5 +24,5 @@ trait Printable {
 }
 
 trait OptNamedPrintedFallback extends OptNamed with Printable {
-  override def toString = name.getOrElse(printed)
+  override def toString = optName.getOrElse(printed)
 }
