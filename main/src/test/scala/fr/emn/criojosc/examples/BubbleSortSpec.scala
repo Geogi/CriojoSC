@@ -23,13 +23,13 @@ package examples
 import org.specs2._
 
 class BubbleSortSpec extends Specification { def is =
-  "Test CriojoSC with the transitive closure algorithm"         ^
-                                                                p^
-  automatonOut                                                  ^
-                                                                end
+  "Test CriojoSC with the bubble sort algorithm"         ^
+                                                         p^
+  automatonOut                                           ^
+                                                         end
 
-  val bubbleSort = {
-    val R = Relation[Int, Int]("R")
+  val bubbleSort = engine {
+    val R = Relation[Int, Int]
     agent (
       {
         val i, j, u, v = Variable[Int]
@@ -42,7 +42,7 @@ class BubbleSortSpec extends Specification { def is =
   lazy val automatonOut = {
     val stream = new java.io.ByteArrayOutputStream()
     Console.withOut(stream) {
-      engine(bubbleSort).run()
+      bubbleSort.run()
     }
     val output = stream.toString
     stream.close()
