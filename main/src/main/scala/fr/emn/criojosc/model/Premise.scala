@@ -36,8 +36,8 @@ class Premise(val reactants: List[OpenReactant]) {
     val guard = that
   }
 
-  def -->(that: () => Boolean) = new ControlGuard {
+  def -->(that: (Valuation) => Boolean) = new ControlGuard {
     val premise = new Premise(reactants)
-    val guard = NativeGuard({implicit s: Valuation => that()})
+    val guard = NativeGuard({implicit s: Valuation => that(s)})
   }
 }

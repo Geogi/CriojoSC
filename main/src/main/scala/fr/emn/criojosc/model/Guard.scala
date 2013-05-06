@@ -84,11 +84,11 @@ trait ControlGuard extends Rule with Guard {
 
   override lazy val printed = premise.reactants.mkString(" & ") + " → " + guard.toString
 
-  def ?(that: () => Conclusion) = {
+  def ?(that: (Valuation) => Conclusion) = {
     val oldPremise = premise
     val oldGuard = guard
     new Rule {
-      def conclusion(implicit s: Valuation) = that()
+      def conclusion(implicit s: Valuation) = that(s)
 
       val premise = oldPremise
       val guard = oldGuard
