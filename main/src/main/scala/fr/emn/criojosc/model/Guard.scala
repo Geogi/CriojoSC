@@ -19,40 +19,31 @@
 
 package fr.emn.criojosc.model
 
-/** Guards allow conditional triggering of [[Rule]]s. !CURRENTLY A STUB!
+/** Guards allow conditional triggering of Rules. !CURRENTLY A STUB!
   *
-  * Their most useful feature is that they permit introspection of the [[EntitySymbol]], allowing
+  * Their most useful feature is that they permit introspection of the EntitySymbol, allowing
   * tests that would not be possible only with the premise.<br />
-  * For instance, `Abs(~A)` test if no [[ClosedAtom]] of A is present in the solution.
+  * For instance, `Abs(~A)` test if no ClosedAtom of A is present in the solution.
   */
 trait Guard extends Printable {
-  /** Truth of this guard. Will probably be changed when guards are implemented with state machines. !CURRENTLY A STUB! */
-  def evaluate(implicit s: Valuation): Boolean
-
   def unary_! = NotGuard(this)
 
   def &&(that: Guard) = AndGuard(this, that)
 }
 
 case class NotGuard(sub: Guard) extends Guard {
-  def evaluate(implicit s: Valuation) = !sub.evaluate
-
   override def printed = "¬(" + sub.printed + ")"
 
   override def toString = printed
 }
 
 case object TrueGuard extends Guard {
-  def evaluate(implicit s: Valuation) = true
-
   override def printed = "true"
 
   override def toString = printed
 }
 
 case class AndGuard(left: Guard, right: Guard) extends Guard {
-  def evaluate(implicit s: Valuation) = left.evaluate(s) && right.evaluate(s)
-
   override def printed = "(" + left.printed + " ∧ " + right.printed + ")"
 
   override def toString = printed
@@ -66,9 +57,7 @@ case class AndGuard(left: Guard, right: Guard) extends Guard {
   *
   * @param test A Boolean to evaluate to.
   */
-case class NativeGuard(test: (Valuation) => Boolean) extends Guard with OptExplicit {
-  def evaluate(implicit s: Valuation) = test(s)
-
+case class NativeGuard(test: () => Boolean) extends Guard with OptExplicit {
   override val explicitAlt = "native"
 
   override def toString = explicitly
@@ -76,19 +65,17 @@ case class NativeGuard(test: (Valuation) => Boolean) extends Guard with OptExpli
   override def printed = explicitly
 }
 
-/** `true` if the premise match and, given the updated [[model.Valuation]], the sub-guard is `true` !CURRENTLY A STUB! */
+/** `true` if the premise match and, given the updated Valuation, the sub-guard is `true` !CURRENTLY A STUB! */
 trait ControlGuard extends Rule with Guard {
-  override def evaluate(implicit s: Valuation) = guard.evaluate(s)
-
-  override def conclusion(implicit s: Valuation) = NoConclusion
+  override def conclusion() = NoConclusion
 
   override lazy val printed = premise.reactants.mkString(" & ") + " → " + guard.toString
 
-  def ?(that: (Valuation) => Conclusion) = {
+  def ?(that: () => Conclusion) = {
     val oldPremise = premise
     val oldGuard = guard
     new Rule {
-      def conclusion(implicit s: Valuation) = that(s)
+      def conclusion() = that()
 
       val premise = oldPremise
       val guard = oldGuard

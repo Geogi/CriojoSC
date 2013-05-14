@@ -30,10 +30,12 @@ object Relation {
   def apply[T1](s: String) = new TypedRelation[T1] {
     override val optName = Some(s)
   }
+  def multi[T1](ss: String*) = ss.map(apply[T1](_))
 #for (i <- 2 to 22)
   def apply[<%=tl(i)%>] = new TypedRelation<%=i%>[<%=tl(i)%>]
   def apply[<%=tl(i)%>](s: String) = new TypedRelation<%=i%>[<%=tl(i)%>] {
     override val optName = Some(s)
   }
+  def multi[<%=tl(i)%>](ss: String*) = ss.map(apply[<%=tl(i)%>](_))
 #end
 }

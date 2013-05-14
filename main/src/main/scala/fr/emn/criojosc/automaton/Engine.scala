@@ -45,12 +45,15 @@ class Engine(val agents: List[Agent]) extends model.Engine {
     if (step()) run()
   }
 
-  protected def evaluateGuard(guard: Guard, s: Valuation): Boolean = guard match {
-    case AndGuard(left, right) => evaluateGuard(left, s) && evaluateGuard(right, s)
-    case NotGuard(subGuard) => !evaluateGuard(subGuard, s)
-    case NativeGuard(test) => test(s)
+  protected def evaluateGuard(guard: Guard, valuation: Valuation): Boolean = guard match {
+    case AndGuard(left, right) => evaluateGuard(left, valuation) && evaluateGuard(right, valuation)
+    case NotGuard(subGuard) => !evaluateGuard(subGuard, valuation)
+    case NativeGuard(test) => {
+      implicit val s = valuation
+      test()
+    }
     case subGuard: ControlGuard => automatonsByRule(subGuard).getCompleted.exists {
-      case (_, pe) => evaluateGuard(subGuard.guard, s ++ pe.valuation)
+      case (_, pe) => evaluateGuard(subGuard.guard, valuation ++ pe.valuation)
     }
   }
 

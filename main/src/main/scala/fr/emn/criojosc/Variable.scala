@@ -33,4 +33,5 @@ object Variable {
   def apply[T](s: String) = new Variable[T] {
     override val optName = Some(s)
   }
+  def multi[T](ss: String*) = ss.map(apply[T](_))
 }
