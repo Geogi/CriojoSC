@@ -20,6 +20,8 @@
 package fr.emn.criojosc.model
 
 trait Rule extends RuleImplicits with OptNamedPrintedFallback with OptExplicit {
+  implicit var s: Valuation = EmptyValuation
+
   val premise: Premise
 
   val guard: Guard

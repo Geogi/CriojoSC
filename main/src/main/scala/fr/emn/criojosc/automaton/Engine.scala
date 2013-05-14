@@ -45,15 +45,15 @@ class Engine(val agents: List[Agent]) extends model.Engine {
     if (step()) run()
   }
 
-  protected def evaluateGuard(guard: Guard, valuation: Valuation): Boolean = guard match {
-    case AndGuard(left, right) => evaluateGuard(left, valuation) && evaluateGuard(right, valuation)
-    case NotGuard(subGuard) => !evaluateGuard(subGuard, valuation)
+  protected def evaluateGuard(rule: Rule, guard: Guard, valuation: Valuation): Boolean = guard match {
+    case AndGuard(left, right) => evaluateGuard(rule, left, valuation) && evaluateGuard(rule, right, valuation)
+    case NotGuard(subGuard) => !evaluateGuard(rule, subGuard, valuation)
     case NativeGuard(test) => {
-      implicit val s = valuation
+      rule.s = valuation
       test()
     }
     case subGuard: ControlGuard => automatonsByRule(subGuard).getCompleted.exists {
-      case (_, pe) => evaluateGuard(subGuard.guard, valuation ++ pe.valuation)
+      case (_, pe) => evaluateGuard(subGuard, subGuard.guard, valuation ++ pe.valuation)
     }
   }
 
@@ -62,7 +62,7 @@ class Engine(val agents: List[Agent]) extends model.Engine {
     automatons(agent).foreach(a => unprocessed(agent).foreach(a.propose(_)))
     // get completed executions (filter guards) whose guards are verified
     val complete = automatons(agent).flatMap(_.getCompleted).filter {
-      case (automaton, pe) => !automaton.rule.isInstanceOf[ControlGuard] && evaluateGuard(automaton.rule.guard, pe.valuation)
+      case (automaton, pe) => !automaton.rule.isInstanceOf[ControlGuard] && evaluateGuard(automaton.rule, automaton.rule.guard, pe.valuation)
     }
     // clears the unprocessed reactants list
     unprocessed(agent).clear()

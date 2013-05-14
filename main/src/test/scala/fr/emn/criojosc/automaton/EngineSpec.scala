@@ -38,9 +38,9 @@ class EngineSpec extends Specification { def is =
       val guard: Guard = ! new ControlGuard {
         val z = Variable[Int]
         val premise = new Premise(List(S?(z)))
-        val guard: Guard = NativeGuard(s => true)
+        val guard: Guard = NativeGuard(() => true)
       }
-      def conclusion(implicit s: Valuation) = new Conclusion(R(!x + !y) :: Nil)
+      def conclusion() = new Conclusion(R(!x + !y) :: Nil)
     }
     val rules = List(rule)
     val solution = new Solution(Set(R(1), R(2), R(3), S(0)))

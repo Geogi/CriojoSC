@@ -63,7 +63,7 @@ class Automaton(val rule: Rule) {
   def getCompleted = states(finalState).map(this -> _)
 
   def execute(pe: PartialExecution): Iterable[ClosedReactant] = {
-    implicit val s = pe.valuation
+    rule.s = pe.valuation
     rule.conclusion().content
   }
 

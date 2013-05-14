@@ -103,7 +103,7 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
       automatons(agent).foreach(a => unprocessed(agent).foreach(a.propose(_)))
       // get completed executions (filter guards) whose guards are verified
       val complete = automatons(agent).flatMap(_.getCompleted).filter {
-        case (automaton, pe) => !automaton.rule.isInstanceOf[ControlGuard] && evaluateGuard(automaton.rule.guard, pe.valuation)
+        case (automaton, pe) => !automaton.rule.isInstanceOf[ControlGuard] && evaluateGuard(automaton.rule, automaton.rule.guard, pe.valuation)
       }
       println("**Completed rules:**" + complete.headOption.map(_=>"").getOrElse(" None"))
       println()
