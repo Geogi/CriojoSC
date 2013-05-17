@@ -21,6 +21,7 @@ package fr.emn.criojosc
 package examples
 
 import org.specs2._
+import fr.emn.criojosc.model.Valuation
 
 class BubbleSortSpec extends Specification { def is =
   "Test CriojoSC with the bubble sort algorithm"         ^
@@ -34,7 +35,7 @@ class BubbleSortSpec extends Specification { def is =
       namedAgent("BubbleSort")(
       {
         val List(i, j, u, v) = Variable.multi[Int]("i", "j", "u", "v")
-        (R?(i, u) & R?(j, v)). --> (!j > !i && !u > !v). ? (R(!i, !v) & R(!j, !u))
+        (R?(i, u) & R?(j, v)). --> ((s: Valuation) => j(s) > i(s) && u(s) > v(s)). ? ((s: Valuation) => R(i(s), v(s)) & R(j(s), u(s)))
       },
       R(0, 0), R(1, 3), R(2, 2)
       )

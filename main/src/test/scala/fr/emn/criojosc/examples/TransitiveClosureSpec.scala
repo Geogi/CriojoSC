@@ -23,7 +23,10 @@ class TransitiveClosureSpec extends Specification { def is =
       new Rule {
         override val optName = Some("Init")
         lazy val (x, y) = (Variable[String]("x"), Variable[String]("y"))
-        def conclusion() = new Conclusion(List(Rs(!x, !y), R(!x, !y)))
+        def conclusion(sa: Valuation) = {
+          implicit val s = sa
+          new Conclusion(List(Rs(!x, !y), R(!x, !y)))
+        }
         override val explicitVal = Some("R+(x, y) & R(x, y)")
 
         val premise = new Premise(List(R?(x, y)))
@@ -31,7 +34,7 @@ class TransitiveClosureSpec extends Specification { def is =
           override val optName = Some("Init — no duplicate")
           lazy val (u, v) = (Variable[String]("u"), Variable[String]("v"))
           val premise = new Premise(List(Rs?(u, v)))
-          val guard = new NativeGuard(() => !x == !u && !y == !v) {
+          val guard = new NativeGuard((s: Valuation) => x(s) == u(s) && y(s) == v(s)) {
             override val explicitVal = Some("x == u && y == v")
           }
         }
@@ -39,17 +42,20 @@ class TransitiveClosureSpec extends Specification { def is =
       new Rule {
         override val optName = Some("Extend")
         lazy val (x, y, u, v) = (Variable[String]("x"), Variable[String]("y"), Variable[String]("u"), Variable[String]("v"))
-        def conclusion() = new Conclusion(List(Rs(!x, !v), Rs(!u, !v), Rs(!x, !y)))
+        def conclusion(sa: Valuation) = {
+          implicit val s = sa
+          new Conclusion(List(Rs(!x, !v), Rs(!u, !v), Rs(!x, !y)))
+        }
         override val explicitVal = Some("R+(x, v) & R+(y, v) & R+(x, y)")
 
         val premise = new Premise(List(Rs?(x, y), Rs?(u, v)))
-        val guard: Guard = new NativeGuard(() => !y == !u) {
+        val guard: Guard = new NativeGuard((s: Valuation) => y(s) == u(s)) {
           override val explicitVal = Some("y == u")
         } && ! new ControlGuard {
           override val optName = Some("Extend — no duplicate")
           lazy val (i, j) = (Variable[String]("i"), Variable[String]("j"))
           val premise = new Premise(List(Rs?(i, j)))
-          val guard = new NativeGuard(() => !i == !x && !j == !v) {
+          val guard = new NativeGuard((s: Valuation) => i(s) == x(s) && j(s) == v(s)) {
             override val explicitVal = Some("i == x && j == v")
           }
         }
