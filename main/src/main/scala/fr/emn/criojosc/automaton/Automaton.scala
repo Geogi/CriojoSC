@@ -62,10 +62,7 @@ class Automaton(val rule: Rule) {
 
   def getCompleted = states(finalState).map(this -> _)
 
-  def execute(pe: PartialExecution): Iterable[ClosedReactant] = {
-    rule.s = pe.valuation
-    rule.conclusion().content
-  }
+  def execute(pe: PartialExecution): Iterable[ClosedReactant] = rule.conclusion(pe.valuation).content
 
   def purge(crs: Iterable[ClosedReactant]) {
     def purgePE(binding: (State, PartialExecution)) {

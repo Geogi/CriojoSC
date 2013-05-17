@@ -34,7 +34,7 @@ class BubbleSortSpec extends Specification { def is =
       namedAgent("BubbleSort")(
       {
         val List(i, j, u, v) = Variable.multi[Int]("i", "j", "u", "v")
-        (R?(i, u) & R?(j, v)).-->(() => !j == !i + 1 && !u > !v).?(() => R(!i, !v) & R(!j, !u))
+        (R?(i, u) & R?(j, v)). --> (!j > !i && !u > !v). ? (R(!i, !v) & R(!j, !u))
       },
       R(0, 0), R(1, 3), R(2, 2)
       )

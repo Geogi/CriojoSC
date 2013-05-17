@@ -24,8 +24,8 @@ class Premise(val reactants: List[OpenReactant]) {
 
   def &(that: OpenReactant) = new Premise(reactants :+ that)
 
-  def -->(that: () => Conclusion) = new Rule {
-    def conclusion() = that()
+  def -->(that: Valuation => Conclusion) = new Rule {
+    def conclusion(s: Valuation) = that(s)
 
     val premise = Premise.this
     val guard = TrueGuard
@@ -36,7 +36,7 @@ class Premise(val reactants: List[OpenReactant]) {
     val guard = that
   }
 
-  def -->(that: () => Boolean) = new ControlGuard {
+  def -->(that: Valuation => Boolean) = new ControlGuard {
     val premise = Premise.this
     val guard = NativeGuard(that)
   }

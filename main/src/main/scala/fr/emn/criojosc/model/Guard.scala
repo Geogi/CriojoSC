@@ -57,7 +57,7 @@ case class AndGuard(left: Guard, right: Guard) extends Guard {
   *
   * @param test A Boolean to evaluate to.
   */
-case class NativeGuard(test: () => Boolean) extends Guard with OptExplicit {
+case class NativeGuard(test: Valuation => Boolean) extends Guard with OptExplicit {
   override val explicitAlt = "native"
 
   override def toString = explicitly
@@ -67,15 +67,15 @@ case class NativeGuard(test: () => Boolean) extends Guard with OptExplicit {
 
 /** `true` if the premise match and, given the updated Valuation, the sub-guard is `true` !CURRENTLY A STUB! */
 trait ControlGuard extends Rule with Guard {
-  override def conclusion() = NoConclusion
+  override def conclusion(s: Valuation) = NoConclusion
 
   override lazy val printed = premise.reactants.mkString(" & ") + " → " + guard.toString
 
-  def ?(that: () => Conclusion) = {
+  def ?(that: Valuation => Conclusion) = {
     val oldPremise = premise
     val oldGuard = guard
     new Rule {
-      def conclusion() = that()
+      def conclusion(s: Valuation) = that(s)
 
       val premise = oldPremise
       val guard = oldGuard

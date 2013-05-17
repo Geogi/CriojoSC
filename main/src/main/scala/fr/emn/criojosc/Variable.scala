@@ -26,6 +26,8 @@ class Variable[+T] extends Pattern[T] with OptNamed {
 
   def unary_!(implicit s: Valuation): T = (s.get(this) getOrElse
     (throw new NoSuchElementException("Unbound variable"))).asInstanceOf[T]
+
+  def apply(s: Valuation): T = unary_!(s)
 }
 
 object Variable {
