@@ -34,8 +34,10 @@ class BubbleSortSpec extends Specification { def is =
       val R = Relation[Int, Int]("R")
       namedAgent("BubbleSort")(
       {
-        val List(i, j, u, v) = Variable.multi[Int]("i", "j", "u", "v")
-        (R?(i, u) & R?(j, v)). --> ((s: Valuation) => j(s) > i(s) && u(s) > v(s)). ? ((s: Valuation) => R(i(s), v(s)) & R(j(s), u(s)))
+        val Seq(i, j, u, v) = Variable.multi[Int]("i", "j", "u", "v")
+        (R?(i, u) & R?(j, v)). --> (
+          (s: Valuation) => j(s) > i(s) && u(s) > v(s)). ? (
+          (s: Valuation) => R(i(s), v(s)) & R(j(s), u(s)))
       },
       R(0, 0), R(1, 3), R(2, 2)
       )
