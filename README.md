@@ -12,7 +12,7 @@ Some useful resources:
 Building
 --------
 1. Install the following dependencies: [Git](http://git-scm.com/), [SBT](http://www.scala-sbt.org/). On Linux, get them from your distro repositories.
-2. Clone from GitHub: `$ git clone https://github.com/Geogi/criojomin.git`.
+2. Clone from GitHub: `$ git clone https://github.com/Geogi/CriojoSC.git`.
 3. Run the code generator then compile CriojoSC: `$ sbt "criojosc-generate/run" compile`.
    The .class files will be located at `target/${scalaVersion}/classes/`.
 4. If you want the JAR: `$ sbt package`. It will be located at `target/`.
