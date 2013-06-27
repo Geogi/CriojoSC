@@ -1,7 +1,7 @@
 CriojoSC
 ==========
 
-CriojoSC is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with guaranteed causal order. It sounds cool, but it's far from complete at the moment.
+CriojoSC is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with guaranteed causal order.
 
 CriojoSC uses [Scala](http://www.scala-lang.org/) and is [GPL](http://www.gnu.org/licenses/gpl.html) licenced.
 
@@ -25,9 +25,3 @@ Generating the API
 Build the project then `$ sbt doc`. The API will be located at `target/${scalaVersion}/api/index.html`.
 
 The [Specs2](http://etorreborre.github.com/specs2/) specification can be generated with `$ sbt test`. It will be located at `target/specs2-reports/index.html`.
-
-Using
------
-It's really unstable and partially unimplemented, so writing a tutorial at this point isn't sensible.
-
-Refer to the API documentation if needed.
