@@ -39,7 +39,7 @@ class BubbleSortSpec extends Specification { def is =
           (s: Valuation) => j(s) > i(s) && u(s) > v(s)). ? (
           (s: Valuation) => R(i(s), v(s)) & R(j(s), u(s)))
       },
-      R(0, 0), R(1, 3), R(2, 2)
+      R(0, 0), R(1, 3), R(2, 2), R(3, 1), R(4, 7), R(5, 2), R(6, 8), R(7, 5), R(8, 3), R(9, 6), R(10, 300)
       )
     }
   )

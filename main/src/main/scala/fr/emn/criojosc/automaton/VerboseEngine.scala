@@ -19,15 +19,19 @@
 
 package fr.emn.criojosc.automaton
 
-import fr.emn.criojosc.model.{ControlGuard, Agent}
+import fr.emn.criojosc.model.{ClosedReactant, ControlGuard, Agent}
+import scala.collection.mutable
 
 class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.Engine(thisAgents) {
-  var MAX_ITS: Option[Int] = None
+  var MAX_ITS: Option[Int] = Some(1000000)
+
+  var final_solution = agents.map(_ -> mutable.HashSet.empty[ClosedReactant]).toMap
 
   override def run() {
     println("### Startup")
     println()
     agents.foreach { a =>
+      final_solution(a) ++= a.solution.content
       println("#### Agent " + a)
       println()
       println("**Initial solution:** " + a.solution.content.mkString(", "))
@@ -92,6 +96,10 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
         println()
         println("Maximum iteration reached: " + i)
       }
+      println()
+      println("**Final state:**")
+      println()
+      agents.foreach(a => println("* **" + a + ":** " + final_solution(a).mkString(" & ")))
     }
   }
 
@@ -114,11 +122,13 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
       unprocessed(agent).clear()
       // takes the first choice, if any
       val chosen = complete.headOption
+      final_solution(agent) --= chosen.map { case (_, pe) => pe.using }.getOrElse(Nil)
       println("**Chosen:** " + chosen.map { case (automaton, pe) => automaton.rule + " *with* " + pe }.getOrElse("None"))
       println()
       // if defined, applies the valuation to the conclusion of the rule
       // and adds the products to the unprocessed reactant list
       val products = chosen.map { case (a, pe) => a.execute(pe) }
+      final_solution(agent) ++= products.getOrElse(Nil)
       println("**Products:** " + products.map(_.mkString(" & ")).getOrElse("None"))
       println()
       products.map(unprocessed(agent) ++= _)
