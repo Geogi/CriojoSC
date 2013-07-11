@@ -17,12 +17,11 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
-package discrimination
+package fr.emn.criojosc.discrimination.internal
 
-import model._
-import internal._
+/** A discrimination structure for the variables values.
+  *
+  */
+class Values {
 
-class Engine(val agents: List[Agent]) extends model.Engine {
-  def run() {}
 }

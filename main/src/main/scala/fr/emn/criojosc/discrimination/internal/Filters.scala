@@ -17,12 +17,11 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
-package discrimination
+package fr.emn.criojosc.discrimination.internal
 
-import model._
-import internal._
+/** Information about the filters to apply
+  *
+  */
+class Filters {
 
-class Engine(val agents: List[Agent]) extends model.Engine {
-  def run() {}
 }

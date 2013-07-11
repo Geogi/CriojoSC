@@ -17,12 +17,12 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
-package discrimination
+package fr.emn.criojosc.discrimination.internal
 
-import model._
-import internal._
+/** This class should know which CR are selected by valuations.
+  *
+  * Without this, `A & A --> _ ? _` would fire even when there's only one A available.
+  */
+class Identity {
 
-class Engine(val agents: List[Agent]) extends model.Engine {
-  def run() {}
 }
