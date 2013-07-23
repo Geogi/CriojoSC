@@ -19,10 +19,9 @@
 
 package fr.emn.criojosc.discrimination.internal
 
-/** The shape of a rule.
-  *
-  * A tree-like structure that stores information related to the actual shape of a rule.
-  */
-case class Shape(
-  entryPoint: Option[(Part, Part)]
+import fr.emn.criojosc.Variable
+
+/** An equivalence class of same level variables */
+case class Part(
+  variables: List[Variable]
 )
