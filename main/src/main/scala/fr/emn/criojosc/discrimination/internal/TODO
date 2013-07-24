@@ -1,0 +1,3 @@
+* initialization of guards from the syntax and filtering
+* modularize filtering to allow hot-plugging of equality constraints
+* take all cases of doubles not to count the same valuation a dynamic number of times
