@@ -22,7 +22,7 @@ package fr.emn.criojosc.model
 import org.specs2._
 import fr.emn.criojosc._
 
-class TuplePatternSpec extends Specification { def is =
+class TuplePatternSpec extends Specification with RuleImplicits { def is =
   "Tuple pattern specification."                                                      ^
                                                                                       p^
   "Tuple patterns are used by n-ary relations (n > 1)."                               ^
@@ -33,8 +33,6 @@ class TuplePatternSpec extends Specification { def is =
     "(1, \"a\", 0 :: 'b' :: Nip) vs. (1, \"a\", 0 :: 'b' :: Nil) true"                ! testTuple3_1 ^
     "(1, \"a\", 0 :: 'b' :: Nip) vs. (1, \"a\", 0 :: 'c' :: Nil) true"                ! testTuple3_2 ^
                                                                                       end
-
-  import RuleImplicits.const
 
   val s = Valuation()
 

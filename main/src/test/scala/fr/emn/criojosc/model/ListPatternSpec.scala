@@ -22,7 +22,7 @@ package fr.emn.criojosc.model
 import org.specs2._
 import fr.emn.criojosc._
 
-class ListPatternSpec extends Specification { def is =
+class ListPatternSpec extends Specification with RuleImplicits { def is =
 
   "List pattern specification."                                           ^
                                                                           p^
@@ -36,8 +36,6 @@ class ListPatternSpec extends Specification { def is =
   "It works recursively on many objects"                                  ! matchTest^
                                                                           end
 
-
-  import RuleImplicits.const
 
   val s = Valuation()
 

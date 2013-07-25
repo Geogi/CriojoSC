@@ -22,7 +22,7 @@ package model
 
 import org.specs2._
 
-class RelationSpec extends Specification { def is =
+class RelationSpec extends Specification with RuleImplicits { def is =
   "RelationSymbol specification."                         ^
                                                     p^
   "Creating a new relation with its companion"      ^
@@ -37,8 +37,6 @@ class RelationSpec extends Specification { def is =
     "Unary"                                         ! instantiateClosedAtom1^
     "Ternary"                                       ! instantiateClosedAtom3^
                                                     end
-
-  import RuleImplicits.const
 
   val R1 = Relation[Int]
   val R3 = Relation[Char, String, Int]
