@@ -20,5 +20,5 @@
 package fr.emn.criojosc
 
 package object examples {
-  val testAgents = List(Deduplication)
+  val testAgents = List(BubbleSort.agent, Deduplication, TransitiveClosure.agent)
 }

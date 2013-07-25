@@ -36,11 +36,12 @@ class Engine(val agents: List[Agent]) extends model.Engine {
 
   private def recurAuto(parent: Rule)(guards: List[Guard] = List(parent.guard)): List[Automaton] = guards match {
     case x :: xs => x match {
-      case TrueGuard => recurAuto(parent)(xs)
       case AndGuard(left, right) => recurAuto(parent)(left :: right :: xs)
-      case NotGuard(guard) => recurAuto(parent)(guard :: xs)
-      case NativeGuard(test) => recurAuto(parent)(xs)
       case guard: ControlGuard => recurAuto(guard)() ::: recurAuto(parent)(xs)
+      case EquivalenceGuard(left, right) => recurAuto(parent)(xs)
+      case NativeGuard(test) => recurAuto(parent)(xs)
+      case NotGuard(guard) => recurAuto(parent)(guard :: xs)
+      case TrueGuard => recurAuto(parent)(xs)
     }
     case _ => List(new Automaton(parent))
   }
@@ -50,13 +51,14 @@ class Engine(val agents: List[Agent]) extends model.Engine {
   }
 
   protected def evaluateGuard(guard: Guard, valuation: Valuation): Boolean = guard match {
-    case TrueGuard => true
     case AndGuard(left, right) => evaluateGuard(left, valuation) && evaluateGuard(right, valuation)
-    case NotGuard(subGuard) => !evaluateGuard(subGuard, valuation)
-    case NativeGuard(test) => test(valuation)
     case subGuard: ControlGuard => automatonsByRule(subGuard).getCompleted.exists {
       case (_, pe) => evaluateGuard(subGuard.guard, valuation ++ pe.valuation)
     }
+    case EquivalenceGuard(left, right) => left(valuation) == right(valuation)
+    case NativeGuard(test) => test(valuation)
+    case NotGuard(subGuard) => !evaluateGuard(subGuard, valuation)
+    case TrueGuard => true
   }
 
   protected def step(): Boolean = agents.map { agent =>

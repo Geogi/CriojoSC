@@ -21,6 +21,7 @@ package fr.emn.criojosc.model.pattern
 
 import fr.emn.criojosc.model.{Valuation, Pattern}
 import fr.emn.criojosc.model.output.OptNamed
+import fr.emn.criojosc.model.guard.EquivalenceGuard
 
 class Variable[+T] extends Pattern[T] with OptNamed {
   def matching[S >: T](proposed: S, s: Valuation) = if (s.contains(this)) (false, s) else (true, s + (this, proposed))
@@ -29,6 +30,8 @@ class Variable[+T] extends Pattern[T] with OptNamed {
     (throw new NoSuchElementException("Unbound variable"))).asInstanceOf[T]
 
   def apply(s: Valuation): T = unary_!(s)
+
+  def ===[S >: T](that: Variable[S]) = new EquivalenceGuard(this, that)
 }
 
 object Variable {

@@ -17,25 +17,11 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.examples
+package fr.emn.criojosc.model.guard
 
-import fr.emn.criojosc.model.{Valuation, Rule, Agent}
-import fr.emn.criojosc._
-import fr.emn.criojosc.model.rule.{Solution, Conclusion}
-import fr.emn.criojosc.model.guard.{NativeGuard, TrueGuard}
+import fr.emn.criojosc.model.Guard
+import fr.emn.criojosc.model.pattern.Variable
 
-object Deduplication extends Agent {
-  override val optName = Some("Deduplication")
-  val R = Relation[Int]("R")
-  val r = new Rule {
-    val Seq(x, y) = Variable.multi[Int]("x", "y")
-
-    def conclusion(s: Valuation) = new Conclusion(List(R(x(s))))
-    override val explicitVal = Some("R(x)")
-
-    val premise = R?(x) & R?(y)
-    val guard = x === y
-  }
-  override val rules = List(r)
-  override val solution = Solution(R(0), R(0), R(1))
+case class EquivalenceGuard[T](val left: Variable[T], val right: Variable[T]) extends Guard {
+  def printed = left + " = " + right
 }

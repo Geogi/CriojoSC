@@ -36,7 +36,7 @@ class VariableSpec extends Specification { def is =
 
   def testSymbol = {
     val (x, y) = (new Variable[Int], new Variable[Int])
-    (x === x) and (x !== y)
+    (x must beEqualTo(x)) and (x !== y)
   }
 
   def testValuation = {
