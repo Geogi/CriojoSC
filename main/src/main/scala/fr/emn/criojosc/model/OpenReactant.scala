@@ -24,7 +24,7 @@ import fr.emn.criojosc.model.rule.Premise
 trait OpenReactant {
   def pattern: Pattern[Any]
 
-  def symbol: EntitySymbol
+  def symbol: RelationSymbol
 
   def matching(cr: ClosedReactant, s: Valuation) =
     if (symbol != cr.symbol) (false, s)

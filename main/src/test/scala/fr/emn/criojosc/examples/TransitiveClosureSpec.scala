@@ -7,6 +7,7 @@ import fr.emn.criojosc.model._
 import scala.Some
 import fr.emn.criojosc.model.guard.{ControlGuard, NativeGuard}
 import fr.emn.criojosc.model.rule.{Solution, Premise, Conclusion}
+import fr.emn.criojosc.model.pattern.Variable
 
 class TransitiveClosureSpec extends Specification { def is =
   "Test CriojoSC with the transitive closure algorithm"         ^

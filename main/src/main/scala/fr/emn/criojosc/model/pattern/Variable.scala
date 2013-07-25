@@ -17,8 +17,24 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.pattern
 
-import output.OptNamed
+import fr.emn.criojosc.model.{Valuation, Pattern}
+import fr.emn.criojosc.model.output.OptNamed
 
-trait RelationSymbol extends OptNamed
+class Variable[+T] extends Pattern[T] with OptNamed {
+  def matching[S >: T](proposed: S, s: Valuation) = if (s.contains(this)) (false, s) else (true, s + (this, proposed))
+
+  def unary_!(implicit s: Valuation): T = (s.get(this) getOrElse
+    (throw new NoSuchElementException("Unbound variable"))).asInstanceOf[T]
+
+  def apply(s: Valuation): T = unary_!(s)
+}
+
+object Variable {
+  def apply[T] = new Variable[T]
+  def apply[T](s: String) = new Variable[T] {
+    override val optName = Some(s)
+  }
+  def multi[T](ss: String*) = ss.map(apply[T](_))
+}

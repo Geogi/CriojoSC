@@ -22,6 +22,7 @@ package examples
 
 import org.specs2._
 import fr.emn.criojosc.model.Valuation
+import fr.emn.criojosc.model.pattern.Variable
 
 class BubbleSortSpec extends Specification { def is =
   "Test CriojoSC with the bubble sort algorithm"         ^

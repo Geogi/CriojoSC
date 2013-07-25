@@ -22,6 +22,7 @@
  def tl(i: Int) = gt(i, "T" + _)
 %>
 package fr.emn.criojosc.model
+package pattern
 
 #for (i <- 2 to 22)
 class Tuple<%=i%>Pattern[<%=gt(i, "+T" + _)%>](val origin: (<%=gt(i, "Pattern[T" + _ + "]")%>)) extends Pattern[(<%=tl(i)%>)] {

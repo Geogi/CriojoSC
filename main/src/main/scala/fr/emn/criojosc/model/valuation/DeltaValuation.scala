@@ -19,8 +19,8 @@
 
 package fr.emn.criojosc.model.valuation
 
-import fr.emn.criojosc.Variable
 import fr.emn.criojosc.model.Valuation
+import fr.emn.criojosc.model.pattern.Variable
 
 case class DeltaValuation(parent: Option[Valuation], delta: Map[Variable[Any], Any]) extends Valuation {
   override lazy val content = parent map { _.content ++ delta } getOrElse delta

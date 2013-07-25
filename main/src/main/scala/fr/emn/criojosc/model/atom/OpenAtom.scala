@@ -19,7 +19,7 @@
 
 package fr.emn.criojosc.model.atom
 
-import fr.emn.criojosc.model.{OpenReactant, Pattern, EntitySymbol}
+import fr.emn.criojosc.model.{OpenReactant, Pattern}
 
 /** A symbolic representation of an [[TypedRelation]], as used in rule premises and "existence" guards.<br />
   * The engine matches it against the actual instances in [[EntitySymbol]] to produce a

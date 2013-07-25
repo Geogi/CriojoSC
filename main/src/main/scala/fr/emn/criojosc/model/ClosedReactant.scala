@@ -25,7 +25,7 @@ import fr.emn.criojosc.model.rule.Conclusion
 trait ClosedReactant {
   def value: Any
 
-  def symbol: EntitySymbol
+  def symbol: RelationSymbol
 
   override def toString = symbol.toString + (value.toString match {
     case s if s.startsWith("(") && s.endsWith(")") => s

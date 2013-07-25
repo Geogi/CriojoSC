@@ -24,6 +24,7 @@ import org.specs2._
 import fr.emn.criojosc.model._
 import fr.emn.criojosc.model.guard.{ControlGuard, NativeGuard}
 import fr.emn.criojosc.model.rule.{Solution, Premise, Conclusion}
+import fr.emn.criojosc.model.pattern.Variable
 
 class EngineSpec extends Specification { def is =
   "Automaton engine specification."                               ^

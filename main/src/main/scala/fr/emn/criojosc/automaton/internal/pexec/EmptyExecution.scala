@@ -17,8 +17,17 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.automaton.internal.pexec
 
-import fr.emn.criojosc.model.output.OptNamed
+import fr.emn.criojosc.model.valuation.EmptyValuation
+import fr.emn.criojosc.model.{ClosedReactant, Valuation}
+import fr.emn.criojosc.automaton.internal.State
 
-trait EntitySymbol extends OptNamed
+object EmptyExecution extends PartialExecution {
+   override val valuation = EmptyValuation
+   override def using = Nil
+
+   override def +(s: Valuation, cr: ClosedReactant, state: State) = PartialExecution(s, None, cr)
+
+   override def toString = "PE()"
+ }

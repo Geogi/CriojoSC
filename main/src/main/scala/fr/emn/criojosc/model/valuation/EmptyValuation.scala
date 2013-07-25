@@ -19,8 +19,8 @@
 
 package fr.emn.criojosc.model.valuation
 
-import fr.emn.criojosc.Variable
 import fr.emn.criojosc.model.Valuation
+import fr.emn.criojosc.model.pattern.Variable
 
 case object EmptyValuation extends Valuation {
   override val content = Map.empty[Variable[Any], Any]

@@ -17,8 +17,8 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.automaton.internal.pexec
 
-import output.OptNamed
+import fr.emn.criojosc.model.{ClosedReactant, Valuation}
 
-trait RelationSymbol extends OptNamed
+class FullPartialExecution(val valuation: Valuation, val using: List[ClosedReactant]) extends PartialExecution

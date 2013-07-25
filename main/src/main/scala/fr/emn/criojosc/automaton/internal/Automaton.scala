@@ -21,7 +21,8 @@ package fr.emn.criojosc.automaton.internal
 
 import collection.mutable
 import fr.emn.criojosc.model.{Rule, OpenReactant, Guard, ClosedReactant}
-import fr.emn.criojosc.automaton.internal.State
+import fr.emn.criojosc.automaton.internal.pexec.PartialExecution
+import fr.emn.criojosc.automaton.internal.PartialExecution
 
 class Automaton(val rule: Rule) {
   val isGuard = rule.isInstanceOf[Guard]

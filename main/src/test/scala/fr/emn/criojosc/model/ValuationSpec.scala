@@ -20,7 +20,7 @@
 package fr.emn.criojosc.model
 
 import org.specs2._
-import fr.emn.criojosc.Variable
+import fr.emn.criojosc.model.pattern.Variable
 
 class ValuationSpec extends Specification { def is =
   "Valuation specification."                        ^

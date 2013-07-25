@@ -23,7 +23,7 @@
 %>
 package fr.emn.criojosc
 
-import model._
+import model.relation._
 
 object Relation {
   def apply[T1] = new TypedRelation[T1]

@@ -17,8 +17,11 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.automaton.internal
+package pexec
 
-import output.OptNamed
+import fr.emn.criojosc.model.{ClosedReactant, Valuation}
 
-trait RelationSymbol extends OptNamed
+class DeltaPartialExecution(val valuation: Valuation, parent: Option[PartialExecution], added: ClosedReactant) extends PartialExecution {
+   override lazy val using = parent.map { added :: _.using } getOrElse List(added)
+ }

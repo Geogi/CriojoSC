@@ -21,8 +21,7 @@ package fr.emn.criojosc.automaton.internal
 
 import collection.mutable
 import fr.emn.criojosc.model.{Valuation, ClosedReactant}
-import fr.emn.criojosc.model.valuation.EmptyValuation
-import fr.emn.criojosc.automaton.internal.State
+import fr.emn.criojosc.automaton.internal.pexec.DeltaPartialExecution
 
 trait PartialExecution {
   def valuation: Valuation
@@ -35,25 +34,4 @@ trait PartialExecution {
   }
 
   override def toString = valuation.toString + " ⇒ " + using.mkString(", ")
-}
-
-object PartialExecution {
-  def apply(valuation: Valuation, using: List[ClosedReactant]) = new FullPartialExecution(valuation, using)
-  def apply(valuation: Valuation, parent: Option[PartialExecution], added: ClosedReactant) = new DeltaPartialExecution(valuation, parent, added)
-  def apply() = EmptyExecution
-}
-
-class FullPartialExecution(val valuation: Valuation, val using: List[ClosedReactant]) extends PartialExecution
-
-class DeltaPartialExecution(val valuation: Valuation, parent: Option[PartialExecution], added: ClosedReactant) extends PartialExecution {
-  override lazy val using = parent.map { added :: _.using } getOrElse List(added)
-}
-
-object EmptyExecution extends PartialExecution {
-  override val valuation = EmptyValuation
-  override def using = Nil
-
-  override def +(s: Valuation, cr: ClosedReactant, state: State) = PartialExecution(s, None, cr)
-
-  override def toString = "PE()"
 }

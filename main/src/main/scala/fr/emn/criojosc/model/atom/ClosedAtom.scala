@@ -19,7 +19,7 @@
 
 package fr.emn.criojosc.model.atom
 
-import fr.emn.criojosc.model.{ClosedReactant, EntitySymbol}
+import fr.emn.criojosc.model.{ClosedReactant}
 
 /** An instance of an [[TypedRelation]] in a given state (a list of patterns).<br />
   * It may exist in [[Solution]] or be the product of a [[Rule]]
