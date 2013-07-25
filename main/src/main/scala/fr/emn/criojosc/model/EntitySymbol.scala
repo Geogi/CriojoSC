@@ -19,4 +19,6 @@
 
 package fr.emn.criojosc.model
 
-class EntitySymbol extends OptNamed
+import fr.emn.criojosc.model.output.OptNamed
+
+trait EntitySymbol extends OptNamed

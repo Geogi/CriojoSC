@@ -17,10 +17,25 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.guard
 
-trait Printable {
-  def printed: String
+import fr.emn.criojosc.model._
+import fr.emn.criojosc.model.rule.{Conclusion, NoConclusion}
+
+/** `true` if the premise match and, given the updated Valuation, the sub-guard is `true` !CURRENTLY A STUB! */
+trait ControlGuard extends Rule with Guard {
+  override def conclusion(s: Valuation) = NoConclusion
+
+  override lazy val printed = premise.reactants.mkString(" & ") + " → " + guard.toString
+
+  def ?(that: Valuation => Conclusion) = {
+    val oldPremise = premise
+    val oldGuard = guard
+    new Rule {
+      def conclusion(s: Valuation) = that(s)
+
+      val premise = oldPremise
+      val guard = oldGuard
+    }
+  }
 }
-
-

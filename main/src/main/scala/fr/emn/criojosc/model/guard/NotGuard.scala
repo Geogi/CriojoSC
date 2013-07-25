@@ -17,10 +17,12 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.guard
 
-import fr.emn.criojosc.Variable
+import fr.emn.criojosc.model.Guard
 
-case class DeltaValuation(parent: Option[Valuation], delta: Map[Variable[Any], Any]) extends Valuation {
-  override lazy val content = parent map { _.content ++ delta } getOrElse delta
+case class NotGuard(sub: Guard) extends Guard {
+  override def printed = "¬(" + sub.printed + ")"
+
+  override def toString = printed
 }

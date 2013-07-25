@@ -17,20 +17,13 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.valuation
 
-/** Guard whose truth value comes from a Scala boolean. !CURRENTLY A STUB!
-  *
-  * {{{
-  *  !x >= !y
-  * }}}
-  *
-  * @param test A Boolean to evaluate to.
-  */
-case class NativeGuard(test: Valuation => Boolean) extends Guard with OptExplicit {
-  override val explicitAlt = "native"
+import fr.emn.criojosc.Variable
+import fr.emn.criojosc.model.Valuation
 
-  override def toString = explicitly
+case object EmptyValuation extends Valuation {
+  override val content = Map.empty[Variable[Any], Any]
 
-  override def printed = explicitly
+  override def +(x: Variable[Any], v: Any) = Valuation(None, Map(x -> v))
 }

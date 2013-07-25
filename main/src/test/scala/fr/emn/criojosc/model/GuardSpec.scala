@@ -21,6 +21,7 @@ package fr.emn.criojosc.model
 
 import org.specs2._
 import fr.emn.criojosc.Variable
+import fr.emn.criojosc.model.guard.NativeGuard
 
 class GuardSpec extends Specification { def is =
   "Guard specification."                                                                 ^

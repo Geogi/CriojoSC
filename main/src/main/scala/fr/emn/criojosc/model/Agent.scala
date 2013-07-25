@@ -19,6 +19,8 @@
 
 package fr.emn.criojosc.model
 
+import fr.emn.criojosc.model.output.OptNamed
+
 /** A universe complying with the chemical computing model. !CURRENTLY A STUB! */
 trait Agent extends OptNamed {
   /** How entities react. */

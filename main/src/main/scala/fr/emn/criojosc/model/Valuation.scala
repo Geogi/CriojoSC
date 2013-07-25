@@ -20,6 +20,7 @@
 package fr.emn.criojosc.model
 
 import fr.emn.criojosc.Variable
+import fr.emn.criojosc.model.valuation.{EmptyValuation, DeltaValuation}
 
 trait Valuation {
   val content: Map[Variable[Any], Any]

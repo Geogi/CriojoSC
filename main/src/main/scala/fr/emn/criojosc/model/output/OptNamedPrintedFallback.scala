@@ -17,17 +17,8 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.output
 
-/** An instance of an [[TypedRelation]] in a given state (a list of patterns).<br />
-  * It may exist in [[Solution]] or be the product of a [[Rule]]
-  * (listed in its conclusion).
-  *
-  * Note that while [[ClosedAtom]] is not typed itself, it is created by
-  * a ([[TypedRelation]] `apply` method, that is typed, ensuring a consistent state.<br />
-  * This is why instances of this class should not be created manually, but using `TypedRelation.apply`.
-  *
-  * @param symbol The Atom this instance refers to.
-  * @param value The value (Any) that defines the state of this instance.
-  */
-case class ClosedAtom(symbol: EntitySymbol, value: Any) extends ClosedReactant
+trait OptNamedPrintedFallback extends OptNamed with Printable {
+  override def toString = optName.getOrElse(printed)
+}

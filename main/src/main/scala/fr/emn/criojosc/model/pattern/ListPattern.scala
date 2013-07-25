@@ -17,7 +17,9 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.pattern
+
+import fr.emn.criojosc.model.{Valuation, Pattern}
 
 class ListPattern[+T] extends Pattern[List[T]] {
   def head: Pattern[T] = throw new UnsupportedOperationException("head of empty list pattern")
@@ -42,7 +44,3 @@ class ListPattern[+T] extends Pattern[List[T]] {
 
   override def toString = ""
 }
-
-
-
-

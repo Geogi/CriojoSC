@@ -17,10 +17,23 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.guard
 
-case object TrueGuard extends Guard {
-  override def printed = "true"
+import fr.emn.criojosc.model.{Guard, Valuation}
+import fr.emn.criojosc.model.output.OptExplicit
 
-  override def toString = printed
+/** Guard whose truth value comes from a Scala boolean. !CURRENTLY A STUB!
+  *
+  * {{{
+  *  !x >= !y
+  * }}}
+  *
+  * @param test A Boolean to evaluate to.
+  */
+case class NativeGuard(test: Valuation => Boolean) extends Guard with OptExplicit {
+  override val explicitAlt = "native"
+
+  override def toString = explicitly
+
+  override def printed = explicitly
 }

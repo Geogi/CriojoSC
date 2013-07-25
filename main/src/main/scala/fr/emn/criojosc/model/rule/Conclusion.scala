@@ -17,22 +17,10 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.rule
 
-/** `true` if the premise match and, given the updated Valuation, the sub-guard is `true` !CURRENTLY A STUB! */
-trait ControlGuard extends Rule with Guard {
-  override def conclusion(s: Valuation) = NoConclusion
+import fr.emn.criojosc.model.ClosedReactant
 
-  override lazy val printed = premise.reactants.mkString(" & ") + " → " + guard.toString
-
-  def ?(that: Valuation => Conclusion) = {
-    val oldPremise = premise
-    val oldGuard = guard
-    new Rule {
-      def conclusion(s: Valuation) = that(s)
-
-      val premise = oldPremise
-      val guard = oldGuard
-    }
-  }
+class Conclusion(val content: List[ClosedReactant]) {
+  def &(that: ClosedReactant) = new Conclusion(content :+ that)
 }

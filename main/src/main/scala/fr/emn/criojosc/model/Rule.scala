@@ -19,6 +19,10 @@
 
 package fr.emn.criojosc.model
 
+import fr.emn.criojosc.model.valuation.EmptyValuation
+import fr.emn.criojosc.model.output.{OptNamedPrintedFallback, OptExplicit}
+import fr.emn.criojosc.model.rule.Conclusion
+
 trait Rule extends RuleImplicits with OptNamedPrintedFallback with OptExplicit {
   implicit var s: Valuation = EmptyValuation
 

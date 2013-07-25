@@ -17,9 +17,10 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.output
 
-case object NilPatternList extends ListPattern[Nothing] {
-  override def cov_matching[S >: Nothing](proposed: List[S], s: Valuation) = (proposed.isEmpty, s)
-  override def toString = "Nip"
+trait OptNamed {
+  val optName: Option[String] = None
+
+  override def toString = optName.getOrElse(super.toString)
 }

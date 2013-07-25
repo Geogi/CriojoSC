@@ -17,12 +17,11 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.valuation
 
-class Const[+T](val c: T) extends Pattern[T] {
-  def matching[S >: T](proposed: S, s: Valuation) = (proposed == c, s)
-  override def toString = c match {
-    case s: String => "~\"" + s.replace("\"", "\\\"") + "\""
-    case _ => "~" + c
-  }
+import fr.emn.criojosc.Variable
+import fr.emn.criojosc.model.Valuation
+
+case class DeltaValuation(parent: Option[Valuation], delta: Map[Variable[Any], Any]) extends Valuation {
+  override lazy val content = parent map { _.content ++ delta } getOrElse delta
 }

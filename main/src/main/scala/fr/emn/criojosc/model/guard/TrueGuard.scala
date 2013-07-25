@@ -17,6 +17,12 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.guard
 
-case object NoConclusion extends Conclusion(Nil)
+import fr.emn.criojosc.model.Guard
+
+case object TrueGuard extends Guard {
+  override def printed = "true"
+
+  override def toString = printed
+}

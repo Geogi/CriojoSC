@@ -17,8 +17,11 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.pattern
 
-class Conclusion(val content: List[ClosedReactant]) {
-  def &(that: ClosedReactant) = new Conclusion(content :+ that)
+import fr.emn.criojosc.model.Valuation
+
+case object NilPatternList extends ListPattern[Nothing] {
+  override def cov_matching[S >: Nothing](proposed: List[S], s: Valuation) = (proposed.isEmpty, s)
+  override def toString = "Nip"
 }

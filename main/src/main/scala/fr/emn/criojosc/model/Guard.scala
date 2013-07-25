@@ -19,6 +19,9 @@
 
 package fr.emn.criojosc.model
 
+import fr.emn.criojosc.model.guard.{NotGuard, AndGuard}
+import fr.emn.criojosc.model.output.Printable
+
 /** Guards allow conditional triggering of Rules. !CURRENTLY A STUB!
   *
   * Their most useful feature is that they permit introspection of the EntitySymbol, allowing

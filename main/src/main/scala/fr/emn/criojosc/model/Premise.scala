@@ -19,6 +19,9 @@
 
 package fr.emn.criojosc.model
 
+import fr.emn.criojosc.model.guard.{TrueGuard, NativeGuard, ControlGuard}
+import fr.emn.criojosc.model.rule.Conclusion
+
 class Premise(val reactants: List[OpenReactant]) {
   override def toString = reactants.mkString(" & ")
 

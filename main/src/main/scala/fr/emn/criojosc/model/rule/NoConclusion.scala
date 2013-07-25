@@ -17,10 +17,8 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.rule
 
-trait OptNamed {
-  val optName: Option[String] = None
+import fr.emn.criojosc.model.rule.Conclusion
 
-  override def toString = optName.getOrElse(super.toString)
-}
+case object NoConclusion extends Conclusion(Nil)

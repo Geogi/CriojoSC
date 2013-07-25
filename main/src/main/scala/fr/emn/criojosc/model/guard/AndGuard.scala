@@ -17,12 +17,12 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.guard
 
-import fr.emn.criojosc.Variable
+import fr.emn.criojosc.model.Guard
 
-case object EmptyValuation extends Valuation {
-  override val content = Map.empty[Variable[Any], Any]
+case class AndGuard(left: Guard, right: Guard) extends Guard {
+  override def printed = "(" + left.printed + " ∧ " + right.printed + ")"
 
-  override def +(x: Variable[Any], v: Any) = Valuation(None, Map(x -> v))
+  override def toString = printed
 }

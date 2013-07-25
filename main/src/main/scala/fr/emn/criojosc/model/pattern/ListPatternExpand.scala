@@ -17,7 +17,9 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.pattern
+
+import fr.emn.criojosc.model.Pattern
 
 final case class ListPatternExpand[+T](override val head: Pattern[T],
                                        override val tail: ListPattern[T]) extends ListPattern[T] {

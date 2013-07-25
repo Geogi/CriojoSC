@@ -20,6 +20,7 @@
 package fr.emn.criojosc.model
 
 import org.specs2._
+import fr.emn.criojosc.model.pattern.Const
 
 class ConstSpec extends Specification { def is =
   "Constant pattern specification."                           ^

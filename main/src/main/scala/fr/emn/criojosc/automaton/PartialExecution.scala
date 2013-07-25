@@ -21,7 +21,8 @@ package fr.emn.criojosc
 package automaton
 
 import collection.mutable
-import fr.emn.criojosc.model.{EmptyValuation, Valuation, ClosedReactant}
+import fr.emn.criojosc.model.{Valuation, ClosedReactant}
+import fr.emn.criojosc.model.valuation.EmptyValuation
 
 trait PartialExecution {
   def valuation: Valuation

@@ -22,6 +22,7 @@ package automaton
 
 import collection.mutable
 import fr.emn.criojosc.model._
+import fr.emn.criojosc.model.guard.ControlGuard
 
 class Engine(val agents: List[Agent]) extends model.Engine {
   protected val automatons = agents.map(a => a -> a.rules.flatMap(recurAuto(_)())).toMap

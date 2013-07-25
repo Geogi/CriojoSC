@@ -17,10 +17,14 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.pattern
 
-case class AndGuard(left: Guard, right: Guard) extends Guard {
-  override def printed = "(" + left.printed + " ∧ " + right.printed + ")"
+import fr.emn.criojosc.model.{Valuation, Pattern}
 
-  override def toString = printed
+class Const[+T](val c: T) extends Pattern[T] {
+  def matching[S >: T](proposed: S, s: Valuation) = (proposed == c, s)
+  override def toString = c match {
+    case s: String => "~\"" + s.replace("\"", "\\\"") + "\""
+    case _ => "~" + c
+  }
 }

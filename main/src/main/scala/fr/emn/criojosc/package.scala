@@ -19,6 +19,8 @@
 
 package fr.emn
 
+import fr.emn.criojosc.model.pattern.NilPatternList
+
 /** CriojoSC is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with guaranteed causal order.<br />
   * It sounds cool, but it's far from complete at the moment.
   *

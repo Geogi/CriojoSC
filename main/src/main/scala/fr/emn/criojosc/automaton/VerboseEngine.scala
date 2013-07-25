@@ -19,8 +19,9 @@
 
 package fr.emn.criojosc.automaton
 
-import fr.emn.criojosc.model.{ClosedReactant, ControlGuard, Agent}
+import fr.emn.criojosc.model.{ClosedReactant, Agent}
 import scala.collection.mutable
+import fr.emn.criojosc.model.guard.ControlGuard
 
 class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.Engine(thisAgents) {
   var MAX_ITS: Option[Int] = Some(1000000)

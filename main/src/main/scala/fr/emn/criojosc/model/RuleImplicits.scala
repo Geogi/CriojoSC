@@ -19,6 +19,8 @@
 
 package fr.emn.criojosc.model
 
+import fr.emn.criojosc.model.pattern.Const
+
 trait RuleImplicits {
   import language.implicitConversions
 

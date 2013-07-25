@@ -19,6 +19,8 @@
 
 package fr.emn.criojosc.model
 
+import fr.emn.criojosc.model.rule.Conclusion
+
 /** Something that exist in the [[Solution]] or can be created by a [[Rule]]. */
 trait ClosedReactant {
   def value: Any

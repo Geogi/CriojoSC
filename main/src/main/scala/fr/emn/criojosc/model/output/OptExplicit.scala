@@ -17,8 +17,10 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.output
 
-trait OptNamedPrintedFallback extends OptNamed with Printable {
-  override def toString = optName.getOrElse(printed)
+trait OptExplicit {
+  val explicitAlt: String = "unavailable"
+  val explicitVal: Option[String] = None
+  def explicitly = "[" + explicitVal.getOrElse(explicitAlt) + "]"
 }

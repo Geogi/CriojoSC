@@ -4,8 +4,9 @@ package examples
 import org.specs2._
 import fr.emn.criojosc.automaton.VerboseEngine
 import fr.emn.criojosc.model._
-import fr.emn.criojosc.model.NativeGuard
 import scala.Some
+import fr.emn.criojosc.model.guard.{ControlGuard, NativeGuard}
+import fr.emn.criojosc.model.rule.Conclusion
 
 class TransitiveClosureSpec extends Specification { def is =
   "Test CriojoSC with the transitive closure algorithm"         ^

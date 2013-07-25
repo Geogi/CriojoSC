@@ -19,7 +19,8 @@
 
 package fr.emn.criojosc
 
-import fr.emn.criojosc.model.{Valuation, OptNamed, Pattern}
+import fr.emn.criojosc.model.{Valuation, Pattern}
+import fr.emn.criojosc.model.output.OptNamed
 
 class Variable[+T] extends Pattern[T] with OptNamed {
   def matching[S >: T](proposed: S, s: Valuation) = if (s.contains(this)) (false, s) else (true, s + (this, proposed))

@@ -17,10 +17,10 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.output
 
-case class NotGuard(sub: Guard) extends Guard {
-  override def printed = "¬(" + sub.printed + ")"
-
-  override def toString = printed
+trait Printable {
+  def printed: String
 }
+
+

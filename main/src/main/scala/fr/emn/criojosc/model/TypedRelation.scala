@@ -19,6 +19,8 @@
 
 package fr.emn.criojosc.model
 
+import fr.emn.criojosc.model.atom.{ClosedAtom, OpenAtom}
+
 /** An atom identifier, which can create [[OpenAtom]]s and
   * [[ClosedAtom]]s.<br />
   *
