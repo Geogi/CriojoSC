@@ -22,7 +22,7 @@ package automaton
 
 import org.specs2._
 
-import model.{AgentSpec, EngineBuffer}
+import model.EngineBuffer
 import examples.testAgents
 
 class EngineSpec extends Specification { def is =

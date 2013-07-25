@@ -22,18 +22,21 @@ package fr.emn.criojosc.examples
 import fr.emn.criojosc.model.{Valuation, Rule, Agent}
 import fr.emn.criojosc._
 import fr.emn.criojosc.model.rule.{Solution, Conclusion}
-import fr.emn.criojosc.model.guard.TrueGuard
+import fr.emn.criojosc.model.guard.{NativeGuard, TrueGuard}
 
 object Deduplication extends Agent {
   override val optName = Some("Deduplication")
-  val R = Relation[Any]("R")
+  val R = Relation[Int]("R")
   val r = new Rule {
-    val x = Variable[Any]("x")
+    val Seq(x, y) = Variable.multi[Int]("x", "y")
 
-    def conclusion(s: Valuation) = new Conclusion(List(R(x)))
+    def conclusion(s: Valuation) = new Conclusion(List(R(x(s))))
+    override val explicitVal = Some("R(x)")
 
-    val premise = R?(x) & R?(x)
-    val guard = TrueGuard
+    val premise = R?(x) & R?(y)
+    val guard = new NativeGuard((s: Valuation) => x(s) == y(s)) {
+      override val explicitVal = Some("x! == y!")
+    }
   }
   override val rules = List(r)
   override val solution = Solution(R(0), R(0), R(1))

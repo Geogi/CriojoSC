@@ -61,7 +61,7 @@ class Engine(val agents: List[Agent]) extends model.Engine {
 
   protected def step(): Boolean = agents.map { agent =>
     // proposes closed atoms, get completed executions (filter guards) whose guards are verified
-    automatons(agent).foreach(a => unprocessed(agent).foreach(a.propose(_)))
+    automatons(agent).foreach(a => unprocessed(agent).foreach(a.propose))
     // get completed executions (filter guards) whose guards are verified
     val complete = automatons(agent).flatMap(_.getCompleted).filter {
       case (automaton, pe) => !automaton.rule.isInstanceOf[ControlGuard] && evaluateGuard(automaton.rule.guard, pe.valuation)

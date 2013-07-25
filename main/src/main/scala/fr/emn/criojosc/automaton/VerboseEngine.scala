@@ -52,7 +52,7 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
     println("#### Unprocessed reactants")
     println()
     val hasUnprocessed = agents.groupBy(unprocessed(_).nonEmpty)
-    hasUnprocessed.get(false).foreach(as => println("**None:** " + as.mkString(", ")))
+    hasUnprocessed.get(false).foreach(as => println("**None:** " + as.mkString(", ") + "\n"))
     hasUnprocessed.get(true).foreach(_.foreach(a => println("* **" + a + ":** " +
       unprocessed(a).mkString(", "))))
     println()
@@ -82,7 +82,8 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
         println(a.rule.premise.reactants.map(or => "-" * (or.toString.length - 2)).mkString("| :", " :|: ", ": |"))
         a.states.filter { case (s, pes) => s != a.initialState && pes.nonEmpty }.foreach { case (s, pes) =>
           println(a.rule.premise.reactants.map { or =>
-            if (s.has(or)) " " * math.floor((or.toString.length - 7) / 2.0).toInt + "***X***" + " " * math.ceil((or.toString.length - 7) / 2.0).toInt
+            if (s.has(or)) " " * math.floor((or.toString.length - 7) / 2.0).toInt + "***X***" +
+                           " " * math.ceil ((or.toString.length - 7) / 2.0).toInt
             else " " * or.toString.length
           }.mkString("| ", " | ", " |"))
           pes.foreach(pe => println("| " + pe + " " + "|" * a.rule.premise.reactants.size))
@@ -90,9 +91,9 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
         println()
       })
     })
-    if(step() && MAX_ITS.map(i < _).getOrElse(true)) verboseRun(i + 1)
+    if(step() && MAX_ITS.map(i.<).getOrElse(true)) verboseRun(i + 1)
     else {
-      if (MAX_ITS.map(i < _).getOrElse(true)) println("### Equilibrium reached")
+      if (MAX_ITS.map(i.<).getOrElse(true)) println("### Equilibrium reached")
       else {
         println("### Stopped")
         println()
@@ -108,8 +109,10 @@ class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.E
   override def step() = {
     println("#### Processing")
     agents.map(agent => {
+      println("##### Agent " + agent)
+      println()
       // proposes closed atoms
-      automatons(agent).foreach(a => unprocessed(agent).foreach(a.propose(_)))
+      automatons(agent).foreach(a => unprocessed(agent).foreach(a.propose))
       // get completed executions (filter guards) whose guards are verified
       val complete = automatons(agent).flatMap(_.getCompleted).filter {
         case (automaton, pe) => !automaton.rule.isInstanceOf[ControlGuard] && evaluateGuard(automaton.rule.guard, pe.valuation)
