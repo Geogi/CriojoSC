@@ -19,4 +19,8 @@
 
 package fr.emn.criojosc.model
 
-trait ChannelSymbol extends EntitySymbol
+trait RuleImplicits {
+  import language.implicitConversions
+
+  implicit def const[T](v: T) = new Const(v)
+}

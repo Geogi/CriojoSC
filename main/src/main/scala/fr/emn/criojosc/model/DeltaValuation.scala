@@ -19,8 +19,8 @@
 
 package fr.emn.criojosc.model
 
-trait Pattern[+A] {
-  def matching[S >: A](proposed: S, s: Valuation): (Boolean, Valuation)
+import fr.emn.criojosc.Variable
+
+case class DeltaValuation(parent: Option[Valuation], delta: Map[Variable[Any], Any]) extends Valuation {
+  override lazy val content = parent map { _.content ++ delta } getOrElse delta
 }
-
-

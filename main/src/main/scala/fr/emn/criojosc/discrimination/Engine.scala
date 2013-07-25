@@ -24,5 +24,7 @@ import model._
 import internal._
 
 class Engine(val agents: List[Agent]) extends model.Engine {
-  def run() {}
+  def run() {
+
+  }
 }

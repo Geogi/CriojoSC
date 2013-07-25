@@ -32,15 +32,3 @@ trait Rule extends RuleImplicits with OptNamedPrintedFallback with OptExplicit {
 
   override val explicitAlt = "conclusion"
 }
-
-trait RuleImplicits {
-  import language.implicitConversions
-
-  implicit def const[T](v: T) = new Const(v)
-}
-
-object RuleImplicits extends RuleImplicits
-
-class Conclusion(val content: List[ClosedReactant]) {
-  def &(that: ClosedReactant) = new Conclusion(content :+ that)
-}

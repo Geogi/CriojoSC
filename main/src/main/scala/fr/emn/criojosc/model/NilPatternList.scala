@@ -19,6 +19,7 @@
 
 package fr.emn.criojosc.model
 
-class Launcher {
-
+case object NilPatternList extends ListPattern[Nothing] {
+  override def cov_matching[S >: Nothing](proposed: List[S], s: Valuation) = (proposed.isEmpty, s)
+  override def toString = "Nip"
 }

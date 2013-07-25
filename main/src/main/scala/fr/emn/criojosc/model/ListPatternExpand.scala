@@ -19,4 +19,7 @@
 
 package fr.emn.criojosc.model
 
-case class ClosedMessage(symbol: EntitySymbol, info: ChannelInfo, value: Any) extends ClosedReactant
+final case class ListPatternExpand[+T](override val head: Pattern[T],
+                                       override val tail: ListPattern[T]) extends ListPattern[T] {
+  override def toString = head.toString + " :: " + tail.toString
+}

@@ -19,8 +19,6 @@
 
 package fr.emn.criojosc.model
 
-trait Pattern[+A] {
-  def matching[S >: A](proposed: S, s: Valuation): (Boolean, Valuation)
+class Conclusion(val content: List[ClosedReactant]) {
+  def &(that: ClosedReactant) = new Conclusion(content :+ that)
 }
-
-

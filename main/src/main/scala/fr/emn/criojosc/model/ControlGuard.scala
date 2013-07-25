@@ -19,12 +19,20 @@
 
 package fr.emn.criojosc.model
 
-import org.specs2._
+/** `true` if the premise match and, given the updated Valuation, the sub-guard is `true` !CURRENTLY A STUB! */
+trait ControlGuard extends Rule with Guard {
+  override def conclusion(s: Valuation) = NoConclusion
 
-class ChannelSpec extends Specification { def is =
+  override lazy val printed = premise.reactants.mkString(" & ") + " → " + guard.toString
 
-  "Channel specification."         ^
-                                   p^
-  "Channel is currently a stub..." ! pending^
-                                   end
+  def ?(that: Valuation => Conclusion) = {
+    val oldPremise = premise
+    val oldGuard = guard
+    new Rule {
+      def conclusion(s: Valuation) = that(s)
+
+      val premise = oldPremise
+      val guard = oldGuard
+    }
+  }
 }

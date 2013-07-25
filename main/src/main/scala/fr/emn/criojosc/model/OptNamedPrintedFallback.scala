@@ -19,8 +19,6 @@
 
 package fr.emn.criojosc.model
 
-trait Pattern[+A] {
-  def matching[S >: A](proposed: S, s: Valuation): (Boolean, Valuation)
+trait OptNamedPrintedFallback extends OptNamed with Printable {
+  override def toString = optName.getOrElse(printed)
 }
-
-

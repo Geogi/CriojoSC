@@ -19,6 +19,10 @@
 
 package fr.emn.criojosc.model
 
-trait Interpreter {
+import fr.emn.criojosc.Variable
 
+case object EmptyValuation extends Valuation {
+  override val content = Map.empty[Variable[Any], Any]
+
+  override def +(x: Variable[Any], v: Any) = Valuation(None, Map(x -> v))
 }

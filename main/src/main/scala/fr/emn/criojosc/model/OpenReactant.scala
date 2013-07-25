@@ -31,21 +31,6 @@ trait OpenReactant {
   def &(that: OpenReactant) = new Premise(List(this, that))
 }
 
-/** A symbolic representation of an [[TypedRelation]], as used in rule premises and "existence" guards.<br />
-  * The engine matches it against the actual instances in [[EntitySymbol]] to produce a
-  * [[model.Valuation]], used by most [[Guard]]s and
-  * [[Rule]] conclusions.
-  *
-  * Note that while [[OpenAtom]] is not typed itself, it is created by
-  * ([[TypedRelation.apply]] that is typed, ensuring a consistent state.<br />
-  * This is why instances of this class should not be created manually, but using `Atom.apply`.
-  *
-  * @param symbol The Atom this particular representation refers to.
-  * @param pattern The list of Patterns used by the matching process.
-  */
-class OpenAtom(val symbol: EntitySymbol, val pattern: Pattern[Any]) extends OpenReactant {
-  override def toString = symbol.toString + "(" + pattern.toString + ")"
-}
 
-/** A symbolic representation of a Message. !CURRENTLY A STUB! */
-class OpenMessage(val symbol: EntitySymbol, val info: ChannelInfo, val pattern: Pattern[Any]) extends OpenReactant
+
+

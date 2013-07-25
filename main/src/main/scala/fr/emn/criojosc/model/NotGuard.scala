@@ -19,8 +19,8 @@
 
 package fr.emn.criojosc.model
 
-trait Pattern[+A] {
-  def matching[S >: A](proposed: S, s: Valuation): (Boolean, Valuation)
+case class NotGuard(sub: Guard) extends Guard {
+  override def printed = "¬(" + sub.printed + ")"
+
+  override def toString = printed
 }
-
-

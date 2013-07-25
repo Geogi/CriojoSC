@@ -19,7 +19,4 @@
 
 package fr.emn.criojosc.model
 
-/** A communication channel between agents. !CURRENTLY A STUB! */
-trait Channel[T] extends ChannelSymbol {
-  val info: ChannelInfo
-}
+case object NoConclusion extends Conclusion(Nil)

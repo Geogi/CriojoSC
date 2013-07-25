@@ -19,8 +19,18 @@
 
 package fr.emn.criojosc.model
 
-trait Pattern[+A] {
-  def matching[S >: A](proposed: S, s: Valuation): (Boolean, Valuation)
+/** Guard whose truth value comes from a Scala boolean. !CURRENTLY A STUB!
+  *
+  * {{{
+  *  !x >= !y
+  * }}}
+  *
+  * @param test A Boolean to evaluate to.
+  */
+case class NativeGuard(test: Valuation => Boolean) extends Guard with OptExplicit {
+  override val explicitAlt = "native"
+
+  override def toString = explicitly
+
+  override def printed = explicitly
 }
-
-

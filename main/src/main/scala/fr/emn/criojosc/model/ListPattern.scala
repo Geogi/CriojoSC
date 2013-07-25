@@ -43,12 +43,6 @@ class ListPattern[+T] extends Pattern[List[T]] {
   override def toString = ""
 }
 
-final case class ListPatternExpand[+T](override val head: Pattern[T],
-                                       override val tail: ListPattern[T]) extends ListPattern[T] {
-  override def toString = head.toString + " :: " + tail.toString
-}
 
-case object NilPatternList extends ListPattern[Nothing] {
-  override def cov_matching[S >: Nothing](proposed: List[S], s: Valuation) = (proposed.isEmpty, s)
-  override def toString = "Nip"
-}
+
+

@@ -19,4 +19,8 @@
 
 package fr.emn.criojosc.model
 
-trait ChannelInfo
+case class AndGuard(left: Guard, right: Guard) extends Guard {
+  override def printed = "(" + left.printed + " ∧ " + right.printed + ")"
+
+  override def toString = printed
+}

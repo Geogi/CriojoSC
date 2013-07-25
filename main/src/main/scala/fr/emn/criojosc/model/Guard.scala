@@ -31,56 +31,14 @@ trait Guard extends Printable {
   def &&(that: Guard) = AndGuard(this, that)
 }
 
-case class NotGuard(sub: Guard) extends Guard {
-  override def printed = "¬(" + sub.printed + ")"
 
-  override def toString = printed
-}
 
-case object TrueGuard extends Guard {
-  override def printed = "true"
 
-  override def toString = printed
-}
 
-case class AndGuard(left: Guard, right: Guard) extends Guard {
-  override def printed = "(" + left.printed + " ∧ " + right.printed + ")"
 
-  override def toString = printed
-}
 
-/** Guard whose truth value comes from a Scala boolean. !CURRENTLY A STUB!
-  *
-  * {{{
-  *  !x >= !y
-  * }}}
-  *
-  * @param test A Boolean to evaluate to.
-  */
-case class NativeGuard(test: Valuation => Boolean) extends Guard with OptExplicit {
-  override val explicitAlt = "native"
 
-  override def toString = explicitly
 
-  override def printed = explicitly
-}
 
-/** `true` if the premise match and, given the updated Valuation, the sub-guard is `true` !CURRENTLY A STUB! */
-trait ControlGuard extends Rule with Guard {
-  override def conclusion(s: Valuation) = NoConclusion
 
-  override lazy val printed = premise.reactants.mkString(" & ") + " → " + guard.toString
 
-  def ?(that: Valuation => Conclusion) = {
-    val oldPremise = premise
-    val oldGuard = guard
-    new Rule {
-      def conclusion(s: Valuation) = that(s)
-
-      val premise = oldPremise
-      val guard = oldGuard
-    }
-  }
-}
-
-case object NoConclusion extends Conclusion(Nil)

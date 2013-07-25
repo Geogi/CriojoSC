@@ -19,8 +19,10 @@
 
 package fr.emn.criojosc.model
 
-trait Pattern[+A] {
-  def matching[S >: A](proposed: S, s: Valuation): (Boolean, Valuation)
+class Const[+T](val c: T) extends Pattern[T] {
+  def matching[S >: T](proposed: S, s: Valuation) = (proposed == c, s)
+  override def toString = c match {
+    case s: String => "~\"" + s.replace("\"", "\\\"") + "\""
+    case _ => "~" + c
+  }
 }
-
-

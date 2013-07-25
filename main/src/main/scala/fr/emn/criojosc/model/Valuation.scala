@@ -37,12 +37,6 @@ object Valuation {
   def apply() = EmptyValuation
 }
 
-case object EmptyValuation extends Valuation {
-  override val content = Map.empty[Variable[Any], Any]
 
-  override def +(x: Variable[Any], v: Any) = Valuation(None, Map(x -> v))
-}
 
-case class DeltaValuation(parent: Option[Valuation], delta: Map[Variable[Any], Any]) extends Valuation {
-  override lazy val content = parent map { _.content ++ delta } getOrElse delta
-}
+
