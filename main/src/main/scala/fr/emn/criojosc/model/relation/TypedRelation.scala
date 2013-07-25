@@ -17,9 +17,10 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.relation
 
 import fr.emn.criojosc.model.atom.{ClosedAtom, OpenAtom}
+import fr.emn.criojosc.model.{Pattern, RelationSymbol}
 
 /** An atom identifier, which can create [[OpenAtom]]s and
   * [[ClosedAtom]]s.<br />

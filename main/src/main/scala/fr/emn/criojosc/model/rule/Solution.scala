@@ -17,7 +17,9 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.rule
+
+import fr.emn.criojosc.model.ClosedReactant
 
 class Solution(val content: Set[ClosedReactant]) {
   override def toString = content.mkString(" & ")

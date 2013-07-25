@@ -20,6 +20,7 @@
 package fr.emn.criojosc.model
 
 import org.specs2._
+import fr.emn.criojosc.model.rule.Solution
 
 class AgentSpec extends Specification { def is =
 

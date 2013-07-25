@@ -17,7 +17,9 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.pattern
+
+import fr.emn.criojosc.model.{Valuation, Pattern}
 
 class Successor(predecessor: Pattern[Int]) extends Pattern[Int] {
   def matching[S >: Int](proposed: S, s: Valuation) = proposed match {

@@ -17,11 +17,12 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model.pattern
+package fr.emn.criojosc.model.rule
 
-import fr.emn.criojosc.model.Pattern
+import fr.emn.criojosc.model.pattern.Const
 
-final case class ListPatternExpand[+T](override val head: Pattern[T],
-                                       override val tail: ListPattern[T]) extends ListPattern[T] {
-  override def toString = head.toString + " :: " + tail.toString
+trait RuleImplicits {
+  import language.implicitConversions
+
+  implicit def const[T](v: T) = new Const(v)
 }

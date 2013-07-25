@@ -21,6 +21,7 @@ package fr.emn.criojosc.model
 
 import org.specs2._
 import fr.emn.criojosc._
+import fr.emn.criojosc.model.rule.RuleImplicits
 
 class TuplePatternSpec extends Specification with RuleImplicits { def is =
   "Tuple pattern specification."                                                      ^

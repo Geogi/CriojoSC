@@ -17,9 +17,10 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model.pattern
+package fr.emn.criojosc.model.pattern.list
 
 import fr.emn.criojosc.model.Valuation
+import fr.emn.criojosc.model.pattern.ListPattern
 
 case object NilPatternList extends ListPattern[Nothing] {
   override def cov_matching[S >: Nothing](proposed: List[S], s: Valuation) = (proposed.isEmpty, s)

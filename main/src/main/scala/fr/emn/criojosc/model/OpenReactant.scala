@@ -19,6 +19,8 @@
 
 package fr.emn.criojosc.model
 
+import fr.emn.criojosc.model.rule.Premise
+
 trait OpenReactant {
   def pattern: Pattern[Any]
 

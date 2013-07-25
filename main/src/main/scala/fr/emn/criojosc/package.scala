@@ -19,7 +19,8 @@
 
 package fr.emn
 
-import fr.emn.criojosc.model.pattern.NilPatternList
+import fr.emn.criojosc.model.pattern.{Successor}
+import fr.emn.criojosc.model.rule.Solution
 
 /** CriojoSC is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with guaranteed causal order.<br />
   * It sounds cool, but it's far from complete at the moment.
@@ -40,13 +41,13 @@ package object criojosc {
   def engine(agents: model.Agent*) = new automaton.VerboseEngine(agents.toList)
 
   def agent(args: Either[model.Rule, model.ClosedReactant]*) = new model.Agent {
-    val solution = new model.Solution(args.filter(_.isRight).map(_.right.get).toSet)
+    val solution = new Solution(args.filter(_.isRight).map(_.right.get).toSet)
     val rules = args.filter(_.isLeft).map(_.left.get)
   }
 
   def namedAgent(name: String)(args: Either[model.Rule, model.ClosedReactant]*) = new model.Agent {
     override val optName = Some(name)
-    val solution = new model.Solution(args.filter(_.isRight).map(_.right.get).toSet)
+    val solution = new Solution(args.filter(_.isRight).map(_.right.get).toSet)
     val rules = args.filter(_.isLeft).map(_.left.get)
   }
 

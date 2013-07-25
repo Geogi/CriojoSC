@@ -6,7 +6,7 @@ import fr.emn.criojosc.automaton.VerboseEngine
 import fr.emn.criojosc.model._
 import scala.Some
 import fr.emn.criojosc.model.guard.{ControlGuard, NativeGuard}
-import fr.emn.criojosc.model.rule.Conclusion
+import fr.emn.criojosc.model.rule.{Solution, Premise, Conclusion}
 
 class TransitiveClosureSpec extends Specification { def is =
   "Test CriojoSC with the transitive closure algorithm"         ^

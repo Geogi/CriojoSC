@@ -20,6 +20,7 @@
 package fr.emn.criojosc.model
 
 import fr.emn.criojosc.model.output.OptNamed
+import fr.emn.criojosc.model.rule.Solution
 
 /** A universe complying with the chemical computing model. !CURRENTLY A STUB! */
 trait Agent extends OptNamed {

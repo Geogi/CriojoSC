@@ -20,6 +20,7 @@
 package fr.emn.criojosc.model.pattern
 
 import fr.emn.criojosc.model.{Valuation, Pattern}
+import fr.emn.criojosc.model.pattern.list.ListPatternExpand
 
 class ListPattern[+T] extends Pattern[List[T]] {
   def head: Pattern[T] = throw new UnsupportedOperationException("head of empty list pattern")

@@ -21,6 +21,8 @@ package fr.emn.criojosc.model
 
 import org.specs2._
 import fr.emn.criojosc._
+import fr.emn.criojosc.model.pattern.Successor
+import fr.emn.criojosc.model.rule.RuleImplicits
 
 class SuccessorSpec extends Specification with RuleImplicits { def is =
 

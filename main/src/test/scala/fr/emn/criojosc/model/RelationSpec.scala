@@ -21,6 +21,8 @@ package fr.emn.criojosc
 package model
 
 import org.specs2._
+import fr.emn.criojosc.model.relation.TypedRelation
+import fr.emn.criojosc.model.rule.RuleImplicits
 
 class RelationSpec extends Specification with RuleImplicits { def is =
   "RelationSymbol specification."                         ^
