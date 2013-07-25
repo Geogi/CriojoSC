@@ -29,7 +29,7 @@ import pattern._
 
 #for (i <- 2 to 22)
 class TypedRelation<%=i%>[<%=tl(i)%>] extends RelationSymbol {
-  def apply(<%=gt(i, j => "v" + j + ": T" + j)%>): ClosedAtom = ClosedAtom(this, (<%=gt(i, "v" + _)%>))
+  def apply(<%=gt(i, j => "v" + j + ": T" + j)%>): ClosedAtom = new ClosedAtom(this, (<%=gt(i, "v" + _)%>))
   def ?(<%=gt(i,j => "p" + j + ": Pattern[T" + j + "]")%>): OpenAtom = new OpenAtom(this, new Tuple<%=i%>Pattern((<%=gt(i, "p" + _)%>)))
 }
 

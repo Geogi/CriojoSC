@@ -1,22 +1,14 @@
 package fr.emn.criojosc
 package examples
 
-import org.specs2._
-import fr.emn.criojosc.automaton.VerboseEngine
-import fr.emn.criojosc.model._
-import scala.Some
+import fr.emn.criojosc.model.{Guard, Valuation, Agent, Rule}
 import fr.emn.criojosc.model.guard.{ControlGuard, NativeGuard}
 import fr.emn.criojosc.model.rule.{Solution, Premise, Conclusion}
 import fr.emn.criojosc.model.pattern.Variable
 import fr.emn.criojosc.model.relation.Relation
 
-class TransitiveClosureSpec extends Specification { def is =
-  "Test CriojoSC with the transitive closure algorithm"         ^
-    p^
-    automatonOut                                                  ^
-    end
-
-  lazy val transitiveClosure = new Agent {
+object TransitiveClosure {
+  val agent = new Agent {
     override val optName = Some("TransitiveClosure")
 
     lazy val R = Relation[String, String]("R")
@@ -64,17 +56,5 @@ class TransitiveClosureSpec extends Specification { def is =
         }
       }
     )
-  }
-  lazy val engine = new VerboseEngine(List(transitiveClosure))
-  engine.MAX_ITS = Some(15)
-
-  lazy val automatonOut = {
-    val stream = new java.io.ByteArrayOutputStream()
-    Console.withOut(stream) {
-      engine.run()
-    }
-    val output = stream.toString
-    stream.close()
-    output
   }
 }

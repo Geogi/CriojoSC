@@ -18,18 +18,7 @@
  */
 
 package fr.emn.criojosc
-package automaton
 
-import org.specs2._
-
-import model.{AgentSpec, EngineBuffer}
-import examples.testAgents
-
-class EngineSpec extends Specification { def is =
-  "Automaton engine specification."                               ^
-                                                                  p^
-  engine.output                                                   ^
-                                                                  end
-
-  lazy val engine = new VerboseEngine(testAgents) with EngineBuffer
+package object examples {
+  val testAgents = List(BubbleSort.agent, Deduplication, TransitiveClosure.agent)
 }

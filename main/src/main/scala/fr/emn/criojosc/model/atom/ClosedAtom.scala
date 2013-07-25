@@ -32,4 +32,4 @@ import fr.emn.criojosc.model.{RelationSymbol, ClosedReactant}
   * @param symbol The Atom this instance refers to.
   * @param value The value (Any) that defines the state of this instance.
   */
-case class ClosedAtom(symbol: RelationSymbol, value: Any) extends ClosedReactant
+class ClosedAtom(val symbol: RelationSymbol, val value: Any) extends ClosedReactant

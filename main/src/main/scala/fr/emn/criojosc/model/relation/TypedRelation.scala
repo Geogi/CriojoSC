@@ -39,7 +39,7 @@ import fr.emn.criojosc.model.{Pattern, RelationSymbol}
 
 /** An identifier for an unary atom. See [[TypedRelation]] for more details. */
 class TypedRelation[T] extends RelationSymbol {
-  def apply(v: T): ClosedAtom = ClosedAtom(this, v)
+  def apply(v: T): ClosedAtom = new ClosedAtom(this, v)
 
   def ?(p: Pattern[T]): OpenAtom = new OpenAtom(this, p)
 }

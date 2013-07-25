@@ -18,18 +18,21 @@
  */
 
 package fr.emn.criojosc
-package automaton
+package examples
 
-import org.specs2._
+import fr.emn.criojosc.model.{Agent, Valuation}
+import fr.emn.criojosc.model.pattern.Variable
+import fr.emn.criojosc.model.relation.Relation
 
-import model.{AgentSpec, EngineBuffer}
-import examples.testAgents
-
-class EngineSpec extends Specification { def is =
-  "Automaton engine specification."                               ^
-                                                                  p^
-  engine.output                                                   ^
-                                                                  end
-
-  lazy val engine = new VerboseEngine(testAgents) with EngineBuffer
+object BubbleSort {
+  val R = Relation[Int, Int]("R")
+  val agent = namedAgent("BubbleSort")(
+  {
+    val Seq(i, j, u, v) = Variable.multi[Int]("i", "j", "u", "v")
+    (R?(i, u) & R?(j, v)). --> (
+      (s: Valuation) => j(s) > i(s) && u(s) > v(s)). ? (
+      (s: Valuation) => R(i(s), v(s)) & R(j(s), u(s)))
+  },
+  R(0, 0), R(1, 3), R(2, 2), R(3, 1), R(4, 7), R(5, 2), R(6, 8), R(7, 5), R(8, 3), R(9, 6)
+  )
 }

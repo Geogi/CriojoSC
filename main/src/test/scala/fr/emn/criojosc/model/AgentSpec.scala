@@ -17,12 +17,10 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
-package model
+package fr.emn.criojosc.model
 
 import org.specs2._
-import fr.emn.criojosc.model.rule.{Conclusion, Solution}
-import fr.emn.criojosc.model.guard.TrueGuard
+import fr.emn.criojosc.model.rule.Solution
 
 class AgentSpec extends Specification { def is =
 
@@ -32,20 +30,9 @@ class AgentSpec extends Specification { def is =
                                                    end
 
   def createAgent = {
-    deduplication must beAnInstanceOf[Agent]
-  }
-
-  val deduplication = new Agent {
-    val R = Relation[Any]("R")
-    val r = new Rule {
-      val x = Variable[Any]("x")
-
-      def conclusion(s: Valuation) = new Conclusion(List(R(x)))
-
-      val premise = R?(x) & R?(x)
-      val guard = TrueGuard
+    val myAgent = new Agent {
+      val (rules, solution) = (List(), Solution())
     }
-    override val rules = List(r)
-    override val solution = Solution(R(0), R(0), R(1))
+    myAgent must beAnInstanceOf[Agent]
   }
 }

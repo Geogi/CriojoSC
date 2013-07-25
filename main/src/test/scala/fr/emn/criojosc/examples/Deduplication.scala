@@ -17,19 +17,24 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
-package automaton
+package fr.emn.criojosc.examples
 
-import org.specs2._
+import fr.emn.criojosc.model.{Valuation, Rule, Agent}
+import fr.emn.criojosc._
+import fr.emn.criojosc.model.rule.{Solution, Conclusion}
+import fr.emn.criojosc.model.guard.TrueGuard
 
-import model.{AgentSpec, EngineBuffer}
-import examples.testAgents
+object Deduplication extends Agent {
+  override val optName = Some("Deduplication")
+  val R = Relation[Any]("R")
+  val r = new Rule {
+    val x = Variable[Any]("x")
 
-class EngineSpec extends Specification { def is =
-  "Automaton engine specification."                               ^
-                                                                  p^
-  engine.output                                                   ^
-                                                                  end
+    def conclusion(s: Valuation) = new Conclusion(List(R(x)))
 
-  lazy val engine = new VerboseEngine(testAgents) with EngineBuffer
+    val premise = R?(x) & R?(x)
+    val guard = TrueGuard
+  }
+  override val rules = List(r)
+  override val solution = Solution(R(0), R(0), R(1))
 }
