@@ -20,7 +20,6 @@
 package fr.emn.criojosc.model.rule
 
 import fr.emn.criojosc.model.guard.{TrueGuard, NativeGuard, ControlGuard}
-import fr.emn.criojosc.model.rule.Conclusion
 import fr.emn.criojosc.model.{Guard, Rule, Valuation, OpenReactant}
 
 class Premise(val reactants: List[OpenReactant]) {

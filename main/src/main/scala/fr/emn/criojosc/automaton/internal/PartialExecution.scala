@@ -17,11 +17,13 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.automaton.internal
+package fr.emn.criojosc
+package automaton.internal
 
 import collection.mutable
-import fr.emn.criojosc.model.{Valuation, ClosedReactant}
-import fr.emn.criojosc.automaton.internal.pexec.DeltaPartialExecution
+
+import model.{Valuation, ClosedReactant}
+import pexec._
 
 trait PartialExecution {
   def valuation: Valuation
@@ -34,4 +36,10 @@ trait PartialExecution {
   }
 
   override def toString = valuation.toString + " ⇒ " + using.mkString(", ")
+}
+
+object PartialExecution {
+  def apply(valuation: Valuation, using: List[ClosedReactant]) = new FullPartialExecution(valuation, using)
+  def apply(valuation: Valuation, parent: Option[PartialExecution], added: ClosedReactant) = new DeltaPartialExecution(valuation, parent, added)
+  def apply() = EmptyExecution
 }

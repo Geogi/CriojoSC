@@ -17,10 +17,10 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.pattern
 
 import org.specs2._
-import fr.emn.criojosc.model.pattern.Variable
+import fr.emn.criojosc.model.Valuation
 
 class VariableSpec extends Specification { def is =
   "Variable specification."                                   ^

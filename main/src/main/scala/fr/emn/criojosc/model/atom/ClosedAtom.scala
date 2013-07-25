@@ -19,7 +19,7 @@
 
 package fr.emn.criojosc.model.atom
 
-import fr.emn.criojosc.model.{ClosedReactant}
+import fr.emn.criojosc.model.{RelationSymbol, ClosedReactant}
 
 /** An instance of an [[TypedRelation]] in a given state (a list of patterns).<br />
   * It may exist in [[Solution]] or be the product of a [[Rule]]
@@ -32,4 +32,4 @@ import fr.emn.criojosc.model.{ClosedReactant}
   * @param symbol The Atom this instance refers to.
   * @param value The value (Any) that defines the state of this instance.
   */
-case class ClosedAtom(symbol: EntitySymbol, value: Any) extends ClosedReactant
+case class ClosedAtom(symbol: RelationSymbol, value: Any) extends ClosedReactant

@@ -19,7 +19,7 @@
 
 package fr.emn.criojosc.model.atom
 
-import fr.emn.criojosc.model.{OpenReactant, Pattern}
+import fr.emn.criojosc.model.{RelationSymbol, OpenReactant, Pattern}
 
 /** A symbolic representation of an [[TypedRelation]], as used in rule premises and "existence" guards.<br />
   * The engine matches it against the actual instances in [[EntitySymbol]] to produce a
@@ -33,6 +33,6 @@ import fr.emn.criojosc.model.{OpenReactant, Pattern}
   * @param symbol The Atom this particular representation refers to.
   * @param pattern The list of Patterns used by the matching process.
   */
-class OpenAtom(val symbol: EntitySymbol, val pattern: Pattern[Any]) extends OpenReactant {
+class OpenAtom(val symbol: RelationSymbol, val pattern: Pattern[Any]) extends OpenReactant {
   override def toString = symbol.toString + "(" + pattern.toString + ")"
 }

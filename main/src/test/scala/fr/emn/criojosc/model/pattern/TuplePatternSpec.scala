@@ -17,11 +17,12 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.pattern
 
 import org.specs2._
-import fr.emn.criojosc._
+import fr.emn.criojosc.Nip
 import fr.emn.criojosc.model.rule.RuleImplicits
+import fr.emn.criojosc.model.{Valuation, RelationSpec}
 
 class TuplePatternSpec extends Specification with RuleImplicits { def is =
   "Tuple pattern specification."                                                      ^

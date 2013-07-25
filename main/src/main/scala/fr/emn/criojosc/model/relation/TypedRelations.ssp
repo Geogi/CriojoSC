@@ -25,6 +25,7 @@ package fr.emn.criojosc.model
 package relation
 
 import atom._
+import pattern._
 
 #for (i <- 2 to 22)
 class TypedRelation<%=i%>[<%=tl(i)%>] extends RelationSymbol {

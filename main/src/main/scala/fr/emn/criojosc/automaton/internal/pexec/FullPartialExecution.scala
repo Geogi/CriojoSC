@@ -17,7 +17,8 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.automaton.internal.pexec
+package fr.emn.criojosc.automaton.internal
+package pexec
 
 import fr.emn.criojosc.model.{ClosedReactant, Valuation}
 

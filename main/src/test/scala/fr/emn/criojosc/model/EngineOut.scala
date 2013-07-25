@@ -17,12 +17,16 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.automaton.internal.pexec
+package fr.emn.criojosc.model
 
-import fr.emn.criojosc.model.{ClosedReactant, Valuation}
-
-object PartialExecution {
-   def apply(valuation: Valuation, using: List[ClosedReactant]) = new FullPartialExecution(valuation, using)
-   def apply(valuation: Valuation, parent: Option[PartialExecution], added: ClosedReactant) = new DeltaPartialExecution(valuation, parent, added)
-   def apply() = EmptyExecution
- }
+trait EngineBuffer extends Engine {
+  lazy val output = {
+    val stream = new java.io.ByteArrayOutputStream()
+    Console.withOut(stream) {
+      run()
+    }
+    val output = stream.toString
+    stream.close()
+    output
+  }
+}

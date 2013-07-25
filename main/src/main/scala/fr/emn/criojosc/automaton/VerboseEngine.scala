@@ -22,7 +22,6 @@ package fr.emn.criojosc.automaton
 import fr.emn.criojosc.model.{ClosedReactant, Agent}
 import scala.collection.mutable
 import fr.emn.criojosc.model.guard.ControlGuard
-import fr.emn.criojosc.automaton.internal.pexec.PartialExecution
 import fr.emn.criojosc.automaton.internal.PartialExecution
 
 class VerboseEngine(thisAgents: List[Agent]) extends fr.emn.criojosc.automaton.Engine(thisAgents) {

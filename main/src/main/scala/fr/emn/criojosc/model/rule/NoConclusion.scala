@@ -19,6 +19,4 @@
 
 package fr.emn.criojosc.model.rule
 
-import fr.emn.criojosc.model.rule.Conclusion
-
 case object NoConclusion extends Conclusion(Nil)

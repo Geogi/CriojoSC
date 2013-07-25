@@ -17,12 +17,12 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.model
+package fr.emn.criojosc.model.pattern
 
 import org.specs2._
-import fr.emn.criojosc._
-import fr.emn.criojosc.model.pattern.Successor
+import fr.emn.criojosc.S
 import fr.emn.criojosc.model.rule.RuleImplicits
+import fr.emn.criojosc.model.{Pattern, Valuation}
 
 class SuccessorSpec extends Specification with RuleImplicits { def is =
 
