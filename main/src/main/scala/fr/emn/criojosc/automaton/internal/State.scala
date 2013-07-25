@@ -17,8 +17,7 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
-package automaton
+package fr.emn.criojosc.automaton.internal
 
 import fr.emn.criojosc.model.OpenReactant
 

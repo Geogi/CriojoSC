@@ -17,12 +17,12 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
-package automaton
+package fr.emn.criojosc.automaton.internal
 
 import collection.mutable
 import fr.emn.criojosc.model.{Valuation, ClosedReactant}
 import fr.emn.criojosc.model.valuation.EmptyValuation
+import fr.emn.criojosc.automaton.internal.State
 
 trait PartialExecution {
   def valuation: Valuation

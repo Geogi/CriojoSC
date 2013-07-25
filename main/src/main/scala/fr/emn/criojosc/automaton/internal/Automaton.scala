@@ -17,11 +17,11 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
-package automaton
+package fr.emn.criojosc.automaton.internal
 
 import collection.mutable
 import fr.emn.criojosc.model.{Rule, OpenReactant, Guard, ClosedReactant}
+import fr.emn.criojosc.automaton.internal.State
 
 class Automaton(val rule: Rule) {
   val isGuard = rule.isInstanceOf[Guard]
