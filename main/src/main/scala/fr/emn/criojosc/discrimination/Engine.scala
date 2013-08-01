@@ -21,19 +21,19 @@ package fr.emn.criojosc.discrimination
 
 import fr.emn.criojosc.model.{Agent, Engine => ModelEngine}
 
+/** Discrimination engine
+  *
+  * Phase 1: supports only rules without control guards.
+  * Works only on the first agent.
+  **/
 class Engine(val agents: List[Agent]) extends ModelEngine {
-  def run() {
-    init()
-    loop()
-  }
+  val agent = agents.head.getOrElse(sys.error("P1: needs an agent"))
 
-  def init() {}
-  
-  def loop() {
-    step && loop()
+  def run() {
+    step && run()
   }
 
   def step: Boolean = {
-    
+
   }
 }
