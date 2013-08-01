@@ -17,23 +17,6 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc.discrimination
+package fr.emn.criojosc.discrimination.internal
 
-import fr.emn.criojosc.model.{Agent, Engine => ModelEngine}
-
-class Engine(val agents: List[Agent]) extends ModelEngine {
-  def run() {
-    init()
-    loop()
-  }
-
-  def init() {}
-  
-  def loop() {
-    step && loop()
-  }
-
-  def step: Boolean = {
-    
-  }
-}
+class Domain(val values: List[Any], val next: Domain)

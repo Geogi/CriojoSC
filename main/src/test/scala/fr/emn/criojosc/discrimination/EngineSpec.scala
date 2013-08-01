@@ -19,21 +19,8 @@
 
 package fr.emn.criojosc.discrimination
 
-import fr.emn.criojosc.model.{Agent, Engine => ModelEngine}
+import org.specs2._
 
-class Engine(val agents: List[Agent]) extends ModelEngine {
-  def run() {
-    init()
-    loop()
-  }
+class EngineSpec {
 
-  def init() {}
-  
-  def loop() {
-    step && loop()
-  }
-
-  def step: Boolean = {
-    
-  }
 }
