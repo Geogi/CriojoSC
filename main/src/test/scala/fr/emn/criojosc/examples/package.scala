@@ -19,6 +19,9 @@
 
 package fr.emn.criojosc
 
+import automaton.VerboseEngine
+
 package object examples {
   val testAgents = List(BubbleSort.agent, Deduplication, TransitiveClosure.agent)
+  type TestEngine = VerboseEngine
 }

@@ -24,8 +24,6 @@ import runner.SpecificationsFinder._
 
 class index extends Specification { def is =
 
-  examplesLinks("CriojoSC specifications")
-
-  // see the SpecificationsFinder trait for the parameters of the 'specifications' method
-  def examplesLinks(t: String) = t.title ^ specifications(basePath = "main/src/test/scala").map(see)
+  "CriojoSC specifications".title.urlIs("index.html")         ^
+  specifications(basePath = "main/src/test/scala").map(link)
 }

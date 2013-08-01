@@ -17,13 +17,10 @@
  * along with CriojoSC.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package fr.emn.criojosc
-package automaton
+package fr.emn.criojosc.model
 
 import org.specs2._
-
-import model.EngineBuffer
-import examples.testAgents
+import fr.emn.criojosc.examples._
 
 class EngineSpec extends Specification { def is =
   "Automaton engine specification."                               ^
@@ -31,5 +28,5 @@ class EngineSpec extends Specification { def is =
   engine.output                                                   ^
                                                                   end
 
-  lazy val engine = new VerboseEngine(testAgents) with EngineBuffer
+  lazy val engine = new TestEngine(testAgents) with EngineBuffer
 }
