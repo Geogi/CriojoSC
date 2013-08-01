@@ -1,6 +1,11 @@
+# Build files
+target/
+
+# IntelliJ files (generate with SBT)
 .idea/
 .idea_modules/
-target/
+
+# Emacs files
 *~
 \#*#
 .#*
