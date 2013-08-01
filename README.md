@@ -1,6 +1,8 @@
 CriojoSC
 ==========
 
+[![Build Status](https://travis-ci.org/Geogi/CriojoSC.png)](https://travis-ci.org/Geogi/CriojoSC)
+
 CriojoSC is an implementation of CRIOJO, a CHAM-based engine for running concurrent applications with guaranteed causal order.
 
 CriojoSC uses [Scala](http://www.scala-lang.org/) and is [GPL](http://www.gnu.org/licenses/gpl.html) licenced.
