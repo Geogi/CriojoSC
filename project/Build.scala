@@ -21,10 +21,10 @@ import sbt._
 import Keys._
 
 object CriojoSCBuild extends Build {
-  lazy val root = Project("criojosc-root", file(".")) aggregate(main) settings (
+  lazy val root = Project("root", file(".")) aggregate(main) settings (
     mappings in (Compile, packageBin) <++= mappings in (main, Compile, packageBin),
     mappings in (Compile, packageSrc) <++= mappings in (main, Compile, packageSrc)
     )
-  lazy val main = Project("criojosc-main", file("main"))
-  lazy val generate = Project("criojosc-generate", file("generate"))
+  lazy val main = Project("main", file("main"))
+  lazy val generate = Project("generate", file("generate"))
 }
